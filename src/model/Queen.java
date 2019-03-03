@@ -20,9 +20,11 @@ import java.util.*;
 public class Queen extends Piece {
 
 	/**
-	 * @param color
-	 * @param file
-	 * @param rank
+	 * Parameterized constructor
+	 * 
+	 * @param color Designated color for a piece (WHITE or BLACK)
+	 * @param file	Integer representation for a file (0 is a, 1 is b, ...)
+	 * @param rank	Integer representation for a rank (0 is 1, 1 is 2, ...)
 	 */
 	public Queen(Color color, Position pos) {
 		super(color, pos);
