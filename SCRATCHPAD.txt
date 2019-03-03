@@ -86,6 +86,16 @@ bp bp bp bp bp bp bp bp 7
 wp wp wp wp wp wp wp wp 2
 wR wN wB wQ wK wB wN wR 1
  a  b  c  d  e  f  g  h
+ 
+bR bN bB bQ bK bB bN bR 7
+bp bp bp bp bp bp bp bp 6
+   ##    ##    ##    ## 5
+##    ##    ##    ##    4
+   ##    ##    ##    ## 3
+##    ##    ##    ##    2 
+wp wp wp wp wp wp wp wp 1
+wR wN wB wQ wK wB wN wR 0
+ 0  1  2  3  4  5  6  7
 
 White's move: e2 e4
 
