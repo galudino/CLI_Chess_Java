@@ -21,9 +21,10 @@ public class Position {
 	private int rank = -1;
 	
 	/**
+	 * Parameterized constructor
 	 * 
-	 * @param file
-	 * @param rank
+	 * @param file	Integer representation for a file (0 is a, 1 is b, ...)
+	 * @param rank	Integer representation for a rank (0 is 1, 1 is 2, ...)
 	 */
 	public Position(int file, int rank) {
 		if (file < 0 || rank < 0) {
@@ -34,9 +35,10 @@ public class Position {
 	}
 	
 	/**
+	 * Mutator to update file and rank
 	 * 
-	 * @param file
-	 * @param rank
+	 * @param file	Integer representation for a file (0 is a, 1 is b, ...)
+	 * @param rank	Integer representation for a rank (0 is 1, 1 is 2, ...)
 	 */
 	public void setFileRank(int file, int rank) {
 		if (file > 7 || rank > 7) {
@@ -49,7 +51,7 @@ public class Position {
 	
 	/**
 	 * 
-	 * @return
+	 * @return Retrieves the file of the current Position instance
 	 */
 	public int getFile() {
 		return file;
@@ -57,16 +59,21 @@ public class Position {
 	
 	/**
 	 * 
-	 * @return
+	 * @return Retrieves the rank of the current Position instance
 	 */
 	public int getRank() {
 		return rank;
 	}
 	
 	/**
+	 * Defines the natural order of position.
+	 * (If files are equal, compare the ranks)
+	 * (If ranks are equal, compare the files)
+	 * (If files and ranks are equal, Positions are equal)
 	 * 
-	 * @param o
-	 * @return
+	 * @param o Object that may or may not represent a Position
+	 * @return 0 if equal, negative if o is "greater", 
+	 * positive if this is "greater"
 	 */
 	public int compareTo(Object o) {
 		int result = 0;
