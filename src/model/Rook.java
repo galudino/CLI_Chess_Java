@@ -19,4 +19,28 @@ import java.util.*;
  */
 public class Rook extends Piece {
 
+	/**
+	 * @param color
+	 * @param file
+	 * @param rank
+	 */
+	public Rook(Color color, Position pos) {
+		super(color, pos);
+		// TODO Auto-generated constructor stub
+	}
+
+	/* (non-Javadoc)
+	 * @see model.Piece#move(int, int)
+	 */
+	@Override
+	public boolean move(int file, int rank) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "R";
+	}
+
 }

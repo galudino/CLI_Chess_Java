@@ -20,12 +20,26 @@ public class Position {
 	private int file = -1;
 	private int rank = -1;
 	
-	public Position(int file, int rank) {		
+	/**
+	 * 
+	 * @param file
+	 * @param rank
+	 */
+	public Position(int file, int rank) {
+		if (file < 0 || rank < 0) {
+			return;
+		}
+		
 		setFileRank(file, rank);
 	}
 	
+	/**
+	 * 
+	 * @param file
+	 * @param rank
+	 */
 	public void setFileRank(int file, int rank) {
-		if ((file < -1 || file > 7) || ((rank < -1) || rank > 7)) {
+		if (file > 7 || rank > 7) {
 			return;
 		}
 		
@@ -33,14 +47,27 @@ public class Position {
 		this.rank = rank;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public int getFile() {
 		return file;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public int getRank() {
 		return rank;
 	}
 	
+	/**
+	 * 
+	 * @param o
+	 * @return
+	 */
 	public int compareTo(Object o) {
 		int result = 0;
 		
@@ -83,22 +110,35 @@ public class Position {
 		switch (this.file) {
 		case 0:
 			file = 'a';
+			break;
 		case 1:
 			file = 'b';
+			break;
 		case 2:
 			file = 'c';
+			break;
 		case 3:
 			file = 'd';
+			break;
 		case 4:
 			file = 'e';
+			break;
 		case 5:
 			file = 'f';
+			break;
 		case 6:
 			file = 'g';
+			break;
 		case 7:
 			file = 'h';
+			break;
+		default:
+			file = '-';
+			break;
 		}
 		
-		return String.format("%c%d", file, rank + 1);
+		final String rankPrint = rank > -1 ? Integer.toString(rank + 1) : "-";
+		
+		return String.format("%c%s", file, rankPrint);
 	}
 }
