@@ -13,6 +13,7 @@ package chess;
 import java.util.*;
 
 import model.*;
+import model.Piece.Color;
 
 /**
  * @version Mar 3, 2019
@@ -26,7 +27,8 @@ public class Chess {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+	
+
 	}
 	
 }

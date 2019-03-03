@@ -35,7 +35,7 @@ public class King extends Piece {
 	@Override
 	public boolean move(int file, int rank) {
 		// TODO Auto-generated method stub
-		pos.s
+
 		return false;
 	}
 	
