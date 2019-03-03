@@ -22,9 +22,10 @@ import model.Piece.Color;
 public class Knight extends Piece {
 
 	/**
-	 * @param color
-	 * @param file
-	 * @param rank
+	 * Parameterized constructor
+	 * 
+	 * @param color Designated color for a piece (WHITE or BLACK)
+	 * @param pos	Designated position for a piece (integers)
 	 */
 	public Knight(Color color, Position pos) {
 		super(color, pos);

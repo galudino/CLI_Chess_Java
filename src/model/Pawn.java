@@ -20,10 +20,10 @@ import java.util.*;
 public class Pawn extends Piece {
 
 	/**
+	 * Parameterized constructor
 	 * 
-	 * @param color
-	 * @param file
-	 * @param rank
+	 * @param color Designated color for a piece (WHITE or BLACK)
+	 * @param pos	Designated position for a piece (integers)
 	 */
 	public Pawn(Color color, Position pos) {
 		super(color, pos);
