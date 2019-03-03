@@ -10,6 +10,8 @@
  */
 package model;
 
+import java.util.*;
+
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino

@@ -10,6 +10,10 @@
  */
 package chess;
 
+import java.util.*;
+
+import model.*;
+
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
@@ -22,7 +26,7 @@ public class Chess {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		
 	}
-
+	
 }
