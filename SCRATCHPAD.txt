@@ -1,0 +1,130 @@
+---DELETE THIS SCRATCHPAD FILE UPON RELEASE---
+
+wK	white king
+wQ	white queen
+wR	white rook
+wB	white bishop
+wN	white knight
+wP	white pawn
+
+bK	black king
+bQ	black queen
+bR	black rook
+bB	black bishop
+bN	black knight
+bP	black pawn
+
+2-player chess
+16 pieces per player
+
+dark square in ASCII art is ##
+
+Rank: 1 - 8
+File: a - h
+
+Game pieces are divided into two sets
+White set
+Black set
+
+WHITE MOVES FIRST
+Then BLACK.
+They alternate turns, moving one piece per turn.
+EXCEPT FOR CASTLING -- when TWO pieces are moved.
+
+Pieces are moved to either an unoccupied square or
+one occupied by an opponent's piece,
+which is captured and REMOVED from play.
+
+With the sole exception of an en passant,
+all pieces capture by moving to the square that the
+opponent's piece occupies.
+
+A player may not make any move that would put or leave
+the player's own king under attack.
+
+A player cannot "pass" a turn;
+one must make a LEGAL move.
+
+If the player to move has NO legal move --
+the game is over; 
+the result is either CHECKMATE
+(a loss for the player with no legal move) if the king is in CHECK, 
+or STATEMATE (a DRAW) if the king is NOT IN CHECK.
+
+Each piece has its own way of moving.
+
+KING
+Moves one square in ANY direction.
+Also has a move called CASTLING, that involves moving a rook.
+
+	CASTLING
+	ONCE in every game, each king can do a CASTLING.
+	Consists of moving the KING TWO SQUARES along the first RANK
+	toward a ROOK (that is on the player's first RANK) and then placing
+	the ROOK on the last square that the KING just crossed.
+	
+	CASTLING is permitted if these conditions are met:
+		neither the king nor the rook have previously moved during the game
+		there are no pieces between the king and the rook
+		the king cannot be in check, nor can the king pass through
+		any square that is under attack by an enemy piece,
+		or move to a square that would result in check.
+		
+		Note that castling is permitted if the rook is attacked,
+		or if the rook crosses an attacked square.
+		
+ROOK
+
+Sample layout:
+
+bR bN bB bQ bK bB bN bR 8
+bp bp bp bp bp bp bp bp 7
+   ##    ##    ##    ## 6
+##    ##    ##    ##    5
+   ##    ##    ##    ## 4
+##    ##    ##    ##    3 
+wp wp wp wp wp wp wp wp 2
+wR wN wB wQ wK wB wN wR 1
+ a  b  c  d  e  f  g  h
+
+White's move: e2 e4
+
+bR bN bB bQ bK bB bN bR 8
+bp bp bp bp bp bp bp bp 7
+   ##    ##    ##    ## 6
+##    ##    ##    ##    5
+   ##    ## wp ##    ## 4
+##    ##    ##    ##    3
+wp wp wp wp    wp wp wp 2
+wR wN wB wQ wK wB wN wR 1
+ a  b  c  d  e  f  g  h
+
+Black's move: e7 e5
+
+bR bN bB bQ bK bB bN bR 8
+bp bp bp bp ## bp bp bp 7
+   ##    ##    ##    ## 6
+##    ##    bp    ##    5
+   ##    ## wp ##    ## 4
+##    ##    ##    ##    3
+wp wp wp wp    wp wp wp 2
+wR wN wB wQ wK wB wN wR 1
+ a  b  c  d  e  f  g  h
+
+White's move: 
+
+
+
+All Piece subtypes coexist in same Board instance
+
+
+All Pieces share:
+	Current position data
+	the ability to 'move' - subclasses determine HOW they move, however.
+	
+	Using its current position data
+	and its move set abilities --
+	we can determine if that piece is able to move at all during a turn. 
+	
+	'active' data - is the piece still in the game?
+	
