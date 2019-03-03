@@ -79,19 +79,34 @@ public class Board {
 
 		for (int rank = cell.length - 1; rank >= 0; rank--) {
 			for (int file = 0; file < cell[rank].length; file++) {
+				
+				// FOR DEBUGGING: Print file/rank indices 
+				//str += String.format("%d%d", cell[file][rank].pos.getFile(), cell[file][rank].pos.getRank());
+
+				// FOR DEBUGGING: Print file/rank markings per cell
+				//str += cell[file][rank].pos;	// FILE/RANK MARKS
+				
+				// FOR RELEASE: Print piece at cell
 				str += cell[file][rank];
+				
+				// Necessary space in between cells
 				str += " ";
 				
 				if (file == cell[rank].length - 1) {
+					// FOR RELEASE: Print real rank enumerations
 					//str += String.format("%d", rank + 1);	// FOR RELEASE
+					
+					// FOR DEBUGGING: Print rank indices as per an array
 					str += String.format("%d", rank);
 				}
 			}
 			str += "\n";
 		}
 
+		// FOR RELEASE: Print real file characters
+		//str += String.format(" a  b  c  d  e  f  g  h\n");
 		
-		//str += String.format(" a  b  c  d  e  f  g  h\n");	// FOR RELEASE
+		// FOR DEBUGGING: Print file indices as per an array
 		str += String.format(" 0  1  2  3  4  5  6  7\n");
 		
 		return str;
