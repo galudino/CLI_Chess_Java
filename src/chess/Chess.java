@@ -23,7 +23,7 @@ import model.Piece.Color;
 public class Chess {
 
 	/**
-	 * @param args
+	 * @param args Command line arguments
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
