@@ -42,7 +42,7 @@ public class Board {
 	}
 	
 	private Cell[][] cell;
-	
+
 	public Board() {
 		final Position POSITION_WK = new Position(4, 0);
 		final Position POSITION_WQ = new Position(3, 0);
@@ -61,6 +61,24 @@ public class Board {
 		final Position POSITION_WP_5 = new Position(5, 1);
 		final Position POSITION_WP_6 = new Position(6, 1);
 		final Position POSITION_WP_7 = new Position(7, 1);
+		
+		final Position POSITION_BK = new Position(4, 7);
+		final Position POSITION_BQ = new Position(3, 7);
+		final Position POSITION_BB_R = new Position(5, 7);
+		final Position POSITION_BB_L = new Position(2, 7);
+		final Position POSITION_BN_R = new Position(6, 7);
+		final Position POSITION_BN_L = new Position(1, 7);
+		final Position POSITION_BR_R = new Position(7, 7);
+		final Position POSITION_BR_L = new Position(0, 7);
+		
+		final Position POSITION_BP_0 = new Position(0, 6);
+		final Position POSITION_BP_1 = new Position(1, 6);
+		final Position POSITION_BP_2 = new Position(2, 6);
+		final Position POSITION_BP_3 = new Position(3, 6);
+		final Position POSITION_BP_4 = new Position(4, 6);
+		final Position POSITION_BP_5 = new Position(5, 6);
+		final Position POSITION_BP_6 = new Position(6, 6);
+		final Position POSITION_BP_7 = new Position(7, 6);
 		
 		// Instantiate 2D array of cells, that represent the board.
 		cell = new Cell[8][8];
@@ -92,6 +110,24 @@ public class Board {
 		cell[5][1].assignPiece(new Pawn(Color.WHITE, POSITION_WP_5));
 		cell[6][1].assignPiece(new Pawn(Color.WHITE, POSITION_WP_6));
 		cell[7][1].assignPiece(new Pawn(Color.WHITE, POSITION_WP_7));
+		
+		cell[4][7].assignPiece(new King(Color.BLACK, POSITION_BK));
+		cell[3][7].assignPiece(new Queen(Color.BLACK, POSITION_BQ));
+		cell[5][7].assignPiece(new Bishop(Color.BLACK, POSITION_BB_R));
+		cell[2][7].assignPiece(new Bishop(Color.BLACK, POSITION_BB_L));
+		cell[6][7].assignPiece(new Knight(Color.BLACK, POSITION_BN_R));
+		cell[1][7].assignPiece(new Knight(Color.BLACK, POSITION_BN_L));
+		cell[7][7].assignPiece(new Rook(Color.BLACK, POSITION_BR_R));
+		cell[0][7].assignPiece(new Rook(Color.BLACK, POSITION_BR_L));
+		
+		cell[0][6].assignPiece(new Pawn(Color.BLACK, POSITION_BP_0));
+		cell[1][6].assignPiece(new Pawn(Color.BLACK, POSITION_BP_1));
+		cell[2][6].assignPiece(new Pawn(Color.BLACK, POSITION_BP_2));
+		cell[3][6].assignPiece(new Pawn(Color.BLACK, POSITION_BP_3));
+		cell[4][6].assignPiece(new Pawn(Color.BLACK, POSITION_BP_4));
+		cell[5][6].assignPiece(new Pawn(Color.BLACK, POSITION_BP_5));
+		cell[6][6].assignPiece(new Pawn(Color.BLACK, POSITION_BP_6));
+		cell[7][6].assignPiece(new Pawn(Color.BLACK, POSITION_BP_7));
 
 
 	}
