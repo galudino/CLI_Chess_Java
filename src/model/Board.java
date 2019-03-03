@@ -21,13 +21,13 @@ import model.Piece.Color;
  */
 public class Board {
 	
+	public static final Position whiteKing = new Position(4, 0);
+	
 	public class Cell {
-		private Position pos;
 		private Piece piece;
 		private boolean occupied;
 
-		public Cell(Position pos) {
-			this.pos = pos;
+		public Cell() {
 			piece = null;
 			occupied = false;
 		}
@@ -46,7 +46,6 @@ public class Board {
 			// determine if a placeholder is "##" or " "
 			// by field pos.
 			
-	
 			str = occupied ? piece.toString() : placeholder;
 			
 			return str;
@@ -56,21 +55,24 @@ public class Board {
 	private Cell[][] cell;
 	
 	public Board() {
+		// Instantiate 2D array of cells, that represent the board.
 		cell = new Cell[8][8];
 		
+		// Instantiate all cells with Position object.
 		for (int file = 0; file < cell.length; file++) {
-			for (int rank = 0; rank < cell[file].length; rank++) {
-				Cell newCell = new Cell(new Position(file, rank));	
-				cell[file][rank] = newCell;
+			for (int rank = 0; rank < cell[file].length; rank++) {	
+				cell[file][rank] = new Cell();
 			}
 		}
 		
 		// not sure if a cell should be aware of position,
 		// or piece should be aware of position, or both.
+
+		cell[4][0].assignPiece(new King(Color.WHITE, new Position(4, 0)));
 		
-		// Test instantiation of a black pawn at 0,0 (not the right place)
-		// but needed it to test toString of Board
-		cell[3][1].assignPiece(new Pawn(Color.BLACK, new Position(0, 0)));
+		
+		// Now we would instantiate all cells with pieces,
+		// and where they would go.
 	}
 	
 	@Override
@@ -87,7 +89,25 @@ public class Board {
 				//str += cell[file][rank].pos;	// FILE/RANK MARKS
 				
 				// FOR RELEASE: Print piece at cell
-				str += cell[file][rank];
+				if (cell[file][rank].toString().equals("--")) {
+					if (rank % 2 != 0) {
+						if (file % 2 != 0) {
+							str += "##";
+						} else {
+							str += "  ";
+						}
+					} else {
+						if (file % 2 == 0) {
+							str += "##";
+						} else {
+							str += "  ";
+						}
+					}
+				} else {
+					str += cell[file][rank];
+				}
+				
+
 				
 				// Necessary space in between cells
 				str += " ";
