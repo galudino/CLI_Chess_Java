@@ -21,8 +21,6 @@ import model.Piece.Color;
  */
 public class Board {
 	
-	public static final Position whiteKing = new Position(4, 0);
-	
 	public class Cell {
 		private Piece piece;
 		private boolean occupied;
@@ -39,22 +37,22 @@ public class Board {
 		
 		@Override
 		public String toString() {
-			String str = "";
-			
-			String placeholder = "--";
-			
-			// determine if a placeholder is "##" or " "
-			// by field pos.
-			
-			str = occupied ? piece.toString() : placeholder;
-			
-			return str;
+			return occupied ? piece.toString() : "--";
 		}
 	}
 	
 	private Cell[][] cell;
 	
 	public Board() {
+		final Position POSITION_WK = new Position(4, 0);
+		final Position POSITION_WQ = new Position(3, 0);
+		final Position POSITION_WB_R = new Position(5, 0);
+		final Position POSITION_WB_L = new Position(2, 0);
+		final Position POSITION_WN_R = new Position(6, 0);
+		final Position POSITION_WN_L = new Position(1, 0);
+		final Position POSITION_WR_R = new Position(7, 0);
+		final Position POSITION_WR_L = new Position(0, 0);
+		
 		// Instantiate 2D array of cells, that represent the board.
 		cell = new Cell[8][8];
 		
@@ -68,11 +66,15 @@ public class Board {
 		// not sure if a cell should be aware of position,
 		// or piece should be aware of position, or both.
 
-		cell[4][0].assignPiece(new King(Color.WHITE, new Position(4, 0)));
-		
-		
-		// Now we would instantiate all cells with pieces,
-		// and where they would go.
+		cell[4][0].assignPiece(new King(Color.WHITE, POSITION_WK));
+		cell[3][0].assignPiece(new Queen(Color.WHITE, POSITION_WQ));
+		cell[5][0].assignPiece(new Bishop(Color.WHITE, POSITION_WB_R));
+		cell[2][0].assignPiece(new Bishop(Color.WHITE, POSITION_WB_L));
+		cell[6][0].assignPiece(new Knight(Color.WHITE, POSITION_WN_R));
+		cell[1][0].assignPiece(new Knight(Color.WHITE, POSITION_WN_L));
+		cell[7][0].assignPiece(new Rook(Color.WHITE, POSITION_WR_R));
+		cell[0][0].assignPiece(new Rook(Color.WHITE, POSITION_WR_L));
+
 	}
 	
 	@Override
