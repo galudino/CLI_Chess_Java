@@ -53,6 +53,15 @@ public class Board {
 		final Position POSITION_WR_R = new Position(7, 0);
 		final Position POSITION_WR_L = new Position(0, 0);
 		
+		final Position POSITION_WP_0 = new Position(0, 1);
+		final Position POSITION_WP_1 = new Position(1, 1);
+		final Position POSITION_WP_2 = new Position(2, 1);
+		final Position POSITION_WP_3 = new Position(3, 1);
+		final Position POSITION_WP_4 = new Position(4, 1);
+		final Position POSITION_WP_5 = new Position(5, 1);
+		final Position POSITION_WP_6 = new Position(6, 1);
+		final Position POSITION_WP_7 = new Position(7, 1);
+		
 		// Instantiate 2D array of cells, that represent the board.
 		cell = new Cell[8][8];
 		
@@ -74,6 +83,16 @@ public class Board {
 		cell[1][0].assignPiece(new Knight(Color.WHITE, POSITION_WN_L));
 		cell[7][0].assignPiece(new Rook(Color.WHITE, POSITION_WR_R));
 		cell[0][0].assignPiece(new Rook(Color.WHITE, POSITION_WR_L));
+		
+		cell[0][1].assignPiece(new Pawn(Color.WHITE, POSITION_WP_0));
+		cell[1][1].assignPiece(new Pawn(Color.WHITE, POSITION_WP_1));
+		cell[2][1].assignPiece(new Pawn(Color.WHITE, POSITION_WP_2));
+		cell[3][1].assignPiece(new Pawn(Color.WHITE, POSITION_WP_3));
+		cell[4][1].assignPiece(new Pawn(Color.WHITE, POSITION_WP_4));
+		cell[5][1].assignPiece(new Pawn(Color.WHITE, POSITION_WP_5));
+		cell[6][1].assignPiece(new Pawn(Color.WHITE, POSITION_WP_6));
+		cell[7][1].assignPiece(new Pawn(Color.WHITE, POSITION_WP_7));
+
 
 	}
 	
