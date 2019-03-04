@@ -164,11 +164,9 @@ public class Board {
 			if (other != null) {
 				if (piece.color.ordinal() == other.color.ordinal()) {
 					return false;
-				}
-				
-				if (piece.getPosition().equals(other.getPosition())) {
+				} else {
 					cell[newFile][newRank].piece = null;
-				} 
+				}
 			}
 			
 			// move piece to desired file/rank
