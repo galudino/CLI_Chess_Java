@@ -35,7 +35,8 @@ public class Pawn extends Piece {
 	 */
 	@Override
 	public boolean move(int file, int rank) {
-		// TODO Auto-generated method stub
+		pos.setFileRank(file, rank);
+
 		return false;
 	}
 	
