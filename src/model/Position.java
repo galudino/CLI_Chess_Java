@@ -27,10 +27,6 @@ public class Position implements Comparable<Position> {
 	 * @param rank	Integer representation for a rank (0 is 1, 1 is 2, ...)
 	 */
 	public Position(int file, int rank) {
-		if (file < 0 || rank < 0) {
-			return;
-		}
-		
 		setFileRank(file, rank);
 	}
 	
@@ -41,7 +37,7 @@ public class Position implements Comparable<Position> {
 	 * @param rank	Integer representation for a rank (0 is 1, 1 is 2, ...)
 	 */
 	public void setFileRank(int file, int rank) {
-		if (file > 7 || rank > 7) {
+		if ((file < 0 || rank < 0) || (file > 7 || rank > 7)) {
 			return;
 		}
 		
