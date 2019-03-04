@@ -69,11 +69,11 @@ public class Board {
 	 *
 	 */
 	public class Cell {
-		private Position loc = new Position(0, 0);
+		private Position loc;
 		private Piece piece;
 		
 		public Cell(int file, int rank) {
-			loc.setFileRank(file, rank);
+			loc = new Position(file, rank);
 			piece = null;
 		}
 		
