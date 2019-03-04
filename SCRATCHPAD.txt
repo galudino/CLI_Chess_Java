@@ -1,5 +1,10 @@
 ---DELETE THIS SCRATCHPAD FILE UPON RELEASE---
 
+for all overridden move methods,
+perhaps another param is required:
+an array of Position[] that denotes
+the locations of other pieces
+
 wK	white king
 wQ	white queen
 wR	white rook

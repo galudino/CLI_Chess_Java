@@ -16,10 +16,7 @@ import model.Piece.Color;
 
 public class Board {
 	
-	private static final int MAX_LENGTH_WIDTH = 8;
-	
 	/**
-	 * 
 	 * @version Mar 3, 2019
 	 * @author gemuelealudino
 	 *
@@ -63,10 +60,9 @@ public class Board {
 	}
 	
 	/**
-	 * 
 	 * @version Mar 3, 2019
 	 * @author gemuelealudino
-	 *
+	 * 
 	 */
 	public class Cell {
 		private Position loc;
@@ -90,6 +86,7 @@ public class Board {
 		}
 	}
 	
+	private static final int MAX_LENGTH_WIDTH = 8;
 	private Cell[][] cell;
 	
 	public Board() {

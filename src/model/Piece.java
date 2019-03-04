@@ -21,10 +21,9 @@ import model.Board.Cell;
  */
 public abstract class Piece {
 	/**
-	 * 
 	 * @version Mar 3, 2019
 	 * @author gemuelealudino
-	 *
+	 * 
 	 */
 	public enum Color {
 		WHITE, BLACK

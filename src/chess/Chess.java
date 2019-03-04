@@ -22,8 +22,6 @@ import model.Piece.Color;
  */
 public class Chess {
 	
-
-
 	/**
 	 * @param args Command line arguments
 	 */
