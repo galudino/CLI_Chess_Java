@@ -12,21 +12,27 @@ package model;
 
 import java.util.*;
 
+import model.Board.Cell;
+
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
  *
  */
 public abstract class Piece {
+	/**
+	 * 
+	 * @version Mar 3, 2019
+	 * @author gemuelealudino
+	 *
+	 */
 	public enum Color {
 		WHITE, BLACK
 	}
 	
 	protected Color color;
 	protected Position pos;
-	
-	protected boolean active;
-	
+		
 	/**
 	 * Parameterized constructor
 	 * 
@@ -52,22 +58,6 @@ public abstract class Piece {
 	 */
 	public Position getPosition() {
 		return pos;
-	}
-	
-	/**
-	 * 
-	 * @return true if a Piece is playable (not taken), false otherwise
-	 */
-	public boolean isActive() {
-		return active;
-	}
-	
-	/**
-	 * Called when a Piece is taken by another Piece
-	 */
-	public void deactivate() {
-		pos.setFileRank(-1, -1);
-		active = false;
 	}
 	
 	@Override

@@ -21,15 +21,19 @@ import model.Piece.Color;
  *
  */
 public class Chess {
+	
+
 
 	/**
 	 * @param args Command line arguments
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		Board board = new Board();
 
+		Board board = new Board();
+		
+		board.makeMove(0, 1, 0, 2);
+	
+		
 		System.out.println(board);
 	}
 	

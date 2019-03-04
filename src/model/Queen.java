@@ -12,6 +12,8 @@ package model;
 
 import java.util.*;
 
+import model.Board.Cell;
+
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
@@ -35,8 +37,15 @@ public class Queen extends Piece {
 	 */
 	@Override
 	public boolean move(int file, int rank) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean result = false;
+		
+		// evaluate file and rank based on pos field
+		// set to true if file and rank agree with pos.
+		result = true;
+		
+		pos.setFileRank(file, rank);
+		
+		return result;
 	}
 	
 	@Override

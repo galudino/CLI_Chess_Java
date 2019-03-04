@@ -12,6 +12,8 @@ package model;
 
 import java.util.*;
 
+import model.Board.Cell;
+
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
@@ -23,7 +25,7 @@ public class King extends Piece {
 	 * Parameterized constructor
 	 * 
 	 * @param color Designated color for a piece (WHITE or BLACK)
-	 * @param pos	Designated position for a piece (integers)
+	 * @param pos	Designated position for a Piece (Integers)
 	 */
 	public King(Color color, Position pos) {
 		super(color, pos);
@@ -35,9 +37,15 @@ public class King extends Piece {
 	 */
 	@Override
 	public boolean move(int file, int rank) {
-		// TODO Auto-generated method stub
-
-		return false;
+		boolean result = false;
+		
+		// evaluate file and rank based on pos field
+		// set to true if file and rank agree with pos.
+		result = true;
+		
+		pos.setFileRank(file, rank);
+		
+		return result;
 	}
 	
 	@Override

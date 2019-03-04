@@ -15,7 +15,7 @@ package model;
  * @author gemuelealudino
  *
  */
-public class Position {
+public class Position implements Comparable<Position> {
 	
 	private int file = -1;
 	private int rank = -1;
@@ -64,40 +64,7 @@ public class Position {
 	public int getRank() {
 		return rank;
 	}
-	
-	/**
-	 * Defines the natural order of position.
-	 * (If files are equal, compare the ranks)
-	 * (If ranks are equal, compare the files)
-	 * (If files and ranks are equal, Positions are equal)
-	 * 
-	 * @param o Object that may or may not represent a Position
-	 * @return 0 if equal, negative if o is "greater", 
-	 * positive if this is "greater"
-	 */
-	public int compareTo(Object o) {
-		int result = 0;
 		
-		if (o != null && o instanceof Position) {
-			Position other = (Position)(o);
-			
-			final int deltaFile = file - other.file;
-			final int deltaRank = rank - other.rank;
-			
-			if (deltaFile == 0) {
-				result = deltaRank;
-			} else {
-				if (deltaRank == 0) {
-					result = deltaFile;
-				} else {
-					result = deltaFile + deltaRank; 
-				}
-			}
-		}
-		
-		return result;
-	}
-	
 	@Override
 	public boolean equals(Object o) {
 		boolean result = false;
@@ -147,5 +114,28 @@ public class Position {
 		final String rankPrint = rank > -1 ? Integer.toString(rank + 1) : "-";
 		
 		return String.format("%c%s", file, rankPrint);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(Position o) {
+		int result = 0;
+		
+		final int deltaFile = file - o.file;
+		final int deltaRank = rank - o.rank;
+		
+		if (deltaFile == 0) {
+			result = deltaRank;
+		} else {
+			if (deltaRank == 0) {
+				result = deltaFile;
+			} else {
+				result = deltaFile + deltaRank; 
+			}
+		}
+		
+		return result;
 	}
 }

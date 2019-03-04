@@ -12,6 +12,8 @@ package model;
 
 import java.util.*;
 
+import model.Board.Cell;
+
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
@@ -35,9 +37,15 @@ public class Pawn extends Piece {
 	 */
 	@Override
 	public boolean move(int file, int rank) {
+		boolean result = false;
+		
+		// evaluate file and rank based on pos field
+		// set to true if file and rank agree with pos.
+		result = true;
+		
 		pos.setFileRank(file, rank);
-
-		return false;
+		
+		return result;
 	}
 	
 	@Override

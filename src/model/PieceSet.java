@@ -12,6 +12,8 @@ package model;
 
 import java.util.*;
 
+import model.Piece.Color;
+
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
@@ -19,4 +21,19 @@ import java.util.*;
  */
 public class PieceSet {
 
+
+	
+	public enum PieceType {
+		KING, QUEEN, BISHOP_L, BISHOP_R, KNIGHT_L, KNIGHT_R, ROOK_L, ROOK_R,
+		PAWN_0, PAWN_1, PAWN_2, PAWN_3, PAWN_4, PAWN_5, PAWN_6, PAWN_7
+	};
+	
+
+		
+
+		
+	
+	
+
+	
 }
