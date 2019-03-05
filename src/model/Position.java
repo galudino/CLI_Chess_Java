@@ -27,16 +27,6 @@ public class Position implements Comparable<Position> {
 	 * @param rank	Integer representation for a rank (0 is 1, 1 is 2, ...)
 	 */
 	public Position(int file, int rank) {
-		setFileRank(file, rank);
-	}
-	
-	/**
-	 * Mutator to update file and rank
-	 * 
-	 * @param file	Integer representation for a file (0 is a, 1 is b, ...)
-	 * @param rank	Integer representation for a rank (0 is 1, 1 is 2, ...)
-	 */
-	public void setFileRank(int file, int rank) {
 		if ((file < 0 || rank < 0) || (file > 7 || rank > 7)) {
 			return;
 		}
@@ -44,7 +34,7 @@ public class Position implements Comparable<Position> {
 		this.file = file;
 		this.rank = rank;
 	}
-	
+		
 	/**
 	 * 
 	 * @return Retrieves the file of the current Position instance
