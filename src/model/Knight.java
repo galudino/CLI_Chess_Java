@@ -28,7 +28,7 @@ public class Knight extends Piece {
 	 * @param color Designated color for a piece (WHITE or BLACK)
 	 * @param pos	Designated position for a piece (integers)
 	 */
-	public Knight(Color color, Position pos) {
+	protected Knight(Color color, Position pos) {
 		super(color, pos);
 		
 		identifier += "Knight";
@@ -39,7 +39,7 @@ public class Knight extends Piece {
 	 * 
 	 * @param color	Designated color for a piece (WHITE or BLACK)
 	 */
-	public Knight(Color color) {
+	protected Knight(Color color) {
 		super(color);
 		
 		identifier += "Knight";

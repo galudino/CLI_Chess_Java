@@ -28,7 +28,7 @@ public class Queen extends Piece {
 	 * @param color Designated color for a piece (WHITE or BLACK)
 	 * @param pos	Designated position for a piece (integers)
 	 */
-	public Queen(Color color, Position pos) {
+	protected Queen(Color color, Position pos) {
 		super(color, pos);
 		
 		identifier += "Queen";
@@ -39,7 +39,7 @@ public class Queen extends Piece {
 	 * 
 	 * @param color	Designated color for a piece (WHITE or BLACK)
 	 */
-	public Queen(Color color) {
+	protected Queen(Color color) {
 		super(color);
 		
 		identifier += "Queen";

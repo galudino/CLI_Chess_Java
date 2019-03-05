@@ -35,7 +35,7 @@ public class PieceSet {
 	 * 
 	 * @param color
 	 */
-	public PieceSet(Color color) {
+	protected PieceSet(Color color) {
 		this.color = color;
 		
 		piece = new Piece[PIECE_COUNT];
@@ -62,7 +62,7 @@ public class PieceSet {
 	 * 
 	 * @return
 	 */
-	public Color getPieceSetColor() {
+	protected Color getPieceSetColor() {
 		return color;
 	}
 	
@@ -71,7 +71,7 @@ public class PieceSet {
 	 * @param pos
 	 * @return
 	 */
-	public Piece getPiece(Position pos) {
+	protected Piece getPiece(Position pos) {
 		for (int i = 0; i < piece.length; i++) {
 			if (piece[i].pos.equals(pos)) {
 				return piece[i];

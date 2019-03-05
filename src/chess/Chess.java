@@ -28,10 +28,17 @@ public class Chess {
 	public static void main(String[] args) {
 
 		Board board = new Board();
+
+		Player white = new Player(Color.WHITE);
+		Player black = new Player(Color.BLACK);
 		
-		board.makeMove(4, 0, 4, 1);
+		white.assignPieceSet(board);
+		black.assignPieceSet(board);
+		
+		white.playMove(board, new Position(0, 1), new Position(0, 2));
 		
 		System.out.println(board);
+		
 	}
 	
 }

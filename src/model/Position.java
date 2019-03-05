@@ -16,7 +16,7 @@ package model;
  *
  */
 public class Position implements Comparable<Position> {
-	
+
 	private int file = -1;
 	private int rank = -1;
 	

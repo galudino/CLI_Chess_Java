@@ -28,7 +28,7 @@ public class Bishop extends Piece {
 	 * @param color Designated color for a piece (WHITE or BLACK)
 	 * @param pos	Designated position for a piece (integers)
 	 */
-	public Bishop(Color color, Position pos) {
+	protected Bishop(Color color, Position pos) {
 		super(color, pos);
 		
 		identifier += "Bishop";
@@ -39,7 +39,7 @@ public class Bishop extends Piece {
 	 * 
 	 * @param color	Designated color for a piece (WHITE or BLACK)
 	 */
-	public Bishop(Color color) {
+	protected Bishop(Color color) {
 		super(color);
 		
 		identifier += "Bishop";

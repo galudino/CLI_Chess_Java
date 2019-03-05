@@ -20,49 +20,6 @@ public class Board {
 	/**
 	 * @version Mar 3, 2019
 	 * @author gemuelealudino
-	 *
-	 */
-	private static final class PieceStart {
-		static final Position POSITION_WK = new Position(4, 0);
-		static final Position POSITION_WQ = new Position(3, 0);
-		static final Position POSITION_WB_R = new Position(5, 0);
-		static final Position POSITION_WB_L = new Position(2, 0);
-		static final Position POSITION_WN_R = new Position(6, 0);
-		static final Position POSITION_WN_L = new Position(1, 0);
-		static final Position POSITION_WR_R = new Position(7, 0);
-		static final Position POSITION_WR_L = new Position(0, 0);
-		
-		static final Position POSITION_WP_0 = new Position(0, 1);
-		static final Position POSITION_WP_1 = new Position(1, 1);
-		static final Position POSITION_WP_2 = new Position(2, 1);
-		static final Position POSITION_WP_3 = new Position(3, 1);
-		static final Position POSITION_WP_4 = new Position(4, 1);
-		static final Position POSITION_WP_5 = new Position(5, 1);
-		static final Position POSITION_WP_6 = new Position(6, 1);
-		static final Position POSITION_WP_7 = new Position(7, 1);
-		
-		static final Position POSITION_BK = new Position(4, 7);
-		static final Position POSITION_BQ = new Position(3, 7);
-		static final Position POSITION_BB_R = new Position(5, 7);
-		static final Position POSITION_BB_L = new Position(2, 7);
-		static final Position POSITION_BN_R = new Position(6, 7);
-		static final Position POSITION_BN_L = new Position(1, 7);
-		static final Position POSITION_BR_R = new Position(7, 7);
-		static final Position POSITION_BR_L = new Position(0, 7);
-		
-		static final Position POSITION_BP_0 = new Position(0, 6);
-		static final Position POSITION_BP_1 = new Position(1, 6);
-		static final Position POSITION_BP_2 = new Position(2, 6);
-		static final Position POSITION_BP_3 = new Position(3, 6);
-		static final Position POSITION_BP_4 = new Position(4, 6);
-		static final Position POSITION_BP_5 = new Position(5, 6);
-		static final Position POSITION_BP_6 = new Position(6, 6);
-		static final Position POSITION_BP_7 = new Position(7, 6);
-	}
-	
-	/**
-	 * @version Mar 3, 2019
-	 * @author gemuelealudino
 	 * 
 	 */
 	public class Cell {
@@ -113,7 +70,7 @@ public class Board {
 	/**
 	 * 
 	 */
-	public void assignWhitePieces() {
+	private void assignWhitePieces() {
 		cell[4][0].piece = whiteSet.piece[PieceType.KING.ordinal()];
 		cell[4][0].piece.pos = cell[4][0].loc;
 		
@@ -163,7 +120,10 @@ public class Board {
 		cell[7][1].piece.pos = cell[7][1].loc;
 	}
 	
-	public void assignBlackPieces() {
+	/**
+	 * 
+	 */
+	private void assignBlackPieces() {
 		cell[4][7].piece = blackSet.piece[PieceType.KING.ordinal()];
 		cell[4][7].piece.pos = cell[4][7].loc;
 		
@@ -212,6 +172,32 @@ public class Board {
 		cell[7][6].piece = blackSet.piece[PieceType.PAWN_7.ordinal()];
 		cell[7][6].piece.pos = cell[7][6].loc;
 	}
+	
+	public PieceSet getWhiteSet() {
+		return whiteSet;
+	}
+	
+	public PieceSet getBlackSet() {
+		return blackSet;
+	}
+	
+	public Cell getCell(Position pos) {
+		return cell[pos.getFile()][pos.getRank()];
+	}
+	
+	public boolean setPieceNullByPosition(Position pos) {
+		Cell cell = getCell(pos);
+		
+		if (cell != null && cell.piece != null) {
+			cell.piece = null;
+			return true;
+		}
+		
+		return false;
+	}
+	
+	
+
 
 	/**
 	 * 
@@ -263,12 +249,7 @@ public class Board {
 	}
 	*/
 	
-	public boolean makeMove(int file, int rank, int newFile, int newRank) {
-		
-		
-		return false;
-		
-	}
+
 	
 	@Override
 	public String toString() {

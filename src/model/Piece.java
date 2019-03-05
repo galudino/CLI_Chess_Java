@@ -39,7 +39,7 @@ public abstract class Piece {
 	 * @param color Designated color for a piece (WHITE or BLACK)
 	 * @param pos	Designated position for a piece (integers)
 	 */
-	public Piece(Color color, Position pos) {
+	protected Piece(Color color, Position pos) {
 		this(color);
 		this.pos = pos;
 	}
@@ -49,7 +49,7 @@ public abstract class Piece {
 	 * 
 	 * @param color	Designated color for a piece (WHITE or BLACK)
 	 */
-	public Piece(Color color) {
+	protected Piece(Color color) {
 		this.color = color;
 		pos = null;
 		
@@ -60,7 +60,7 @@ public abstract class Piece {
 	 * 
 	 * @return A Piece's Color
 	 */
-	public Color getColor() {
+	protected Color getColor() {
 		return color;
 	}
 	
@@ -68,11 +68,11 @@ public abstract class Piece {
 	 * 
 	 * @return A Piece's Position
 	 */
-	public Position getPosition() {
+	protected Position getPosition() {
 		return pos;
 	}
 	
-	public String getIdentifier() {
+	protected String getIdentifier() {
 		return identifier;
 	}
 	

@@ -28,7 +28,7 @@ public class King extends Piece {
 	 * @param color Designated color for a piece (WHITE or BLACK)
 	 * @param pos	Designated position for a Piece (Integers)
 	 */
-	public King(Color color, Position pos) {
+	protected King(Color color, Position pos) {
 		super(color, pos);
 		
 		identifier += "King";
@@ -39,7 +39,7 @@ public class King extends Piece {
 	 * 
 	 * @param color	Designated color for a piece (WHITE or BLACK)
 	 */
-	public King(Color color) {
+	protected King(Color color) {
 		super(color);
 		
 		identifier += "King";

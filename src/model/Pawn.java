@@ -28,7 +28,7 @@ public class Pawn extends Piece {
 	 * @param color Designated color for a piece (WHITE or BLACK)
 	 * @param pos	Designated position for a piece (integers)
 	 */
-	public Pawn(Color color, Position pos) {
+	protected Pawn(Color color, Position pos) {
 		super(color, pos);
 		
 		identifier += "Pawn";
@@ -39,7 +39,7 @@ public class Pawn extends Piece {
 	 * 
 	 * @param color	Designated color for a piece (WHITE or BLACK)
 	 */
-	public Pawn(Color color) {
+	protected Pawn(Color color) {
 		super(color);
 		
 		identifier += "Pawn";

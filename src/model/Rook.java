@@ -28,7 +28,7 @@ public class Rook extends Piece {
 	 * @param color Designated color for a piece (WHITE or BLACK)
 	 * @param pos	Designated position for a piece (integers)
 	 */
-	public Rook(Color color, Position pos) {
+	protected Rook(Color color, Position pos) {
 		super(color, pos);
 		
 		identifier += "Rook";
@@ -39,7 +39,7 @@ public class Rook extends Piece {
 	 * 
 	 * @param color	Designated color for a piece (WHITE or BLACK)
 	 */
-	public Rook(Color color) {
+	protected Rook(Color color) {
 		super(color);
 		
 		identifier += "Rook";
