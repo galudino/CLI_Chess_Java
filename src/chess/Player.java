@@ -34,6 +34,10 @@ public class Player {
 	}
 	
 	public boolean assignPieceSet(Board board) {
+		if (pieceSet != null) {
+			return false;
+		}
+		
 		if (color.equals(board.getWhiteSet().getPieceSetColor())) {
 			pieceSet = board.getWhiteSet();
 			return true;
@@ -47,13 +51,20 @@ public class Player {
 
 	public boolean playMove(Board board, Position piecePosition, 
 			Position newPosition) {
-
+		if (piecePosition.equals(newPosition)) {
+			return false;
+		}
 		
+		Piece toMove = board.getCell(piecePosition).getPiece();
 		
+		if (toMove == null) {
+			return false;
+		}
 		
-		return false;
+		board.movePiece(toMove, newPosition);
+		
+		return true;
 	}
-	
-	
+
 
 }
