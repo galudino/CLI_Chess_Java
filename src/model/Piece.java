@@ -68,11 +68,11 @@ public abstract class Piece {
 	 * 
 	 * @return A Piece's Position
 	 */
-	protected Position getPosition() {
+	public Position getPosition() {
 		return pos;
 	}
 	
-	protected String getIdentifier() {
+	public String getIdentifier() {
 		return identifier;
 	}
 	
@@ -81,6 +81,10 @@ public abstract class Piece {
 		return color == Color.WHITE ? "w" : "b";
 	}
 		
-
+	/**
+	 * 
+	 * @param pos
+	 * @return
+	 */
 	protected abstract boolean move(Position pos);
 }
