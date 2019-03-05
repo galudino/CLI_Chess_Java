@@ -58,14 +58,6 @@ public abstract class Piece {
 	
 	/**
 	 * 
-	 * @return A Piece's Color
-	 */
-	protected Color getColor() {
-		return color;
-	}
-	
-	/**
-	 * 
 	 * @return A Piece's Position
 	 */
 	public Position getPosition() {
@@ -80,7 +72,15 @@ public abstract class Piece {
 	public String toString() {
 		return color == Color.WHITE ? "w" : "b";
 	}
-		
+	
+	/**
+	 * 
+	 * @return A Piece's Color
+	 */
+	protected Color getColor() {
+		return color;
+	}
+			
 	/**
 	 * 
 	 * @param pos

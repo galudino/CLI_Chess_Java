@@ -65,19 +65,4 @@ public class PieceSet {
 	public Color getPieceSetColor() {
 		return color;
 	}
-	
-	/**
-	 * 
-	 * @param pos
-	 * @return
-	 */
-	public Piece getPiece(Position pos) {
-		for (int i = 0; i < piece.length; i++) {
-			if (piece[i].pos.equals(pos)) {
-				return piece[i];
-			}
-		}
-		
-		return null;
-	}
 }

@@ -26,7 +26,6 @@ public class Chess {
 	 * @param args Command line arguments
 	 */
 	public static void main(String[] args) {
-
 		Board board = new Board();
 
 		Player white = new Player(Color.WHITE);
@@ -35,10 +34,9 @@ public class Chess {
 		white.assignPieceSet(board);
 		black.assignPieceSet(board);
 		
-		white.playMove(board, new Position(0, 1), new Position(0, 2));
-		
+		white.playMove(board, new Position(1, 1), new Position(1, 2));
+
 		System.out.println(board);
-		
 	}
 	
 }

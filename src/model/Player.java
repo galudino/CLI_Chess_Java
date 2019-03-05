@@ -8,13 +8,8 @@
  * 01:198:213 Software Methodology, Spring 2019
  * Professor Seshadri Venugopal
  */
-package chess;
+package model;
 
-import model.Board;
-import model.Piece;
-import model.PieceSet;
-import model.Position;
-import model.Board.Cell;
 import model.Piece.Color;
 
 /**
@@ -25,14 +20,22 @@ import model.Piece.Color;
 public class Player {
 	
 	private Color color;
-	
 	private PieceSet pieceSet;
 	
+	/**
+	 * 
+	 * @param color
+	 */
 	public Player(Color color) {
 		this.color = color;
 		pieceSet = null;
 	}
 	
+	/**
+	 * 
+	 * @param board
+	 * @return
+	 */
 	public boolean assignPieceSet(Board board) {
 		if (pieceSet != null) {
 			return false;
@@ -49,6 +52,13 @@ public class Player {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param board
+	 * @param piecePosition
+	 * @param newPosition
+	 * @return
+	 */
 	public boolean playMove(Board board, Position piecePosition, 
 			Position newPosition) {
 		if (piecePosition.equals(newPosition)) {
@@ -56,6 +66,8 @@ public class Player {
 		}
 		
 		Piece toMove = board.getCell(piecePosition).getPiece();
+		
+
 		
 		if (toMove == null) {
 			return false;
@@ -65,6 +77,4 @@ public class Player {
 		
 		return true;
 	}
-
-
 }
