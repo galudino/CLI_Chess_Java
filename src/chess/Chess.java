@@ -35,6 +35,8 @@ public class Chess {
 		black.assignPieceSet(board);
 		
 		white.playMove(board, new Position(1, 1), new Position(1, 2));
+	
+		
 
 		System.out.println(board);
 	}

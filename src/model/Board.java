@@ -70,11 +70,11 @@ public class Board {
 		assignBlackPieces();
 	}
 	
-	public PieceSet getWhiteSet() {
+	protected PieceSet getWhiteSet() {
 		return whiteSet;
 	}
 	
-	public PieceSet getBlackSet() {
+	protected PieceSet getBlackSet() {
 		return blackSet;
 	}
 	
