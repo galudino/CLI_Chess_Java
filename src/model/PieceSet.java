@@ -71,7 +71,7 @@ public class PieceSet {
 	 * @param pos
 	 * @return
 	 */
-	protected Piece getPiece(Position pos) {
+	public Piece getPiece(Position pos) {
 		for (int i = 0; i < piece.length; i++) {
 			if (piece[i].pos.equals(pos)) {
 				return piece[i];
