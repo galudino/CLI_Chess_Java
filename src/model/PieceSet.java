@@ -62,7 +62,7 @@ public class PieceSet {
 	 * 
 	 * @return
 	 */
-	protected Color getPieceSetColor() {
+	public Color getPieceSetColor() {
 		return color;
 	}
 	
