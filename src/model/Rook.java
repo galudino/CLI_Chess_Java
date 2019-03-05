@@ -10,11 +10,6 @@
  */
 package model;
 
-import java.util.*;
-
-import model.Board.Cell;
-import model.Piece.Color;
-
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino

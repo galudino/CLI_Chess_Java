@@ -10,8 +10,6 @@
  */
 package model;
 
-import java.util.*;
-
 import model.Piece.Color;
 
 /**
@@ -33,7 +31,7 @@ public class PieceSet {
 		
 	/**
 	 * 
-	 * @param color
+	 * @param color the Color of a Player's PieceSet
 	 */
 	protected PieceSet(Color color) {
 		this.color = color;
@@ -60,7 +58,7 @@ public class PieceSet {
 	
 	/**
 	 * 
-	 * @return
+	 * @return the Color of a Player's PieceSet
 	 */
 	public Color getPieceSetColor() {
 		return color;

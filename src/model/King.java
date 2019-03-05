@@ -10,11 +10,6 @@
  */
 package model;
 
-import java.util.*;
-
-import model.Board.Cell;
-import model.Piece.Color;
-
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
@@ -65,5 +60,4 @@ public class King extends Piece {
 	public String toString() {
 		return super.toString() + "K";
 	}
-
 }

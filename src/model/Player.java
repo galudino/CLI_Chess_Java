@@ -24,7 +24,7 @@ public class Player {
 	
 	/**
 	 * 
-	 * @param color
+	 * @param color the Color associated with a Player's PieceSet
 	 */
 	public Player(Color color) {
 		this.color = color;
@@ -33,7 +33,7 @@ public class Player {
 	
 	/**
 	 * 
-	 * @param board
+	 * @param board the current Board instance used during a match
 	 * @return
 	 */
 	public boolean assignPieceSet(Board board) {
@@ -54,10 +54,10 @@ public class Player {
 
 	/**
 	 * 
-	 * @param board
-	 * @param piecePosition
-	 * @param newPosition
-	 * @return
+	 * @param board the current Board instance used during a match
+	 * @param piecePosition the Position of a chosen Piece
+	 * @param newPosition the Position desired by the Player for a chosen Piece
+	 * @return true if successful, false otherwise
 	 */
 	public boolean playMove(Board board, Position piecePosition, 
 			Position newPosition) {
@@ -66,8 +66,6 @@ public class Player {
 		}
 		
 		Piece toMove = board.getCell(piecePosition).getPiece();
-		
-
 		
 		if (toMove == null) {
 			return false;

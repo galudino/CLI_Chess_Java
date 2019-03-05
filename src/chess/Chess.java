@@ -10,8 +10,6 @@
  */
 package chess;
 
-import java.util.*;
-
 import model.*;
 import model.Piece.Color;
 
@@ -36,8 +34,6 @@ public class Chess {
 		
 		white.playMove(board, new Position(1, 1), new Position(1, 2));
 	
-		
-
 		System.out.println(board);
 	}
 	

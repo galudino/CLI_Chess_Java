@@ -10,10 +10,6 @@
  */
 package model;
 
-import java.util.*;
-
-import model.Board.Cell;
-
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
@@ -28,34 +24,34 @@ public abstract class Piece {
 	public enum Color {
 		WHITE, BLACK
 	}
-	
+
 	protected Color color;
 	protected Position pos;
 	protected String identifier;
-		
+
 	/**
 	 * Parameterized constructor
 	 * 
 	 * @param color Designated color for a piece (WHITE or BLACK)
-	 * @param pos	Designated position for a piece (integers)
+	 * @param pos   Designated position for a piece (integers)
 	 */
 	protected Piece(Color color, Position pos) {
 		this(color);
 		this.pos = pos;
 	}
-	
+
 	/**
 	 * Parameterized constructor
 	 * 
-	 * @param color	Designated color for a piece (WHITE or BLACK)
+	 * @param color Designated color for a piece (WHITE or BLACK)
 	 */
 	protected Piece(Color color) {
 		this.color = color;
 		pos = null;
-		
+
 		identifier = color.equals(Color.WHITE) ? "White " : "Black ";
 	}
-	
+
 	/**
 	 * 
 	 * @return A Piece's Position
@@ -63,16 +59,16 @@ public abstract class Piece {
 	public Position getPosition() {
 		return pos;
 	}
-	
+
 	public String getIdentifier() {
 		return identifier;
 	}
-	
+
 	@Override
 	public String toString() {
 		return color == Color.WHITE ? "w" : "b";
 	}
-	
+
 	/**
 	 * 
 	 * @return A Piece's Color
@@ -80,11 +76,12 @@ public abstract class Piece {
 	protected Color getColor() {
 		return color;
 	}
-			
+
 	/**
+	 * Subclasses will define functionality for move()
 	 * 
-	 * @param pos
-	 * @return
+	 * @param pos Represents the new Position for a piece after a move
+	 * @return true if successful, false otherwise
 	 */
 	protected abstract boolean move(Position pos);
 }

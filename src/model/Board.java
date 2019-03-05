@@ -10,8 +10,6 @@
  */
 package model;
 
-import java.util.*;
-
 import model.Piece.Color;
 import model.PieceSet.PieceType;
 
@@ -70,36 +68,36 @@ public class Board {
 		assignBlackPieces();
 	}
 	
+	/**
+	 * 
+	 * @return the PieceSet for a white-piece player
+	 */
 	protected PieceSet getWhiteSet() {
 		return whiteSet;
 	}
 	
+	/**
+	 * 
+	 * @return the PieceSet for a black-piece player
+	 */
 	protected PieceSet getBlackSet() {
 		return blackSet;
 	}
 	
+	/**
+	 * 
+	 * @param pos the Position of the desired Cell
+	 * @return the Cell with the given file and rank of a Position
+	 */
 	protected Cell getCell(Position pos) {
 		return cell[pos.getFile()][pos.getRank()];
 	}
 	
-	/*
-	public boolean setPieceNullByPosition(Position pos) {
-		Cell cell = getCell(pos);
-		
-		if (cell != null && cell.piece != null) {
-			cell.piece = null;
-			return true;
-		}
-		
-		return false;
-	}
-	*/
-	
 	/**
 	 * 
-	 * @param piece
-	 * @param newPosition
-	 * @return
+	 * @param piece accessed by a Player for a move
+	 * @param newPosition the new Position desired by the Player for a Piece
+	 * @return true if successful, false otherwise
 	 */
 	public boolean movePiece(Piece piece, Position newPosition) {
 		Cell oldPositionCell = getCell(piece.getPosition());
