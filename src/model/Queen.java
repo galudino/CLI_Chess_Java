@@ -13,6 +13,7 @@ package model;
 import java.util.*;
 
 import model.Board.Cell;
+import model.Piece.Color;
 
 /**
  * @version Mar 3, 2019
@@ -29,7 +30,19 @@ public class Queen extends Piece {
 	 */
 	public Queen(Color color, Position pos) {
 		super(color, pos);
-		// TODO Auto-generated constructor stub
+		
+		identifier += "Queen";
+	}
+	
+	/**
+	 * Parameterized constructor
+	 * 
+	 * @param color	Designated color for a piece (WHITE or BLACK)
+	 */
+	public Queen(Color color) {
+		super(color);
+		
+		identifier += "Queen";
 	}
 
 	/* (non-Javadoc)

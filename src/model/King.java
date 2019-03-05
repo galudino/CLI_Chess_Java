@@ -13,6 +13,7 @@ package model;
 import java.util.*;
 
 import model.Board.Cell;
+import model.Piece.Color;
 
 /**
  * @version Mar 3, 2019
@@ -29,7 +30,19 @@ public class King extends Piece {
 	 */
 	public King(Color color, Position pos) {
 		super(color, pos);
-		// TODO Auto-generated constructor stub
+		
+		identifier += "King";
+	}
+	
+	/**
+	 * Parameterized constructor
+	 * 
+	 * @param color	Designated color for a piece (WHITE or BLACK)
+	 */
+	public King(Color color) {
+		super(color);
+		
+		identifier += "King";
 	}
 
 	/* (non-Javadoc)

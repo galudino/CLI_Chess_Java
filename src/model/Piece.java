@@ -31,6 +31,7 @@ public abstract class Piece {
 	
 	protected Color color;
 	protected Position pos;
+	protected String identifier;
 		
 	/**
 	 * Parameterized constructor
@@ -39,8 +40,20 @@ public abstract class Piece {
 	 * @param pos	Designated position for a piece (integers)
 	 */
 	public Piece(Color color, Position pos) {
-		this.color = color;
+		this(color);
 		this.pos = pos;
+	}
+	
+	/**
+	 * Parameterized constructor
+	 * 
+	 * @param color	Designated color for a piece (WHITE or BLACK)
+	 */
+	public Piece(Color color) {
+		this.color = color;
+		pos = null;
+		
+		identifier = color.equals(Color.WHITE) ? "White " : "Black ";
 	}
 	
 	/**
@@ -57,6 +70,10 @@ public abstract class Piece {
 	 */
 	public Position getPosition() {
 		return pos;
+	}
+	
+	public String getIdentifier() {
+		return identifier;
 	}
 	
 	@Override

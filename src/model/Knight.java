@@ -30,7 +30,19 @@ public class Knight extends Piece {
 	 */
 	public Knight(Color color, Position pos) {
 		super(color, pos);
-		// TODO Auto-generated constructor stub
+		
+		identifier += "Knight";
+	}
+	
+	/**
+	 * Parameterized constructor
+	 * 
+	 * @param color	Designated color for a piece (WHITE or BLACK)
+	 */
+	public Knight(Color color) {
+		super(color);
+		
+		identifier += "Knight";
 	}
 
 	/* (non-Javadoc)

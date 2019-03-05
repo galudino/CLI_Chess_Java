@@ -13,6 +13,7 @@ package model;
 import java.util.*;
 
 import model.Board.Cell;
+import model.Piece.Color;
 
 /**
  * @version Mar 3, 2019
@@ -29,7 +30,19 @@ public class Pawn extends Piece {
 	 */
 	public Pawn(Color color, Position pos) {
 		super(color, pos);
-		// TODO Auto-generated constructor stub
+		
+		identifier += "Pawn";
+	}
+	
+	/**
+	 * Parameterized constructor
+	 * 
+	 * @param color	Designated color for a piece (WHITE or BLACK)
+	 */
+	public Pawn(Color color) {
+		super(color);
+		
+		identifier += "Pawn";
 	}
 
 	/* (non-Javadoc)

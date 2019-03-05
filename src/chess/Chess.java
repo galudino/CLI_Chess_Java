@@ -29,8 +29,7 @@ public class Chess {
 
 		Board board = new Board();
 		
-		board.makeMove(0, 1, 0, 2);
-	
+		board.makeMove(4, 0, 4, 1);
 		
 		System.out.println(board);
 	}
