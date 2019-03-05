@@ -13,6 +13,7 @@ package model;
 import java.util.*;
 
 import model.Piece.Color;
+import model.PieceSet.PieceType;
 
 public class Board {
 	
@@ -89,7 +90,11 @@ public class Board {
 	private static final int MAX_LENGTH_WIDTH = 8;
 	private Cell[][] cell;
 	
+	private PieceSet whiteSet;
+	private PieceSet blackSet;
+	
 	public Board() {
+	
 		cell = new Cell[MAX_LENGTH_WIDTH][MAX_LENGTH_WIDTH];
 		
 		for (int file = 0; file < MAX_LENGTH_WIDTH; file++) {
@@ -97,42 +102,115 @@ public class Board {
 				cell[file][rank] = new Cell(file, rank);
 			}
 		}
-	
-		cell[4][0].piece = new King(Color.WHITE, PieceStart.POSITION_WK);
-		cell[3][0].piece = new Queen(Color.WHITE, PieceStart.POSITION_WQ);
-		cell[5][0].piece = new Bishop(Color.WHITE, PieceStart.POSITION_WB_R);
-		cell[2][0].piece = new Bishop(Color.WHITE, PieceStart.POSITION_WB_L);
-		cell[6][0].piece = new Knight(Color.WHITE, PieceStart.POSITION_WN_R);
-		cell[1][0].piece = new Knight(Color.WHITE, PieceStart.POSITION_WN_L);
-		cell[7][0].piece = new Rook(Color.WHITE, PieceStart.POSITION_WR_R);
-		cell[0][0].piece = new Rook(Color.WHITE, PieceStart.POSITION_WR_L);
-	
-		cell[0][1].piece = new Pawn(Color.WHITE, PieceStart.POSITION_WP_0);
-		cell[1][1].piece = new Pawn(Color.WHITE, PieceStart.POSITION_WP_1);
-		cell[2][1].piece = new Pawn(Color.WHITE, PieceStart.POSITION_WP_2);
-		cell[3][1].piece = new Pawn(Color.WHITE, PieceStart.POSITION_WP_3);
-		cell[4][1].piece = new Pawn(Color.WHITE, PieceStart.POSITION_WP_4);
-		cell[5][1].piece = new Pawn(Color.WHITE, PieceStart.POSITION_WP_5);
-		cell[6][1].piece = new Pawn(Color.WHITE, PieceStart.POSITION_WP_6);
-		cell[7][1].piece = new Pawn(Color.WHITE, PieceStart.POSITION_WP_7);
 		
-		cell[4][7].piece = new King(Color.BLACK, PieceStart.POSITION_BK);
-		cell[3][7].piece = new Queen(Color.BLACK, PieceStart.POSITION_BQ);
-		cell[5][7].piece = new Bishop(Color.BLACK, PieceStart.POSITION_BB_R);
-		cell[2][7].piece = new Bishop(Color.BLACK, PieceStart.POSITION_BB_L);
-		cell[6][7].piece = new Knight(Color.BLACK, PieceStart.POSITION_BN_R);
-		cell[1][7].piece = new Knight(Color.BLACK, PieceStart.POSITION_BN_L);
-		cell[7][7].piece = new Rook(Color.BLACK, PieceStart.POSITION_BR_R);
-		cell[0][7].piece = new Rook(Color.BLACK, PieceStart.POSITION_BR_L);
+		whiteSet = new PieceSet(Color.WHITE);
+		blackSet = new PieceSet(Color.BLACK);
 		
-		cell[0][6].piece = new Pawn(Color.BLACK, PieceStart.POSITION_BP_0);
-		cell[1][6].piece = new Pawn(Color.BLACK, PieceStart.POSITION_BP_1);
-		cell[2][6].piece = new Pawn(Color.BLACK, PieceStart.POSITION_BP_2);
-		cell[3][6].piece = new Pawn(Color.BLACK, PieceStart.POSITION_BP_3);
-		cell[4][6].piece = new Pawn(Color.BLACK, PieceStart.POSITION_BP_4);
-		cell[5][6].piece = new Pawn(Color.BLACK, PieceStart.POSITION_BP_5);
-		cell[6][6].piece = new Pawn(Color.BLACK, PieceStart.POSITION_BP_6);
-		cell[7][6].piece = new Pawn(Color.BLACK, PieceStart.POSITION_BP_7);
+		assignWhitePieces();
+		assignBlackPieces();
+	}
+	
+	/**
+	 * 
+	 */
+	public void assignWhitePieces() {
+		cell[4][0].piece = whiteSet.piece[PieceType.KING.ordinal()];
+		cell[4][0].piece.pos = cell[4][0].loc;
+		
+		cell[3][0].piece = whiteSet.piece[PieceType.QUEEN.ordinal()];
+		cell[3][0].piece.pos = cell[3][0].loc;
+		
+		cell[5][0].piece = whiteSet.piece[PieceType.BISHOP_R.ordinal()];
+		cell[5][0].piece.pos = cell[5][0].loc;
+		
+		cell[2][0].piece = whiteSet.piece[PieceType.BISHOP_L.ordinal()];
+		cell[2][0].piece.pos = cell[2][0].loc;
+
+		cell[6][0].piece = whiteSet.piece[PieceType.KNIGHT_R.ordinal()];
+		cell[6][0].piece.pos = cell[6][0].loc;
+		
+		cell[1][0].piece = whiteSet.piece[PieceType.KNIGHT_L.ordinal()];
+		cell[1][0].piece.pos = cell[1][0].loc;
+		
+		cell[7][0].piece = whiteSet.piece[PieceType.ROOK_R.ordinal()];
+		cell[7][0].piece.pos = cell[7][0].loc;
+		
+		cell[0][0].piece = whiteSet.piece[PieceType.ROOK_L.ordinal()];
+		cell[0][0].piece.pos = cell[0][0].loc;
+		
+		cell[0][1].piece = whiteSet.piece[PieceType.PAWN_0.ordinal()];
+		cell[0][1].piece.pos = cell[0][1].loc;
+		
+		cell[1][1].piece = whiteSet.piece[PieceType.PAWN_1.ordinal()];
+		cell[1][1].piece.pos = cell[1][1].loc;
+		
+		cell[2][1].piece = whiteSet.piece[PieceType.PAWN_2.ordinal()];
+		cell[2][1].piece.pos = cell[2][1].loc;
+		
+		cell[3][1].piece = whiteSet.piece[PieceType.PAWN_3.ordinal()];
+		cell[3][1].piece.pos = cell[3][1].loc;
+		
+		cell[4][1].piece = whiteSet.piece[PieceType.PAWN_4.ordinal()];
+		cell[4][1].piece.pos = cell[4][1].loc;
+		
+		cell[5][1].piece = whiteSet.piece[PieceType.PAWN_5.ordinal()];
+		cell[5][1].piece.pos = cell[5][1].loc;
+		
+		cell[6][1].piece = whiteSet.piece[PieceType.PAWN_6.ordinal()];
+		cell[6][1].piece.pos = cell[6][1].loc;
+		
+		cell[7][1].piece = whiteSet.piece[PieceType.PAWN_7.ordinal()];
+		cell[7][1].piece.pos = cell[7][1].loc;
+	}
+	
+	public void assignBlackPieces() {
+		cell[4][7].piece = blackSet.piece[PieceType.KING.ordinal()];
+		cell[4][7].piece.pos = cell[4][7].loc;
+		
+		cell[3][7].piece = blackSet.piece[PieceType.QUEEN.ordinal()];
+		cell[3][7].piece.pos = cell[3][7].loc;
+		
+		cell[5][7].piece = blackSet.piece[PieceType.BISHOP_R.ordinal()];
+		cell[5][7].piece.pos = cell[5][7].loc;
+		
+		cell[2][7].piece = blackSet.piece[PieceType.BISHOP_L.ordinal()];
+		cell[2][7].piece.pos = cell[2][7].loc;
+
+		cell[6][7].piece = blackSet.piece[PieceType.KNIGHT_R.ordinal()];
+		cell[6][7].piece.pos = cell[6][7].loc;
+		
+		cell[1][7].piece = blackSet.piece[PieceType.KNIGHT_L.ordinal()];
+		cell[1][7].piece.pos = cell[1][7].loc;
+		
+		cell[7][7].piece = blackSet.piece[PieceType.ROOK_R.ordinal()];
+		cell[7][7].piece.pos = cell[7][7].loc;
+		
+		cell[0][7].piece = blackSet.piece[PieceType.ROOK_L.ordinal()];
+		cell[0][7].piece.pos = cell[0][7].loc;
+		
+		cell[0][6].piece = blackSet.piece[PieceType.PAWN_0.ordinal()];
+		cell[0][6].piece.pos = cell[0][6].loc;
+		
+		cell[1][6].piece = blackSet.piece[PieceType.PAWN_1.ordinal()];
+		cell[1][6].piece.pos = cell[1][6].loc;
+		
+		cell[2][6].piece = blackSet.piece[PieceType.PAWN_2.ordinal()];
+		cell[2][6].piece.pos = cell[2][6].loc;
+		
+		cell[3][6].piece = blackSet.piece[PieceType.PAWN_3.ordinal()];
+		cell[3][6].piece.pos = cell[3][6].loc;
+		
+		cell[4][6].piece = blackSet.piece[PieceType.PAWN_4.ordinal()];
+		cell[4][6].piece.pos = cell[4][6].loc;
+		
+		cell[5][6].piece = blackSet.piece[PieceType.PAWN_5.ordinal()];
+		cell[5][6].piece.pos = cell[5][6].loc;
+		
+		cell[6][6].piece = blackSet.piece[PieceType.PAWN_6.ordinal()];
+		cell[6][6].piece.pos = cell[6][6].loc;
+		
+		cell[7][6].piece = blackSet.piece[PieceType.PAWN_7.ordinal()];
+		cell[7][6].piece.pos = cell[7][6].loc;
 	}
 
 	/**
@@ -143,7 +221,10 @@ public class Board {
 	 * @param newRank
 	 * @return
 	 */
+	/*
 	public boolean makeMove(int file, int rank, int newFile, int newRank) {
+		Position playerMove = new Position(newFile, newRank);
+		
 		if (file == newFile && rank == newRank) {
 			return false;
 		}
@@ -179,6 +260,14 @@ public class Board {
 		}
 		
 		return true;
+	}
+	*/
+	
+	public boolean makeMove(int file, int rank, int newFile, int newRank) {
+		
+		
+		return false;
+		
 	}
 	
 	@Override
