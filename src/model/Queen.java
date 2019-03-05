@@ -49,7 +49,7 @@ public class Queen extends Piece {
 	 * @see model.Piece#move(Position)
 	 */
 	@Override
-	public boolean move(Position pos) {
+	protected boolean move(Position pos) {
 		boolean result = false;
 		
 		// evaluate file and rank based on pos field

@@ -82,5 +82,5 @@ public abstract class Piece {
 	}
 		
 
-	public abstract boolean move(Position pos);
+	protected abstract boolean move(Position pos);
 }
