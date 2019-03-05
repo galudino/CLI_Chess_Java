@@ -46,17 +46,17 @@ public class Knight extends Piece {
 	}
 
 	/* (non-Javadoc)
-	 * @see model.Piece#move(int, int)
+	 * @see model.Piece#move(Position)
 	 */
 	@Override
-	public boolean move(int file, int rank) {
+	public boolean move(Position pos) {
 		boolean result = false;
 		
 		// evaluate file and rank based on pos field
 		// set to true if file and rank agree with pos.
 		result = true;
 		
-		pos.setFileRank(file, rank);
+		this.pos = pos;
 		
 		return result;
 	}

@@ -81,13 +81,6 @@ public abstract class Piece {
 		return color == Color.WHITE ? "w" : "b";
 	}
 		
-	/**
-	 * Functionality is determined by subclasses.
-	 * (Each child of Piece moves in its own way)
-	 * 
-	 * @param file	Integer representation for a file (0 is a, 1 is b, ...)
-	 * @param rank	Integer representation for a rank (0 is 1, 1 is 2, ...)
-	 * @return	true if move was successful, false otherwise
-	 */
-	public abstract boolean move(int file, int rank);
+
+	public abstract boolean move(Position pos);
 }
