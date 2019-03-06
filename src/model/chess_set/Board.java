@@ -128,6 +128,7 @@ public class Board {
 			// Since the Piece moved from the old location to the new location,
 			// the Cell will no longer have a reference to that Piece.
 			oldPositionCell.piece = null;
+			newPositionCell.piece = piece;
 		}
 		
 		return false;
