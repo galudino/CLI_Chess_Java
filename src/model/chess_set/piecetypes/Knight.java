@@ -8,7 +8,11 @@
  * 01:198:213 Software Methodology, Spring 2019
  * Professor Seshadri Venugopal
  */
-package model;
+package model.chess_set.piecetypes;
+
+import model.PieceType;
+import model.chess_set.Piece;
+import model.game.Position;
 
 /**
  * @version Mar 3, 2019
@@ -17,25 +21,16 @@ package model;
  */
 public class Knight extends Piece {
 
-	/**
-	 * Parameterized constructor
-	 * 
-	 * @param color Designated color for a piece (WHITE or BLACK)
-	 * @param pos	Designated position for a piece (integers)
-	 */
-	protected Knight(Color color, Position pos) {
-		super(color, pos);
-		
-		identifier += "Knight";
-	}
-	
-	/**
-	 * Parameterized constructor
-	 * 
-	 * @param color	Designated color for a piece (WHITE or BLACK)
-	 */
-	protected Knight(Color color) {
+	public Knight(PieceType pieceType, PieceType.Color color) {
 		super(color);
+		
+		if (pieceType.equals(PieceType.KNIGHT_R) 
+				|| pieceType.equals(PieceType.KNIGHT_L)) {
+			this.pieceType = pieceType;
+		} else {
+			System.err.println("ERROR: Set this piece to either "
+					+ "PieceType.KNIGHT_R or PieceType.KNIGHT_L!");
+		}
 		
 		identifier += "Knight";
 	}
@@ -44,7 +39,7 @@ public class Knight extends Piece {
 	 * @see model.Piece#move(Position)
 	 */
 	@Override
-	protected boolean move(Position pos) {
+	public boolean move(Position pos) {
 		boolean result = false;
 		
 		// evaluate file and rank based on pos field

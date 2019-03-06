@@ -8,7 +8,11 @@
  * 01:198:213 Software Methodology, Spring 2019
  * Professor Seshadri Venugopal
  */
-package model;
+package model.chess_set.piecetypes;
+
+import model.PieceType;
+import model.chess_set.Piece;
+import model.game.Position;
 
 /**
  * @version Mar 3, 2019
@@ -16,27 +20,24 @@ package model;
  *
  */
 public class Pawn extends Piece {
-
-	/**
-	 * Parameterized constructor
-	 * 
-	 * @param color Designated color for a piece (WHITE or BLACK)
-	 * @param pos	Designated position for a piece (integers)
-	 */
-	protected Pawn(Color color, Position pos) {
-		super(color, pos);
-		
-		identifier += "Pawn";
-	}
 	
-	/**
-	 * Parameterized constructor
-	 * 
-	 * @param color	Designated color for a piece (WHITE or BLACK)
-	 */
-	protected Pawn(Color color) {
+	public Pawn(PieceType pieceType, PieceType.Color color) {
 		super(color);
 		
+		if (pieceType.equals(PieceType.PAWN_0) ||
+				pieceType.equals(PieceType.PAWN_1) ||
+				pieceType.equals(PieceType.PAWN_2) ||
+				pieceType.equals(PieceType.PAWN_3) ||
+				pieceType.equals(PieceType.PAWN_4) ||
+				pieceType.equals(PieceType.PAWN_5) ||
+				pieceType.equals(PieceType.PAWN_6) ||
+				pieceType.equals(PieceType.PAWN_7)) {
+			this.pieceType = pieceType;
+		} else {
+			System.err.println("ERROR: Set this piece to either "
+					+ "PieceType.PAWN_n, n being [0 - 7]!");
+		}
+			
 		identifier += "Pawn";
 	}
 
@@ -44,7 +45,7 @@ public class Pawn extends Piece {
 	 * @see model.Piece#move(Position)
 	 */
 	@Override
-	protected boolean move(Position pos) {
+	public boolean move(Position pos) {
 		boolean result = false;
 		
 		// evaluate file and rank based on pos field

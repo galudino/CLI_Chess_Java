@@ -8,7 +8,7 @@
  * 01:198:213 Software Methodology, Spring 2019
  * Professor Seshadri Venugopal
  */
-package model;
+package model.game;
 
 /**
  * @version Mar 3, 2019
@@ -17,8 +17,13 @@ package model;
  */
 public class Position implements Comparable<Position> {
 
-	private int file = -1;
-	private int rank = -1;
+	private int file;
+	private int rank;
+	
+	Position() {
+		file = -1;
+		rank = -1;
+	}
 	
 	/**
 	 * Parameterized constructor
@@ -33,6 +38,23 @@ public class Position implements Comparable<Position> {
 		
 		this.file = file;
 		this.rank = rank;
+	}
+	
+	/**
+	 * 
+	 * @param file The file to set
+	 * @param rank The rank to set
+	 * @return true if successfully set, false otherwise
+	 */
+	boolean setFileRank(int file, int rank) {
+		if ((file < 0 || rank < 0) || (file > 7 || rank > 7)) {
+			return false;
+		}
+		
+		this.file = file;
+		this.rank = rank;
+		
+		return true;
 	}
 		
 	/**
@@ -50,14 +72,19 @@ public class Position implements Comparable<Position> {
 	public int getRank() {
 		return rank;
 	}
-		
+			
 	@Override
 	public boolean equals(Object o) {
 		boolean result = false;
 		
 		if (o != null && o instanceof Position) {
 			Position other = (Position)(o);
-			result = compareTo(other) == 0;
+			
+			if (file == other.file && rank == other.rank) {
+				result = true;
+			} else {
+				result = false;
+			}
 		}
 		
 		return result;
@@ -98,7 +125,6 @@ public class Position implements Comparable<Position> {
 		}
 		
 		final String rankPrint = rank > -1 ? Integer.toString(rank + 1) : "-";
-		
 		return String.format("%c%s", file, rankPrint);
 	}
 

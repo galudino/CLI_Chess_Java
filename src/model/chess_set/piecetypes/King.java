@@ -1,5 +1,5 @@
 /**
- * Queen.java
+ * King.java
  *
  * Copyright (c) 2019 Gemuele Aludino, Patrick Nogaj. 
  * All rights reserved.
@@ -8,36 +8,24 @@
  * 01:198:213 Software Methodology, Spring 2019
  * Professor Seshadri Venugopal
  */
-package model;
+package model.chess_set.piecetypes;
+
+import model.PieceType;
+import model.chess_set.Piece;
+import model.game.Position;
 
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
  *
  */
-public class Queen extends Piece {
-
-	/**
-	 * Parameterized constructor
-	 * 
-	 * @param color Designated color for a piece (WHITE or BLACK)
-	 * @param pos	Designated position for a piece (integers)
-	 */
-	protected Queen(Color color, Position pos) {
-		super(color, pos);
-		
-		identifier += "Queen";
-	}
+public class King extends Piece {
 	
-	/**
-	 * Parameterized constructor
-	 * 
-	 * @param color	Designated color for a piece (WHITE or BLACK)
-	 */
-	protected Queen(Color color) {
+	public King(PieceType.Color color) {
 		super(color);
+		pieceType = PieceType.KING;
 		
-		identifier += "Queen";
+		identifier += "King";
 	}
 
 	/* (non-Javadoc)
@@ -58,7 +46,6 @@ public class Queen extends Piece {
 	
 	@Override
 	public String toString() {
-		return super.toString() + "Q";
+		return super.toString() + "K";
 	}
-
 }

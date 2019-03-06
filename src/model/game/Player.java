@@ -8,25 +8,28 @@
  * 01:198:213 Software Methodology, Spring 2019
  * Professor Seshadri Venugopal
  */
-package model;
+package model.game;
 
-import model.Piece.Color;
+import model.PieceType;
+import model.chess_set.Board;
+import model.chess_set.Piece;
+import model.chess_set.PieceSet;
 
 /**
  * @version Mar 5, 2019
  * @author gemuelealudino
  *
  */
-public class Player {
+class Player {
 	
-	private Color color;
+	private PieceType.Color color;
 	private PieceSet pieceSet;
 	
 	/**
 	 * 
 	 * @param color the Color associated with a Player's PieceSet
 	 */
-	public Player(Color color) {
+	Player(PieceType.Color color) {
 		this.color = color;
 		pieceSet = null;
 	}
@@ -36,11 +39,11 @@ public class Player {
 	 * @param board the current Board instance used during a match
 	 * @return
 	 */
-	public boolean assignPieceSet(Board board) {
+	boolean assignPieceSet(Board board) {
 		if (pieceSet != null) {
 			return false;
 		}
-		
+				
 		if (color.equals(board.getWhiteSet().getPieceSetColor())) {
 			pieceSet = board.getWhiteSet();
 			return true;
@@ -59,20 +62,19 @@ public class Player {
 	 * @param newPosition the Position desired by the Player for a chosen Piece
 	 * @return true if successful, false otherwise
 	 */
-	public boolean playMove(Board board, Position piecePosition, 
+	boolean playMove(Board board, Position piecePosition, 
 			Position newPosition) {
 		if (piecePosition.equals(newPosition)) {
 			return false;
 		}
 		
-		Piece toMove = board.getCell(piecePosition).getPiece();
-		
+		Piece toMove = pieceSet.getPieceByPosition(piecePosition);
 		if (toMove == null) {
 			return false;
 		}
 		
 		board.movePiece(toMove, newPosition);
-		
+
 		return true;
 	}
 }

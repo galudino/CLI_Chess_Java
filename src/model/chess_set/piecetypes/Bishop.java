@@ -1,5 +1,5 @@
 /**
- * King.java
+ * Bishop.java
  *
  * Copyright (c) 2019 Gemuele Aludino, Patrick Nogaj. 
  * All rights reserved.
@@ -8,43 +8,39 @@
  * 01:198:213 Software Methodology, Spring 2019
  * Professor Seshadri Venugopal
  */
-package model;
+package model.chess_set.piecetypes;
+
+import model.PieceType;
+import model.chess_set.Piece;
+import model.game.Position;
 
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
  *
  */
-public class King extends Piece {
+public class Bishop extends Piece {
 
-	/**
-	 * Parameterized constructor
-	 * 
-	 * @param color Designated color for a piece (WHITE or BLACK)
-	 * @param pos	Designated position for a Piece (Integers)
-	 */
-	protected King(Color color, Position pos) {
-		super(color, pos);
-		
-		identifier += "King";
-	}
-	
-	/**
-	 * Parameterized constructor
-	 * 
-	 * @param color	Designated color for a piece (WHITE or BLACK)
-	 */
-	protected King(Color color) {
+	public Bishop(PieceType pieceType, PieceType.Color color) {
 		super(color);
 		
-		identifier += "King";
+		if (pieceType.equals(PieceType.BISHOP_R) 
+				|| pieceType.equals(PieceType.BISHOP_L)) {
+			this.pieceType = pieceType;
+		} else {
+			System.err.println("ERROR: Set this piece to either "
+					+ "PieceType.BISHOP_R or PieceType.BISHOP_L!");
+		}
+		
+		identifier += "Bishop";
 	}
+
 
 	/* (non-Javadoc)
 	 * @see model.Piece#move(Position)
 	 */
 	@Override
-	protected boolean move(Position pos) {
+	public boolean move(Position pos) {
 		boolean result = false;
 		
 		// evaluate file and rank based on pos field
@@ -58,6 +54,7 @@ public class King extends Piece {
 	
 	@Override
 	public String toString() {
-		return super.toString() + "K";
+		return super.toString() + "B";
 	}
+
 }

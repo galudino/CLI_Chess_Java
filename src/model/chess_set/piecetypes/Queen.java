@@ -1,5 +1,5 @@
 /**
- * Bishop.java
+ * Queen.java
  *
  * Copyright (c) 2019 Gemuele Aludino, Patrick Nogaj. 
  * All rights reserved.
@@ -8,43 +8,31 @@
  * 01:198:213 Software Methodology, Spring 2019
  * Professor Seshadri Venugopal
  */
-package model;
+package model.chess_set.piecetypes;
+
+import model.PieceType;
+import model.chess_set.Piece;
+import model.game.Position;
 
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
  *
  */
-public class Bishop extends Piece {
+public class Queen extends Piece {
 
-	/**
-	 * Parameterized constructor
-	 * 
-	 * @param color Designated color for a piece (WHITE or BLACK)
-	 * @param pos	Designated position for a piece (integers)
-	 */
-	protected Bishop(Color color, Position pos) {
-		super(color, pos);
-		
-		identifier += "Bishop";
-	}
-	
-	/**
-	 * Parameterized constructor
-	 * 
-	 * @param color	Designated color for a piece (WHITE or BLACK)
-	 */
-	protected Bishop(Color color) {
+	public Queen(PieceType.Color color) {
 		super(color);
+		pieceType = PieceType.QUEEN;
 		
-		identifier += "Bishop";
+		identifier += "Queen";
 	}
 
 	/* (non-Javadoc)
 	 * @see model.Piece#move(Position)
 	 */
 	@Override
-	protected boolean move(Position pos) {
+	public boolean move(Position pos) {
 		boolean result = false;
 		
 		// evaluate file and rank based on pos field
@@ -58,7 +46,7 @@ public class Bishop extends Piece {
 	
 	@Override
 	public String toString() {
-		return super.toString() + "B";
+		return super.toString() + "Q";
 	}
 
 }

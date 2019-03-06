@@ -8,7 +8,11 @@
  * 01:198:213 Software Methodology, Spring 2019
  * Professor Seshadri Venugopal
  */
-package model;
+package model.chess_set.piecetypes;
+
+import model.PieceType;
+import model.chess_set.Piece;
+import model.game.Position;
 
 /**
  * @version Mar 3, 2019
@@ -17,34 +21,27 @@ package model;
  */
 public class Rook extends Piece {
 
-	/**
-	 * Parameterized constructor
-	 * 
-	 * @param color Designated color for a piece (WHITE or BLACK)
-	 * @param pos	Designated position for a piece (integers)
-	 */
-	protected Rook(Color color, Position pos) {
-		super(color, pos);
-		
-		identifier += "Rook";
-	}
-	
-	/**
-	 * Parameterized constructor
-	 * 
-	 * @param color	Designated color for a piece (WHITE or BLACK)
-	 */
-	protected Rook(Color color) {
+	public Rook(PieceType pieceType, PieceType.Color color) {
 		super(color);
 		
+		if (pieceType.equals(PieceType.ROOK_R) 
+				|| pieceType.equals(PieceType.ROOK_L)) {
+			this.pieceType = pieceType;
+		} else {
+			System.err.println("ERROR: Set this piece to either "
+					+ "PieceType.ROOK_R or PieceType.ROOK_L!");
+		}
+
+		
 		identifier += "Rook";
 	}
+
 
 	/* (non-Javadoc)
 	 * @see model.Piece#move(Position)
 	 */
 	@Override
-	protected boolean move(Position pos) {
+	public boolean move(Position pos) {
 		boolean result = false;
 		
 		// evaluate file and rank based on pos field

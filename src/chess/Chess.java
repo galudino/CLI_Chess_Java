@@ -10,8 +10,7 @@
  */
 package chess;
 
-import model.*;
-import model.Piece.Color;
+import model.game.Game;
 
 /**
  * @version Mar 3, 2019
@@ -23,18 +22,19 @@ public class Chess {
 	/**
 	 * @param args Command line arguments
 	 */
-	public static void main(String[] args) {
-		Board board = new Board();
-
-		Player white = new Player(Color.WHITE);
-		Player black = new Player(Color.BLACK);
+	public static void main(String[] args) {		
+		// Instantiate a "game"
+		Game game = new Game();
 		
-		white.assignPieceSet(board);
-		black.assignPieceSet(board);
+		// Game --> Player --> Board --> Piece.
+		// Board and Piece (subclasses) are what is in charge
+		// of either allowing or preventing a move to occur.
+		// A 'player' can request a move, 
+		// but the Board/Pieces have the final word.
 		
-		white.playMove(board, new Position(1, 1), new Position(1, 2));
-	
-		System.out.println(board);
+		game.whitePlayMove(3, 1, 3, 2);
+		
+		System.out.println(game.boardToString());
 	}
 	
 }

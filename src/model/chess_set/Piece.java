@@ -8,7 +8,10 @@
  * 01:198:213 Software Methodology, Spring 2019
  * Professor Seshadri Venugopal
  */
-package model;
+package model.chess_set;
+
+import model.PieceType;
+import model.game.Position;
 
 /**
  * @version Mar 3, 2019
@@ -16,65 +19,55 @@ package model;
  *
  */
 public abstract class Piece {
-	/**
-	 * @version Mar 3, 2019
-	 * @author gemuelealudino
-	 * 
-	 */
-	public enum Color {
-		WHITE, BLACK
-	}
-
-	protected Color color;
-	protected Position pos;
+	
+	private PieceType.Color color;
+	protected PieceType pieceType;
 	protected String identifier;
-
-	/**
-	 * Parameterized constructor
-	 * 
-	 * @param color Designated color for a piece (WHITE or BLACK)
-	 * @param pos   Designated position for a piece (integers)
-	 */
-	protected Piece(Color color, Position pos) {
-		this(color);
-		this.pos = pos;
-	}
+	protected Position pos;
 
 	/**
 	 * Parameterized constructor
 	 * 
 	 * @param color Designated color for a piece (WHITE or BLACK)
 	 */
-	protected Piece(Color color) {
+	protected Piece(PieceType.Color color) {
 		this.color = color;
 		pos = null;
 
-		identifier = color.equals(Color.WHITE) ? "White " : "Black ";
+		identifier = color.equals(PieceType.Color.WHITE) ? "White " : "Black ";
 	}
 
 	/**
 	 * 
 	 * @return A Piece's Position
 	 */
-	public Position getPosition() {
+	protected Position getPosition() {
 		return pos;
 	}
 
-	public String getIdentifier() {
+	/**
+	 * 
+	 * @return A Piece's identifier (its color and type)
+	 */
+	protected String getIdentifier() {
 		return identifier;
 	}
 
 	@Override
 	public String toString() {
-		return color == Color.WHITE ? "w" : "b";
+		return color == PieceType.Color.WHITE ? "w" : "b";
 	}
 
 	/**
 	 * 
 	 * @return A Piece's Color
 	 */
-	protected Color getColor() {
+	protected PieceType.Color getColor() {
 		return color;
+	}
+	
+	protected PieceType getPieceType() {
+		return pieceType;
 	}
 
 	/**
