@@ -30,17 +30,21 @@ public class King extends Piece {
 
 	/* (non-Javadoc)
 	 * @see model.Piece#move(Position)
+	 * 
+	 * King's move will check if the current position - position it's going to is absolute 1, if it is allowed the move since the king is allowed to move in any direction by 1 space.
 	 */
 	@Override
 	protected boolean move(Position pos) {
 		boolean result = false;
 		
-		// evaluate file and rank based on pos field
-		// set to true if file and rank agree with pos.
-		result = true;
-		
-		this.pos = pos;
-		
+		if(Math.abs(this.pos.getFile() - pos.getFile()) <= 1 && (Math.abs(this.pos.getRank() - pos.getRank()) <= 1)) {
+			result = true;
+			this.pos = pos;
+		} else {
+			result = false;
+			System.out.println("Illegal move");
+		}
+			
 		return result;
 	}
 	
