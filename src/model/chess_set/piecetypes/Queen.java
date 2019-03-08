@@ -12,6 +12,7 @@ package model.chess_set.piecetypes;
 
 import model.PieceType;
 import model.chess_set.Piece;
+import model.chess_set.Board.Cell;
 import model.game.Position;
 
 /**
@@ -42,6 +43,15 @@ public class Queen extends Piece {
 		this.pos = pos;
 		
 		return result;
+	}
+	
+	
+	/* (non-Javadoc)
+	 * @see model.chess_set.Piece#move(model.chess_set.Board.Cell[][], model.game.Position)
+	 */
+	protected boolean move(Cell[][] cell, Position pos) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	@Override

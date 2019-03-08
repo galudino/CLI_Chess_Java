@@ -11,6 +11,7 @@
 package model.chess_set;
 
 import model.PieceType;
+import model.chess_set.Board.Cell;
 import model.game.Position;
 
 /**
@@ -77,4 +78,13 @@ public abstract class Piece {
 	 * @return true if successful, false otherwise
 	 */
 	protected abstract boolean move(Position pos);
+	
+	/**
+	 * Subclasses will define functionality for move()
+	 * 
+	 * @param cell current state of the Board
+	 * @param pos Represents the new Position for a piece after a move
+	 * @return true if successful, false otherwise
+	 */
+	protected abstract boolean move(Cell[][] cell, Position pos);
 }
