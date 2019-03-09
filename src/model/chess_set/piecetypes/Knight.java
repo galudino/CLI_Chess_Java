@@ -45,9 +45,13 @@ public class Knight extends Piece {
 		
 		// evaluate file and rank based on pos field
 		// set to true if file and rank agree with pos.
-		result = true;
-		
-		this.pos = pos;
+		if((Math.abs(this.pos.getFile() - pos.getFile()) == 2 && (Math.abs(this.pos.getRank() - pos.getRank()) == 1)) || (Math.abs(this.pos.getFile() - pos.getFile()) == 1 && (Math.abs(this.pos.getRank() - pos.getRank()) == 2))) {
+			result = true;
+			this.pos = pos;
+		} else {
+			result = false;
+			System.out.println("Illegal move");
+		}
 		
 		return result;
 	}

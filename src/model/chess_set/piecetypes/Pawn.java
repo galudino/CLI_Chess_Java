@@ -22,6 +22,8 @@ import model.game.Position;
  */
 public class Pawn extends Piece {
 	
+	private boolean firstMove = true;
+	
 	public Pawn(PieceType pieceType, PieceType.Color color) {
 		super(color);
 		
@@ -51,11 +53,33 @@ public class Pawn extends Piece {
 		
 		// evaluate file and rank based on pos field
 		// set to true if file and rank agree with pos.
-		result = true;
+		//System.out.println("Value of first move: " + firstMove);
+		//if(validDirection(pos)) 
+				
+		//System.out.println("PieceType: " + this.pieceType + " \nCurrent POS RANK: " + this.getPosition().getRank() + "\nMOVING TO POS: " + pos.getRank());
+				
+		if(firstMove) {
+			if(Math.abs(pos.getRank() - this.getPosition().getRank()) == 2 || Math.abs(pos.getRank() - this.getPosition().getRank()) == 1) {
+				result = true;
+				this.pos = pos;
+			} 
+			firstMove = false;
+		} else {
+			if(Math.abs(pos.getRank() - this.getPosition().getRank()) == 1) {
+				result = true;
+				this.pos = pos;
+			}
+		}
 		
-		//this.pos = pos;
 		
+		//result = true;
+		//this.pos = pos; 
+		//System.out.println("Result: " + result);
 		return result;
+	}
+	
+	private boolean validDirection(Position pos) {
+		return (this.getColor() == PieceType.Color.WHITE) ? (this.getPosition().getRank() <= pos.getRank()) : (pos.getRank() <= this.getPosition().getRank());
 	}
 	
 	
