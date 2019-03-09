@@ -45,9 +45,14 @@ public abstract class Piece {
 	public Position getPosition() {
 		return pos;
 	}
-	
-	public void setPosition(Position pos) {
-		this.pos = pos;
+		
+	/**
+	 * 
+	 * @param other
+	 * @return
+	 */
+	public boolean matchesColor(Piece other) {
+		return color.equals(other.color);
 	}
 
 	/**
@@ -62,18 +67,38 @@ public abstract class Piece {
 	public String toString() {
 		return color == PieceType.Color.WHITE ? "w" : "b";
 	}
-
+	
 	/**
 	 * 
-	 * @return A Piece's Color
+	 * @return
 	 */
-	protected PieceType.Color getColor() {
-		return color;
+	protected boolean isWhite() {
+		return color.equals(PieceType.Color.WHITE);
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	protected boolean isBlack() {
+		return color.equals(PieceType.Color.BLACK);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	protected PieceType getPieceType() {
 		return pieceType;
 	}
+	
+	/**
+	 * 
+	 * @param cell current state of the Board
+	 * @param pos Represents the new Position for a piece after a move
+	 * @return true if successful, false otherwise
+	 */
+	protected abstract boolean isMoveLegal(Cell[][] cell, Position pos);
 	
 	/**
 	 * Subclasses will define functionality for move()
