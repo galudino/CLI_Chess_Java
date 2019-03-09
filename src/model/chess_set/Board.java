@@ -100,40 +100,59 @@ public class Board {
 	 * @return true if successful, false otherwise
 	 */
 	public boolean movePiece(Piece piece, Position newPosition) {
-		Cell oldPositionCell = getCell(piece.getPosition());
-		Cell newPositionCell = getCell(newPosition);
+		boolean result = false;
 		
-		boolean isLegalMove = piece.move(newPosition);
-		// At this point, a Piece will have been moved to its new position,
-		// provided it was legal.
+		Cell newPositionCell = getCell(newPosition);
+
+		boolean isLegalMove = piece.isMoveLegal(cell, newPosition);
 		
 		if (isLegalMove) {
 			Piece other = newPositionCell.piece;
+			boolean pieceFoundAtNewPosition = other != null;
 			
-			if (other != null) {
-				if (piece.getColor().equals(other.getColor())) {
+			if (pieceFoundAtNewPosition) {
+				boolean allyPieceFound = piece.matchesColor(other);
+				
+				if (allyPieceFound) {
 					// This prevents a Piece of the same color "taking"
 					// another piece.
-					return false;
+					result = false;
 				} else {
 					// At this point, a "piece" is taken.
-					// Perhaps a boolean variable would be better,
-					// instead of setting something null or not.
-					// An inactive piece would require an update to toString
-					// to ensure that it does not appear on the board.
 					newPositionCell.piece = null;
+					
+					// result = true means we will allow our requested
+					// piece to move to the cell with newPosition.
+					result = true;
 				}
+			} else {
+				// result = true means we will allow our requested
+				// piece to move to the cell with newPosition.
+				result = true;
 			}
 			
 			// Since the Piece moved from the old location to the new location,
 			// the Cell will no longer have a reference to that Piece.
 			
-			oldPositionCell.piece = null;
-			newPositionCell.piece = piece;
-			
+			if (result) {
+				Cell oldPositionCell = getCell(piece.getPosition());
+				
+				// This statement nullifies any reference to a piece
+				// for this Cell object. (The Piece will be moved
+				// from the oldPositionCell to the newPositionCell.
+				oldPositionCell.piece = null;
+				
+				// This statement affects the internal position
+				// data within a Piece object.
+				piece.move(newPosition);
+				
+				// This statement affects what Pieces print
+				// at which cells when board.toString() is called.
+				newPositionCell.piece = piece;
+			}
 		}
 		
-		return false;
+		return result;
 	}
 	
 	@Override
@@ -159,10 +178,10 @@ public class Board {
 					}
 				} else {
 					// FOR RELEASE: Print Pieces
-					//str += cell[file][rank];
+					str += cell[file][rank];
 					
 					// FOR DEBUGGING: See positions instead of Pieces
-					str += cell[file][rank].getPosition();
+					//str += cell[file][rank].getPosition();
 				}
 				
 				str += " ";	// Two spaces in between cells
@@ -261,7 +280,6 @@ public class Board {
 	 * 
 	 */
 	private void assignBlackPieces() {
-		
 		Piece king = blackSet.getPiece(PieceType.KING);
 		king.pos = cell[4][7].loc;
 		cell[4][7].piece = king;
