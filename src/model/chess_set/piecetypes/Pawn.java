@@ -75,17 +75,19 @@ public class Pawn extends Piece {
 		// pos.getRank());
 
 		if (firstMove) {
-			if (Math.abs(pos.getRank() - this.getPosition().getRank()) == 2
+			if (Math.abs(pos.getRank() - this.pos.getRank()) == 2
 					|| Math.abs(pos.getRank()
-							- this.getPosition().getRank()) == 1) {
+							- this.pos.getRank()) == 1) {
 				result = true;
+				
 				this.pos = pos;
 			}
-			
+
 			firstMove = false;
 		} else {
 			if (Math.abs(pos.getRank() - this.getPosition().getRank()) == 1) {
 				result = true;
+				
 				this.pos = pos;
 			}
 		}
@@ -97,8 +99,8 @@ public class Pawn extends Piece {
 	}
 
 	private boolean validDirection(Position pos) {
-		return (isWhite() ? (this.getPosition().getRank() <= pos.getRank())
-				: (pos.getRank() <= this.getPosition().getRank()));
+		return (isWhite() ? (this.pos.getRank() <= pos.getRank())
+				: (pos.getRank() <= this.pos.getRank()));
 	}
 
 	/*

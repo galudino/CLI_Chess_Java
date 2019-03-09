@@ -11,7 +11,6 @@
 package model.chess_set.piecetypes;
 
 import model.PieceType;
-import model.PieceType.Color;
 import model.chess_set.Board.Cell;
 import model.chess_set.Piece;
 import model.game.Position;
