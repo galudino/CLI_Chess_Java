@@ -40,19 +40,20 @@ class Player {
 	 * @return
 	 */
 	boolean assignPieceSet(Board board) {
-		if (pieceSet != null) {
-			return false;
-		}
-				
-		if (color.equals(board.getWhiteSet().getPieceSetColor())) {
-			pieceSet = board.getWhiteSet();
-			return true;
-		} else if (color.equals(board.getBlackSet().getPieceSetColor())) {
-			pieceSet = board.getBlackSet();
-			return true;
+		boolean result = false;
+		
+		if (pieceSet == null) {
+			PieceSet whiteSet = board.getWhiteSet();
+			PieceSet blackSet = board.getBlackSet();
+			
+			boolean playerIsWhite = color.equals(whiteSet.getPieceSetColor());
+					
+			pieceSet = playerIsWhite ? whiteSet : blackSet;
+			
+			result = true;
 		}
 		
-		return false;
+		return result;
 	}
 
 	/**
@@ -64,24 +65,34 @@ class Player {
 	 */
 	boolean playMove(Board board, Position piecePosition, 
 			Position newPosition) {
-	
-		/*
-		if (piecePosition.equals(newPosition)) {
-			return false;
-		}
-		*/
+		boolean result = false;
 		
-		Piece toMove = pieceSet.getPieceByPosition(piecePosition);
+		boolean requestDiffersFromNewPosition = 
+				piecePosition.equals(newPosition) == false;
 
-		
-		if (toMove == null) {
-			System.out.println("came back null");
-			return false;
+		if (requestDiffersFromNewPosition) {
+			Piece pieceRequested = pieceSet.getPieceByPosition(piecePosition);
+			
+			if (pieceRequested == null) {
+				String error = String.format(
+						"ERROR: No %s piece at position %s exists.", 
+						color, piecePosition);
+				System.err.println(error);
+			} else {
+				result = board.movePiece(pieceRequested, newPosition);
+
+				/*
+				 *  Not necessary, because pieceRequested
+				 *  is being passed to board.movePiece(Piece piece, Pos..),
+				 *  and movePiece() calls piece.move()
+				 *  
+				if (result) {
+					pieceRequested.setPosition(newPosition);					
+				}
+				*/
+			}
 		}
 		
-		board.movePiece(toMove, newPosition);
-		toMove.setPosition(newPosition);
-		
-		return true;
+		return result;
 	}
 }
