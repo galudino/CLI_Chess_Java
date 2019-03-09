@@ -111,12 +111,12 @@ public class PieceSet {
 		
 		for (int i = 0; i < piece.length; i++) {
 			str += piece[i].toString() + "\t\t";
-			str += piece[i].getIdentifier() + "\t\t";
-			str += piece[i].getPosition() + "\n";
+			str += piece[i].identifier + "\t\t";
+			str += piece[i].pos + "\n";
 		}
+		
 		str += "\n";
-		
-		
+	
 		return str;
 	}
 }

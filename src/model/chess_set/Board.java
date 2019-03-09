@@ -135,7 +135,7 @@ public class Board {
 			// the Cell will no longer have a reference to that Piece.
 			
 			if (result) {
-				Cell oldPositionCell = getCell(piece.getPosition());
+				Cell oldPositionCell = getCell(piece.pos);
 				
 				// This statement nullifies any reference to a piece
 				// for this Cell object. (The Piece will be moved

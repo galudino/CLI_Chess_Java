@@ -85,7 +85,7 @@ public class Pawn extends Piece {
 
 			firstMove = false;
 		} else {
-			if (Math.abs(pos.getRank() - this.getPosition().getRank()) == 1) {
+			if (Math.abs(pos.getRank() - this.pos.getRank()) == 1) {
 				result = true;
 				
 				this.pos = pos;

@@ -37,14 +37,6 @@ public abstract class Piece {
 
 		identifier = color.equals(PieceType.Color.WHITE) ? "White " : "Black ";
 	}
-
-	/**
-	 * 
-	 * @return A Piece's Position
-	 */
-	public Position getPosition() {
-		return pos;
-	}
 		
 	/**
 	 * 
