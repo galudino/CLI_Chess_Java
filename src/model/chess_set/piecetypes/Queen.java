@@ -28,6 +28,15 @@ public class Queen extends Piece {
 		
 		identifier += "Queen";
 	}
+	
+	/* (non-Javadoc)
+	 * @see model.chess_set.Piece#isMoveLegal(model.chess_set.Board.Cell[][], model.game.Position)
+	 */
+	@Override
+	protected boolean isMoveLegal(Cell[][] cell, Position pos) {
+		// TODO Auto-generated method stub
+		return true;
+	}
 
 	/* (non-Javadoc)
 	 * @see model.Piece#move(Position)
@@ -58,5 +67,4 @@ public class Queen extends Piece {
 	public String toString() {
 		return super.toString() + "Q";
 	}
-
 }

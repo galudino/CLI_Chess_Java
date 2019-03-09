@@ -9,7 +9,7 @@ https://galudino@bitbucket.org/galudino/chess22.git
 
 Java Version: 
 -------------
-Java SE 11
+Java SE 1.8
 
 SYNOPSIS
 --------
@@ -20,7 +20,7 @@ to stdout, and prompt one of the two players to play their move.
 The current player will input their move in the following format:
 [fileRANK] [fileRANK]
 
-file: horizontal axis 	[a-f]
+file: horizontal axis 	[a-h]
 RANK: vertical axis		[1-8]
 
 For example, when the game begins, 

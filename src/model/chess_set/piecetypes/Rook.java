@@ -33,8 +33,16 @@ public class Rook extends Piece {
 					+ "PieceType.ROOK_R or PieceType.ROOK_L!");
 		}
 
-		
 		identifier += "Rook";
+	}
+	
+	/* (non-Javadoc)
+	 * @see model.chess_set.Piece#isMoveLegal(model.chess_set.Board.Cell[][], model.game.Position)
+	 */
+	@Override
+	protected boolean isMoveLegal(Cell[][] cell, Position pos) {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 

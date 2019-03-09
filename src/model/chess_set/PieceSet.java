@@ -30,7 +30,7 @@ public class PieceSet {
 	 * 
 	 * @param color the Color of a Player's PieceSet
 	 */
-	public PieceSet(PieceType.Color color) {
+	PieceSet(PieceType.Color color) {
 		this.color = color;
 		
 		piece = new Piece[PIECE_COUNT];

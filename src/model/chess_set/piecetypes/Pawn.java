@@ -41,6 +41,15 @@ public class Pawn extends Piece {
 			
 		identifier += "Pawn";
 	}
+	
+	/* (non-Javadoc)
+	 * @see model.chess_set.Piece#isMoveLegal(model.chess_set.Board.Cell[][], model.game.Position)
+	 */
+	@Override
+	protected boolean isMoveLegal(Cell[][] cell, Position pos) {
+		// TODO Auto-generated method stub
+		return true;
+	}
 
 	/* (non-Javadoc)
 	 * @see model.Piece#move(Position)
@@ -53,11 +62,10 @@ public class Pawn extends Piece {
 		// set to true if file and rank agree with pos.
 		result = true;
 		
-		//this.pos = pos;
+		this.pos = pos;
 		
 		return result;
 	}
-	
 	
 	/* (non-Javadoc)
 	 * @see model.chess_set.Piece#move(model.chess_set.Board.Cell[][], model.game.Position)
