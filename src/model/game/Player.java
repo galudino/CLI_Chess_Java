@@ -64,17 +64,24 @@ class Player {
 	 */
 	boolean playMove(Board board, Position piecePosition, 
 			Position newPosition) {
+	
+		/*
 		if (piecePosition.equals(newPosition)) {
 			return false;
 		}
+		*/
 		
 		Piece toMove = pieceSet.getPieceByPosition(piecePosition);
+
+		
 		if (toMove == null) {
+			System.out.println("came back null");
 			return false;
 		}
 		
 		board.movePiece(toMove, newPosition);
-
+		toMove.setPosition(newPosition);
+		
 		return true;
 	}
 }

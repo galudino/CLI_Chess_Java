@@ -105,4 +105,18 @@ public class PieceSet {
 		
 		return null;
 	}
+	
+	public String toString() {
+		String str = " ";
+		
+		for (int i = 0; i < piece.length; i++) {
+			str += piece[i].toString() + "\t\t";
+			str += piece[i].getIdentifier() + "\t\t";
+			str += piece[i].getPosition() + "\n";
+		}
+		str += "\n";
+		
+		
+		return str;
+	}
 }

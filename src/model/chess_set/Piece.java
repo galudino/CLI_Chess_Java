@@ -42,8 +42,12 @@ public abstract class Piece {
 	 * 
 	 * @return A Piece's Position
 	 */
-	protected Position getPosition() {
+	public Position getPosition() {
 		return pos;
+	}
+	
+	public void setPosition(Position pos) {
+		this.pos = pos;
 	}
 
 	/**
@@ -70,7 +74,7 @@ public abstract class Piece {
 	protected PieceType getPieceType() {
 		return pieceType;
 	}
-
+	
 	/**
 	 * Subclasses will define functionality for move()
 	 * 

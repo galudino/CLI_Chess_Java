@@ -53,7 +53,7 @@ public class Pawn extends Piece {
 		// set to true if file and rank agree with pos.
 		result = true;
 		
-		this.pos = pos;
+		//this.pos = pos;
 		
 		return result;
 	}

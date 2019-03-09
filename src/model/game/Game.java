@@ -47,8 +47,10 @@ public class Game {
 	}
 	
 	public boolean whitePlayMove(int file, int rank, int newFile, int newRank) {
-		whitePlay.setFileRank(file, rank);
-		whiteNewPosition.setFileRank(newFile, newRank);
+		//whitePlay.setFileRank(file, rank);
+		//whiteNewPosition.setFileRank(newFile, newRank);
+		whitePlay = new Position(file, rank);
+		whiteNewPosition = new Position(newFile, newRank);
 
 		boolean result = white.playMove(board, whitePlay, whiteNewPosition);
 		
@@ -56,8 +58,10 @@ public class Game {
 	}
 	
 	public boolean blackPlayMove(int file, int rank, int newFile, int newRank) {
-		blackPlay.setFileRank(file, rank);
-		blackNewPosition.setFileRank(newFile, newRank);
+		//blackPlay.setFileRank(file, rank);
+		//blackNewPosition.setFileRank(newFile, newRank);
+		blackPlay = new Position(file, rank);
+		blackNewPosition = new Position(file, rank);
 
 		boolean result = black.playMove(board, blackPlay, blackNewPosition);
 		

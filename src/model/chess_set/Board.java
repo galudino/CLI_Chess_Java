@@ -127,8 +127,10 @@ public class Board {
 			
 			// Since the Piece moved from the old location to the new location,
 			// the Cell will no longer have a reference to that Piece.
+			
 			oldPositionCell.piece = null;
 			newPositionCell.piece = piece;
+			
 		}
 		
 		return false;
@@ -157,10 +159,10 @@ public class Board {
 					}
 				} else {
 					// FOR RELEASE: Print Pieces
-					str += cell[file][rank];
+					//str += cell[file][rank];
 					
 					// FOR DEBUGGING: See positions instead of Pieces
-					//str += cell[file][rank].getPosition();
+					str += cell[file][rank].getPosition();
 				}
 				
 				str += " ";	// Two spaces in between cells
