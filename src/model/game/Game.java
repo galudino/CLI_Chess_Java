@@ -30,6 +30,9 @@ public class Game {
 	private Position blackPlay;
 	private Position blackNewPosition;
 	
+	/**
+	 * 
+	 */
 	public Game() {
 		board = new Board();
 		
@@ -38,52 +41,74 @@ public class Game {
 		
 		white.assignPieceSet(board);
 		black.assignPieceSet(board);
-		
-		whitePlay = new Position();
-		whiteNewPosition = new Position();
-		
-		blackPlay = new Position();
-		blackNewPosition = new Position();
 	}
 	
+	/**
+	 * 
+	 * @param file
+	 * @param rank
+	 * @param newFile
+	 * @param newRank
+	 * @return
+	 */
 	public boolean whitePlayMove(int file, int rank, int newFile, int newRank) {
-		//whitePlay.setFileRank(file, rank);
-		//whiteNewPosition.setFileRank(newFile, newRank);
 		whitePlay = new Position(file, rank);
 		whiteNewPosition = new Position(newFile, newRank);
 
-		boolean result = white.playMove(board, whitePlay, whiteNewPosition);
-		
-		return result;
+		return white.playMove(board, whitePlay, whiteNewPosition);
 	}
 	
+	/**
+	 * 
+	 * @param file
+	 * @param rank
+	 * @param newFile
+	 * @param newRank
+	 * @return
+	 */
 	public boolean blackPlayMove(int file, int rank, int newFile, int newRank) {
-		//blackPlay.setFileRank(file, rank);
-		//blackNewPosition.setFileRank(newFile, newRank);
 		blackPlay = new Position(file, rank);
 		blackNewPosition = new Position(file, rank);
-
-		boolean result = black.playMove(board, blackPlay, blackNewPosition);
 		
-		return result;
+		return black.playMove(board, blackPlay, blackNewPosition);
 	}
 		
+	/**
+	 * 
+	 * @return
+	 */
 	Position getWhitePlayPosition() {
 		return whitePlay;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	Position getWhiteNewPosition() {
 		return whiteNewPosition;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	Position getBlackPlayPosition() {
 		return blackPlay;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	Position getBlackNewPosition() {
 		return blackNewPosition;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String boardToString() {
 		return board.toString();
 	}
