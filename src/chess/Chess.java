@@ -34,6 +34,7 @@ public class Chess {
 		
 		game.whitePlayMove(3, 1, 3, 2);
 		game.whitePlayMove(3, 2, 3, 3);
+		game.whitePlayMove(3, 3, 3, 4);
 		
 		System.out.println(game.boardToString());
 	}
