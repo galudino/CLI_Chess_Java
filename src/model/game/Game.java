@@ -49,6 +49,7 @@ public class Game {
 	 * @param rank
 	 * @param newFile
 	 * @param newRank
+	 * 
 	 * @return
 	 */
 	public boolean whitePlayMove(int file, int rank, int newFile, int newRank) {
@@ -64,6 +65,7 @@ public class Game {
 	 * @param rank
 	 * @param newFile
 	 * @param newRank
+	 * 
 	 * @return
 	 */
 	public boolean blackPlayMove(int file, int rank, int newFile, int newRank) {

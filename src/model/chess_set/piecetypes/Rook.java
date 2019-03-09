@@ -18,10 +18,14 @@ import model.game.Position;
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
- *
  */
 public class Rook extends Piece {
 
+	/**
+	 * 
+	 * @param pieceType
+	 * @param color
+	 */
 	public Rook(PieceType pieceType, PieceType.Color color) {
 		super(color);
 		

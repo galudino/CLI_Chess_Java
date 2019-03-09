@@ -18,7 +18,6 @@ import model.chess_set.PieceSet;
 /**
  * @version Mar 5, 2019
  * @author gemuelealudino
- *
  */
 class Player {
 	
@@ -26,6 +25,7 @@ class Player {
 	private PieceSet pieceSet;
 	
 	/**
+	 * Parameterized constructor
 	 * 
 	 * @param color the Color associated with a Player's PieceSet
 	 */
@@ -35,9 +35,11 @@ class Player {
 	}
 	
 	/**
+	 * Assign a PieceSet to a Player given a Board
 	 * 
 	 * @param board the current Board instance used during a match
-	 * @return
+	 * 
+	 * @return true if successful, false otherwise
 	 */
 	boolean assignPieceSet(Board board) {
 		boolean result = false;
@@ -57,10 +59,12 @@ class Player {
 	}
 
 	/**
+	 * Player makes a request to play a move
 	 * 
 	 * @param board the current Board instance used during a match
 	 * @param piecePosition the Position of a chosen Piece
 	 * @param newPosition the Position desired by the Player for a chosen Piece
+	 * 
 	 * @return true if successful, false otherwise
 	 */
 	boolean playMove(Board board, Position piecePosition, 
@@ -72,7 +76,7 @@ class Player {
 
 		if (requestDiffersFromNewPosition) {
 			Piece pieceRequested = pieceSet.getPieceByPosition(piecePosition);
-			
+	
 			if (pieceRequested == null) {
 				String error = String.format(
 						"ERROR: No %s piece at position %s exists.", 

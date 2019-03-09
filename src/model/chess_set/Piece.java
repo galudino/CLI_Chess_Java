@@ -43,6 +43,7 @@ public abstract class Piece {
 	 * Compare colors between Pieces for a match
 	 * 
 	 * @param other the Piece to evaluate
+	 * 
 	 * @return true if color matches, false otherwise
 	 */
 	protected boolean matchesColor(Piece other) {
@@ -95,6 +96,7 @@ public abstract class Piece {
 	 * 
 	 * @param cell current state of the Board
 	 * @param pos Represents the new Position for a piece after a move
+	 * 
 	 * @return true if successful, false otherwise
 	 */
 	protected abstract boolean isMoveLegal(Cell[][] cell, Position pos);
@@ -103,6 +105,7 @@ public abstract class Piece {
 	 * Subclasses will define functionality for move()
 	 * 
 	 * @param pos Represents the new Position for a piece after a move
+	 * 
 	 * @return true if successful, false otherwise
 	 */
 	protected abstract boolean move(Position pos);
@@ -112,6 +115,7 @@ public abstract class Piece {
 	 * 
 	 * @param cell current state of the Board
 	 * @param pos Represents the new Position for a piece after a move
+	 * 
 	 * @return true if successful, false otherwise
 	 */
 	protected abstract boolean move(Cell[][] cell, Position pos);

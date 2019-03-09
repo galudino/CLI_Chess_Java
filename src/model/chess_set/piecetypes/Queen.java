@@ -18,10 +18,13 @@ import model.game.Position;
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
- *
  */
 public class Queen extends Piece {
 
+	/**
+	 * 
+	 * @param color
+	 */
 	public Queen(PieceType.Color color) {
 		super(color);
 		pieceType = PieceType.QUEEN;

@@ -13,7 +13,6 @@ package model.game;
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
- *
  */
 public class Position implements Comparable<Position> {
 

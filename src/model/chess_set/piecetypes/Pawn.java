@@ -18,12 +18,16 @@ import model.game.Position;
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
- *
  */
 public class Pawn extends Piece {
 
 	private boolean firstMove = true;
 
+	/**
+	 * 
+	 * @param pieceType
+	 * @param color
+	 */
 	public Pawn(PieceType pieceType, PieceType.Color color) {
 		super(color);
 
@@ -98,6 +102,12 @@ public class Pawn extends Piece {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param pos
+	 * 
+	 * @return
+	 */
 	private boolean validDirection(Position pos) {
 		return (isWhite() ? (this.pos.getRank() <= pos.getRank())
 				: (pos.getRank() <= this.pos.getRank()));

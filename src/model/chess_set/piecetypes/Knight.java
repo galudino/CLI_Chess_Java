@@ -18,10 +18,14 @@ import model.game.Position;
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
- *
  */
 public class Knight extends Piece {
 
+	/**
+	 * 
+	 * @param pieceType
+	 * @param color
+	 */
 	public Knight(PieceType pieceType, PieceType.Color color) {
 		super(color);
 

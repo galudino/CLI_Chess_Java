@@ -13,30 +13,51 @@ package model.chess_set;
 import model.PieceType;
 import model.game.Position;
 
+/**
+ * 
+ * @version Mar 9, 2019
+ * @author gemuelealudino
+ */
 public class Board {
 	
 	/**
 	 * @version Mar 3, 2019
 	 * @author gemuelealudino
-	 * 
 	 */
 	public class Cell {
 		private Position loc;
 		private Piece piece;
 		
+		/**
+		 * 
+		 * @param file
+		 * @param rank
+		 */
 		public Cell(int file, int rank) {
 			loc = new Position(file, rank);
 			piece = null;
 		}
 		
+		/**
+		 * 
+		 * @return
+		 */
 		public Piece getPiece() {
 			return piece;
 		}
 		
+		/**
+		 * 
+		 * @return
+		 */
 		public Position getPosition() {
 			return loc;
 		}
 		
+		/**
+		 * 
+		 */
+		@Override
 		public String toString() {
 			return piece == null ? "--" : piece.toString();
 		}
@@ -87,6 +108,7 @@ public class Board {
 	/**
 	 * 
 	 * @param pos the Position of the desired Cell
+	 * 
 	 * @return the Cell with the given file and rank of a Position
 	 */
 	public Cell getCell(Position pos) {
@@ -97,6 +119,7 @@ public class Board {
 	 * 
 	 * @param piece accessed by a Player for a move
 	 * @param newPosition the new Position desired by the Player for a Piece
+	 * 
 	 * @return true if successful, false otherwise
 	 */
 	public boolean movePiece(Piece piece, Position newPosition) {

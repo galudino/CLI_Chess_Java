@@ -13,12 +13,16 @@ package model;
 /**
  * @version Mar 5, 2019
  * @author gemuelealudino
- *
  */
 public enum PieceType {
 	KING, QUEEN, BISHOP_L, BISHOP_R, KNIGHT_L, KNIGHT_R, ROOK_L, ROOK_R,
 	PAWN_0, PAWN_1, PAWN_2, PAWN_3, PAWN_4, PAWN_5, PAWN_6, PAWN_7;
 	
+	/**
+	 * 
+	 * @version Mar 9, 2019
+	 * @author gemuelealudino
+	 */
 	public enum Color {
 		WHITE, BLACK
 	}

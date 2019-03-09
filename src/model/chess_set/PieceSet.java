@@ -73,6 +73,7 @@ public class PieceSet {
 	/**
 	 * 
 	 * @param pieceType the PieceType of a desired Piece
+	 * 
 	 * @return A Piece within the PieceSet
 	 */
 	Piece getPiece(PieceType pieceType) {
@@ -90,6 +91,7 @@ public class PieceSet {
 	/**
 	 * 
 	 * @param pos The Position of the desired Piece
+	 * 
 	 * @return if found, the desired Piece, otherwise null
 	 */
 	public Piece getPieceByPosition(Position pos) {
