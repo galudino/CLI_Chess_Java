@@ -15,9 +15,10 @@ import model.chess_set.Board.Cell;
 import model.game.Position;
 
 /**
+ * Basis for a Piece within a PieceSet for a Player within a Game. (Chess)
+ * 
  * @version Mar 3, 2019
  * @author gemuelealudino
- *
  */
 public abstract class Piece {
 	
@@ -39,15 +40,17 @@ public abstract class Piece {
 	}
 		
 	/**
+	 * Compare colors between Pieces for a match
 	 * 
-	 * @param other
-	 * @return
+	 * @param other the Piece to evaluate
+	 * @return true if color matches, false otherwise
 	 */
-	public boolean matchesColor(Piece other) {
+	protected boolean matchesColor(Piece other) {
 		return color.equals(other.color);
 	}
 
 	/**
+	 * Retrieve a Piece's String identifier ("White King", "Black Queen", etc)
 	 * 
 	 * @return A Piece's identifier (its color and type)
 	 */
@@ -61,30 +64,34 @@ public abstract class Piece {
 	}
 	
 	/**
+	 * Determine if a Piece is white
 	 * 
-	 * @return
+	 * @return true if color == white, false otherwise
 	 */
 	protected boolean isWhite() {
 		return color.equals(PieceType.Color.WHITE);
 	}
 	
 	/**
+	 * Determine if a Piece is black
 	 * 
-	 * @return
+	 * @return true if color == black, false otherwise
 	 */
 	protected boolean isBlack() {
 		return color.equals(PieceType.Color.BLACK);
 	}
 	
 	/**
+	 * Determine a Piece's PieceType
 	 * 
-	 * @return
+	 * @return a Piece's PieceType
 	 */
 	protected PieceType getPieceType() {
 		return pieceType;
 	}
 	
 	/**
+	 * Determine if a move is legal given a Position pos
 	 * 
 	 * @param cell current state of the Board
 	 * @param pos Represents the new Position for a piece after a move
