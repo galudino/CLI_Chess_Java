@@ -39,24 +39,7 @@ public class Position implements Comparable<Position> {
 		this.file = file;
 		this.rank = rank;
 	}
-	
-	/**
-	 * 
-	 * @param file The file to set
-	 * @param rank The rank to set
-	 * @return true if successfully set, false otherwise
-	 */
-	boolean setFileRank(int file, int rank) {
-		if ((file < 0 || rank < 0) || (file > 7 || rank > 7)) {
-			return false;
-		}
-		
-		this.file = file;
-		this.rank = rank;
-		
-		return true;
-	}
-		
+			
 	/**
 	 * 
 	 * @return Retrieves the file of the current Position instance
