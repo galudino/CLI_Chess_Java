@@ -33,8 +33,8 @@ public class Chess {
 		// but the Board/Pieces have the final word.
 		
 		game.whitePlayMove(3, 1, 3, 2);
-		game.whitePlayMove(3, 2, 3, 3);
-		game.whitePlayMove(3, 3, 3, 4);
+		//game.whitePlayMove(3, 2, 3, 3);
+		//game.whitePlayMove(3, 3, 3, 4);
 		
 		System.out.println(game.boardToString());
 	}

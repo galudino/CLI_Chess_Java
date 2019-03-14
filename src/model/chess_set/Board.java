@@ -272,31 +272,31 @@ public class Board {
 		
 		Piece pawn_1 = whiteSet.getPiece(PieceType.PAWN_1);
 		pawn_1.pos = cell[1][1].loc;
-		cell[1][1].piece = pawn_0;
+		cell[1][1].piece = pawn_1;
 		
 		Piece pawn_2 = whiteSet.getPiece(PieceType.PAWN_2);
 		pawn_2.pos = cell[2][1].loc;
-		cell[2][1].piece = pawn_0;
+		cell[2][1].piece = pawn_2;
 		
 		Piece pawn_3 = whiteSet.getPiece(PieceType.PAWN_3);
 		pawn_3.pos = cell[3][1].loc;
-		cell[3][1].piece = pawn_0;
+		cell[3][1].piece = pawn_3;
 		
 		Piece pawn_4 = whiteSet.getPiece(PieceType.PAWN_4);
 		pawn_4.pos = cell[4][1].loc;
-		cell[4][1].piece = pawn_0;
+		cell[4][1].piece = pawn_4;
 		
 		Piece pawn_5 = whiteSet.getPiece(PieceType.PAWN_5);
 		pawn_5.pos = cell[5][1].loc;
-		cell[5][1].piece = pawn_0;
+		cell[5][1].piece = pawn_5;
 		
 		Piece pawn_6 = whiteSet.getPiece(PieceType.PAWN_6);
 		pawn_6.pos = cell[6][1].loc;
-		cell[6][1].piece = pawn_0;
+		cell[6][1].piece = pawn_6;
 		
 		Piece pawn_7 = whiteSet.getPiece(PieceType.PAWN_7);
 		pawn_7.pos = cell[7][1].loc;
-		cell[7][1].piece = pawn_0;
+		cell[7][1].piece = pawn_7;
 	}
 	
 	/**
@@ -341,30 +341,30 @@ public class Board {
 		
 		Piece pawn_1 = blackSet.getPiece(PieceType.PAWN_1);
 		pawn_1.pos = cell[1][6].loc;
-		cell[1][6].piece = pawn_0;
+		cell[1][6].piece = pawn_1;
 		
 		Piece pawn_2 = blackSet.getPiece(PieceType.PAWN_2);
 		pawn_2.pos = cell[2][6].loc;
-		cell[2][6].piece = pawn_0;
+		cell[2][6].piece = pawn_2;
 		
 		Piece pawn_3 = blackSet.getPiece(PieceType.PAWN_3);
 		pawn_3.pos = cell[3][6].loc;
-		cell[3][6].piece = pawn_0;
+		cell[3][6].piece = pawn_3;
 		
 		Piece pawn_4 = blackSet.getPiece(PieceType.PAWN_4);
 		pawn_4.pos = cell[4][6].loc;
-		cell[4][6].piece = pawn_0;
+		cell[4][6].piece = pawn_4;
 		
 		Piece pawn_5 = blackSet.getPiece(PieceType.PAWN_5);
 		pawn_5.pos = cell[5][6].loc;
-		cell[5][6].piece = pawn_0;
+		cell[5][6].piece = pawn_5;
 		
 		Piece pawn_6 = blackSet.getPiece(PieceType.PAWN_6);
 		pawn_6.pos = cell[6][6].loc;
-		cell[6][6].piece = pawn_0;
+		cell[6][6].piece = pawn_6;
 		
 		Piece pawn_7 = blackSet.getPiece(PieceType.PAWN_7);
 		pawn_7.pos = cell[7][6].loc;
-		cell[7][6].piece = pawn_0;
+		cell[7][6].piece = pawn_7;
 	}
 }
