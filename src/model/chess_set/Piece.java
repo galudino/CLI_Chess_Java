@@ -30,12 +30,11 @@ public abstract class Piece {
 	/**
 	 * Parameterized constructor
 	 * 
-	 * @param color Designated color for a piece (WHITE or BLACK)
+	 * @param color the Color of a Player's PieceSet
 	 */
 	protected Piece(PieceType.Color color) {
 		this.color = color;
 		pos = null;
-
 		identifier = color.equals(PieceType.Color.WHITE) ? "White " : "Black ";
 	}
 		

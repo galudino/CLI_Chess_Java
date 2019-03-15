@@ -22,14 +22,15 @@ import model.game.Position;
 public class Queen extends Piece {
 
 	/**
-	 * 
-	 * @param color
+	 * Parameterized constructor 
+	 *
+	 * @param color the Color of a Player's PieceSet
 	 */
 	public Queen(PieceType.Color color) {
 		super(color);
 		pieceType = PieceType.QUEEN;
 		
-		identifier += "Queen";
+		identifier += "Queen     ";
 	}
 	
 	/* (non-Javadoc)

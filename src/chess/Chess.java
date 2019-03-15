@@ -49,6 +49,9 @@ public class Chess {
 		
 		// Diagnostic print of Piece positions is in
 		// Player.java, playMove(), line 100.
+		
+		// Board.java, line 190
+		// State of board prints after movePiece() completes
 	}
 	
 }

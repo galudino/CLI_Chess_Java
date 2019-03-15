@@ -22,22 +22,27 @@ import model.game.Position;
 public class Knight extends Piece {
 
 	/**
+	 * Parameterized constructor
 	 * 
-	 * @param pieceType
-	 * @param color
+	 * @param pieceType the PieceType to assign
+	 * @param color the Color of a Player's PieceSet
 	 */
 	public Knight(PieceType pieceType, PieceType.Color color) {
 		super(color);
 
-		if (pieceType.equals(PieceType.KNIGHT_R)
-				|| pieceType.equals(PieceType.KNIGHT_L)) {
-			this.pieceType = pieceType;
-		} else {
+		this.pieceType = pieceType.equals(PieceType.KNIGHT_R)
+				|| pieceType.equals(PieceType.KNIGHT_L) ? pieceType : null;
+
+		if (this.pieceType == null) {
 			System.err.println("ERROR: Set this piece to either "
 					+ "PieceType.KNIGHT_R or PieceType.KNIGHT_L!");
+			identifier += " (invalid)";
+		} else {
+			identifier += "Knight";
+			
+			identifier += pieceType.equals(PieceType.KNIGHT_R) 
+					? " (right)" : " (left)";
 		}
-
-		identifier += "Knight";
 	}
 
 	/*

@@ -24,28 +24,64 @@ public class Pawn extends Piece {
 	private boolean firstMove = true;
 
 	/**
+	 * Parameterized constructor
 	 * 
-	 * @param pieceType
-	 * @param color
+	 * @param pieceType the PieceType to assign
+	 * @param color the Color of a Player's PieceSet
 	 */
 	public Pawn(PieceType pieceType, PieceType.Color color) {
 		super(color);
 
-		if (pieceType.equals(PieceType.PAWN_0)
-				|| pieceType.equals(PieceType.PAWN_1)
-				|| pieceType.equals(PieceType.PAWN_2)
-				|| pieceType.equals(PieceType.PAWN_3)
-				|| pieceType.equals(PieceType.PAWN_4)
-				|| pieceType.equals(PieceType.PAWN_5)
-				|| pieceType.equals(PieceType.PAWN_6)
-				|| pieceType.equals(PieceType.PAWN_7)) {
+		switch (pieceType) {
+		case PAWN_0:
+		case PAWN_1:
+		case PAWN_2:
+		case PAWN_3:
+		case PAWN_4:
+		case PAWN_5:
+		case PAWN_6:
+		case PAWN_7:
 			this.pieceType = pieceType;
-		} else {
+			identifier += "Pawn";
+			break;
+		default:
+			this.pieceType = null;
+			identifier += " (invalid)";
+			
 			System.err.println("ERROR: Set this piece to either "
 					+ "PieceType.PAWN_n, n being [0 - 7]!");
+			
+			break;
 		}
-
-		identifier += "Pawn";
+		
+		switch (this.pieceType) {
+		case PAWN_0:
+			identifier += "   (1)";
+			break;
+		case PAWN_1:
+			identifier += "   (2)";
+			break;
+		case PAWN_2:
+			identifier += "   (3)";
+			break;
+		case PAWN_3:
+			identifier += "   (4)";
+			break;
+		case PAWN_4:
+			identifier += "   (5)";
+			break;
+		case PAWN_5:
+			identifier += "   (6)";
+			break;
+		case PAWN_6:
+			identifier += "   (7)";
+			break;
+		case PAWN_7:
+			identifier += "   (8)";
+			break;
+		default:	
+			break;
+		}
 	}
 
 	/*
@@ -103,10 +139,12 @@ public class Pawn extends Piece {
 	}
 
 	/**
+	 * @author Patrick Nogaj
+	 * Helper method to determine if pos is a valid direction
 	 * 
-	 * @param pos
+	 * @param pos the Position to evaluate if valid
 	 * 
-	 * @return
+	 * @return true if pos is determined to be valid, false otherwise
 	 */
 	private boolean validDirection(Position pos) {
 		return (isWhite() ? (this.pos.getRank() <= pos.getRank())

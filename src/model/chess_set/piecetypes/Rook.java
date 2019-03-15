@@ -22,22 +22,27 @@ import model.game.Position;
 public class Rook extends Piece {
 
 	/**
+	 * Parameterized constructor
 	 * 
-	 * @param pieceType
-	 * @param color
+	 * @param pieceType the PieceType to assign
+	 * @param color the Color of a Player's PieceSet
 	 */
 	public Rook(PieceType pieceType, PieceType.Color color) {
 		super(color);
 		
-		if (pieceType.equals(PieceType.ROOK_R) 
-				|| pieceType.equals(PieceType.ROOK_L)) {
-			this.pieceType = pieceType;
-		} else {
+		this.pieceType = pieceType.equals(PieceType.ROOK_R)
+				|| pieceType.equals(PieceType.ROOK_L) ? pieceType : null;
+
+		if (this.pieceType == null) {
 			System.err.println("ERROR: Set this piece to either "
 					+ "PieceType.ROOK_R or PieceType.ROOK_L!");
+			identifier += " (invalid)";
+		} else {
+			identifier += "Rook";
+			
+			identifier += pieceType.equals(PieceType.ROOK_R) 
+					? "   (right)" : "   (left)";
 		}
-
-		identifier += "Rook";
 	}
 	
 	/* (non-Javadoc)
