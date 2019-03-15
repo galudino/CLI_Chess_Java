@@ -16,6 +16,8 @@ import model.chess_set.Piece;
 import model.chess_set.PieceSet;
 
 /**
+ * Represents a participant in a Chess game
+ * 
  * @version Mar 5, 2019
  * @author gemuelealudino
  */
@@ -76,7 +78,7 @@ class Player {
 
 		if (requestDiffersFromNewPosition) {
 			Piece pieceRequested = pieceSet.getPieceByPosition(piecePosition);
-	
+
 			if (pieceRequested == null) {
 				String error = String.format(
 						"ERROR: No %s piece at position %s exists.", 
@@ -94,6 +96,8 @@ class Player {
 					pieceRequested.setPosition(newPosition);					
 				}
 				*/
+				
+				System.out.println(pieceSet);
 			}
 		}
 		
