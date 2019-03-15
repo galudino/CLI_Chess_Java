@@ -11,6 +11,8 @@
 package model.game;
 
 /**
+ * Represents a (file, rank) pair as per a Chess board
+ * 
  * @version Mar 3, 2019
  * @author gemuelealudino
  */
@@ -40,16 +42,18 @@ public class Position implements Comparable<Position> {
 	}
 			
 	/**
+	 * Retrieve the x-axis coordinate of a Position, as per a Chess board
 	 * 
-	 * @return Retrieves the file of the current Position instance
+	 * @return file of the current Position instance
 	 */
 	public int getFile() {
 		return file;
 	}
 	
 	/**
+	 * Retrieve the y-axis coordinate of a Position, as per a Chess board
 	 * 
-	 * @return Retrieves the rank of the current Position instance
+	 * @return rank of the current Position instance
 	 */
 	public int getRank() {
 		return rank;
@@ -126,7 +130,13 @@ public class Position implements Comparable<Position> {
 			if (deltaRank == 0) {
 				result = deltaFile;
 			} else {
-				result = deltaFile + deltaRank; 
+				//result = deltaFile + deltaRank; 
+				final double deltaFileSq = Math.pow((int)(deltaFile), 2);
+				final double deltaRankSq = Math.pow((int)(deltaRank), 2);
+				
+				final double resultant = Math.sqrt(deltaFileSq + deltaRankSq);
+				
+				result = (int)(resultant);
 			}
 		}
 		
