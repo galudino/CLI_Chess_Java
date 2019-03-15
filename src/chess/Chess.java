@@ -13,9 +13,10 @@ package chess;
 import model.game.Game;
 
 /**
+ * Driver class for a Chess game
+ * 
  * @version Mar 3, 2019
  * @author gemuelealudino
- *
  */
 public class Chess {
 	
@@ -31,12 +32,23 @@ public class Chess {
 		// of either allowing or preventing a move to occur.
 		// A 'player' can request a move, 
 		// but the Board/Pieces have the final word.
-		
-		game.whitePlayMove(3, 1, 3, 2);
-		//game.whitePlayMove(3, 2, 3, 3);
-		//game.whitePlayMove(3, 3, 3, 4);
-		
+
+		System.out.println("\nNew game\n-------------------------");
 		System.out.println(game.boardToString());
+		
+		System.out.println("--- Move tests begin NOW ---\n");
+		
+		System.out.println("wP 4 from d2 to d3\n-------------------------");
+		game.whitePlayMove(3, 1, 3, 2);
+		
+		System.out.println("wP 4 from d3 to d4\n-------------------------");
+		game.whitePlayMove(3, 2, 3, 3);
+		
+		System.out.println("wP 4 from d4 to d5\n-------------------------");
+		game.whitePlayMove(3, 3, 3, 4);
+		
+		// Diagnostic print of Piece positions is in
+		// Player.java, playMove(), line 100.
 	}
 	
 }
