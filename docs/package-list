@@ -1,1 +1,6 @@
+chess
+model
+model.chess_set
+model.chess_set.piecetypes
 model.game
+util
