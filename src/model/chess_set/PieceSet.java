@@ -25,8 +25,9 @@ public class PieceSet {
 	
 	private PieceType.Color color;
 	private Piece[] piece;
-		
+	
 	/**
+	 * Parameterized constructor
 	 * 
 	 * @param color the Color of a Player's PieceSet
 	 */
@@ -34,7 +35,7 @@ public class PieceSet {
 		this.color = color;
 		
 		piece = new Piece[PIECE_COUNT];
-		
+				
 		Piece king = new King(color);
 		Piece queen = new Queen(color);
 		Piece bishop_l = new Bishop(PieceType.BISHOP_L, color);
@@ -71,6 +72,7 @@ public class PieceSet {
 	}
 	
 	/**
+	 * Accessor to retrieve a Piece by PieceType
 	 * 
 	 * @param pieceType the PieceType of a desired Piece
 	 * 
@@ -81,6 +83,7 @@ public class PieceSet {
 	}
 	
 	/**
+	 * Accessor to retrieve the Color of a Player's PieceSet
 	 * 
 	 * @return the Color of a Player's PieceSet
 	 */
@@ -89,6 +92,7 @@ public class PieceSet {
 	}
 	
 	/**
+	 * Accessor to retrieve a Piece using the file and rank of a Position
 	 * 
 	 * @param pos The Position of the desired Piece
 	 * 
@@ -104,17 +108,26 @@ public class PieceSet {
 				return piece[i];
 			}
 		}
-		
+
 		return null;
 	}
 	
+	/**
+	 * Returns a string representation of the PieceSet (used for debugging)
+	 */
+	@Override
 	public String toString() {
-		String str = " ";
+		String str = "";
+		
+		str += "Symbol\tIdentifier\t\tPosition\n";
+		str += "----------------------------------------\n";
 		
 		for (int i = 0; i < piece.length; i++) {
-			str += piece[i].toString() + "\t\t";
-			str += piece[i].identifier + "\t\t";
-			str += piece[i].pos + "\n";
+			str += piece[i].toString() + "\t";
+			str += piece[i].identifier + "\t";
+			str += piece[i].pos + "\t";
+			
+			str += "\n";
 		}
 		
 		str += "\n";
