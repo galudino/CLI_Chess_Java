@@ -20,6 +20,8 @@ import model.game.Position;
  * @author gemuelealudino
  */
 public class King extends Piece {
+	
+	private boolean castled;
 
 	/**
 	 * Parameterized constructor 
@@ -29,6 +31,7 @@ public class King extends Piece {
 	public King(PieceType.Color color) {
 		super(color);
 		pieceType = PieceType.KING;
+		this.castled = false;
 
 		identifier += "King      ";
 	}
@@ -38,44 +41,28 @@ public class King extends Piece {
 	 */
 	@Override
 	protected boolean isMoveLegal(Cell[][] cell, Position pos) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see model.Piece#move(Position)
-	 * 
-	 * King's move will check if the current position - position it's going to
-	 * is absolute 1, if it is allowed the move since the king is allowed to
-	 * move in any direction by 1 space.
-	 */
-	@Override
-	protected boolean move(Position pos) {
-		boolean result = false;
+		boolean result = true;
 		
-		if (Math.abs(this.pos.getFile() - pos.getFile()) <= 1
-				&& (Math.abs(this.pos.getRank() - pos.getRank()) <= 1)) {
-			result = true;
-			this.pos = pos;
-		} else {
-			result = false;
-			System.out.println("Illegal move");
+		if(Math.abs(this.pos.getFile() - pos.getFile()) <= 1 && (Math.abs(this.pos.getRank() - pos.getRank()) <= 1)) {
+			
+			//Castling logic.
+			if(pos.getFile() - this.pos.getFile() == 2 && pos.getRank() == this.pos.getRank()) {
+				if(cell[pos.getRank()][this.pos.getFile() + 1] != null || cell[pos.getRank()][this.pos.getFile() + 2] != null) {
+					castled = false;
+					result = false;
+				}
+			} else if(this.pos.getFile() - pos.getFile() == 3 && this.pos.getRank() == pos.getRank()) {
+				if(cell[pos.getRank()][this.pos.getFile() - 1] != null || cell[pos.getRank()][this.pos.getFile() - 2] != null || cell[pos.getRank()][this.pos.getFile() - 3] != null) {
+					castled = false;
+					result = false;
+				}
+			} else {
+				castled = false;
+				result = false;
+			}
+			castled = true;
 		}
-
 		return result;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see model.chess_set.Piece#move(model.chess_set.Board.Cell[][],
-	 * model.game.Position)
-	 */
-	protected boolean move(Cell[][] cell, Position pos) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override

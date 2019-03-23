@@ -74,8 +74,8 @@ class Player {
 		boolean result = false;
 		
 		boolean requestDiffersFromNewPosition = 
-				piecePosition.equals(newPosition) == false;
-
+				(piecePosition.equals(newPosition) == false);
+		
 		if (requestDiffersFromNewPosition) {
 			Piece pieceRequested = pieceSet.getPieceByPosition(piecePosition);
 

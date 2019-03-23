@@ -24,6 +24,7 @@ public abstract class Piece {
 	
 	private PieceType.Color color;
 	protected PieceType pieceType;
+	protected Piece piece;
 	protected String identifier;
 	protected Position pos;
 
@@ -68,7 +69,7 @@ public abstract class Piece {
 	 * 
 	 * @return true if color == white, false otherwise
 	 */
-	protected boolean isWhite() {
+	public boolean isWhite() {
 		return color.equals(PieceType.Color.WHITE);
 	}
 	
@@ -77,7 +78,7 @@ public abstract class Piece {
 	 * 
 	 * @return true if color == black, false otherwise
 	 */
-	protected boolean isBlack() {
+	public boolean isBlack() {
 		return color.equals(PieceType.Color.BLACK);
 	}
 	
@@ -90,6 +91,19 @@ public abstract class Piece {
 		return pieceType;
 	}
 	
+	protected Piece getPiece() {
+		return piece;
+	}
+	
+	/**
+	 * Set a piece type (utilized for Promotion)
+	 * @param pieceType -- set piece type inputed by user.
+	 * @return It allows the user to set a new piece type.
+	 */
+	protected void setPieceType(Piece piece) {
+		this.piece = piece;
+	}
+	
 	/**
 	 * Determine if a move is legal given a Position pos
 	 * 
@@ -100,22 +114,4 @@ public abstract class Piece {
 	 */
 	protected abstract boolean isMoveLegal(Cell[][] cell, Position pos);
 	
-	/**
-	 * Subclasses will define functionality for move()
-	 * 
-	 * @param pos Represents the new Position for a piece after a move
-	 * 
-	 * @return true if successful, false otherwise
-	 */
-	protected abstract boolean move(Position pos);
-	
-	/**
-	 * Subclasses will define functionality for move()
-	 * 
-	 * @param cell current state of the Board
-	 * @param pos Represents the new Position for a piece after a move
-	 * 
-	 * @return true if successful, false otherwise
-	 */
-	protected abstract boolean move(Cell[][] cell, Position pos);
 }

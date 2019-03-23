@@ -20,6 +20,8 @@ import model.game.Position;
  * @author gemuelealudino
  */
 public class Rook extends Piece {
+	
+	private boolean canCastle;
 
 	/**
 	 * Parameterized constructor
@@ -29,7 +31,7 @@ public class Rook extends Piece {
 	 */
 	public Rook(PieceType pieceType, PieceType.Color color) {
 		super(color);
-		
+		canCastle = true;
 		this.pieceType = pieceType.equals(PieceType.ROOK_R)
 				|| pieceType.equals(PieceType.ROOK_L) ? pieceType : null;
 
@@ -50,36 +52,45 @@ public class Rook extends Piece {
 	 */
 	@Override
 	protected boolean isMoveLegal(Cell[][] cell, Position pos) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-
-	/* (non-Javadoc)
-	 * @see model.Piece#move(Position)
-	 */
-	@Override
-	public boolean move(Position pos) {
-		boolean result = false;
+		boolean result = true;
 		
-		// evaluate file and rank based on pos field
-		// set to true if file and rank agree with pos.
-		result = true;
+		//This is to check if it is moving on one path aka not diagonal
+		if(pos.getRank() != this.pos.getRank() && pos.getFile() != this.pos.getFile()) {
+			result = false;
+		}
 		
-		this.pos = pos;
+		//Utilized to check if next piece will be null
+		int offset;
+		
+		if(pos.getFile() != this.pos.getFile()) {
+			if(this.pos.getFile() < pos.getFile())
+				offset = 1;
+			else
+				offset = -1;
+			
+			for(int x = this.pos.getFile() + offset; x != pos.getFile(); x += offset) {
+				if(cell[x][this.pos.getRank()].getPiece() != null) {
+					return false;
+				}
+			}
+		}
+		
+		if(pos.getRank() != this.pos.getRank()) {
+			if(this.pos.getRank() < pos.getRank())
+				offset = 1;
+			else
+				offset = -1;
+			
+			for(int x = this.pos.getRank() + offset; x != pos.getRank(); x += offset) {
+				if(cell[this.pos.getFile()][x].getPiece() != null) {
+					return false;
+				}
+			}
+		}
 		
 		return result;
 	}
-	
-	
-	/* (non-Javadoc)
-	 * @see model.chess_set.Piece#move(model.chess_set.Board.Cell[][], model.game.Position)
-	 */
-	protected boolean move(Cell[][] cell, Position pos) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
+
 	@Override
 	public String toString() {
 		return super.toString() + "R";

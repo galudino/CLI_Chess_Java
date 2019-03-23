@@ -14,6 +14,7 @@ import model.PieceType;
 import model.chess_set.Piece;
 import model.chess_set.Board.Cell;
 import model.game.Position;
+import java.util.Scanner;
 
 /**
  * @version Mar 3, 2019
@@ -92,74 +93,68 @@ public class Pawn extends Piece {
 	 */
 	@Override
 	protected boolean isMoveLegal(Cell[][] cell, Position pos) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see model.Piece#move(Position)
-	 */
-	@Override
-	public boolean move(Position pos) {
 		boolean result = false;
-
-		// evaluate file and rank based on pos field
-		// set to true if file and rank agree with pos.
-		// System.out.println("Value of first move: " + firstMove);
-		// if(validDirection(pos))
-
-		// System.out.println("PieceType: " + this.pieceType + " \nCurrent POS
-		// RANK: " + this.getPosition().getRank() + "\nMOVING TO POS: " +
-		// pos.getRank());
-
-		if (firstMove) {
-			if (Math.abs(pos.getRank() - this.pos.getRank()) == 2
-					|| Math.abs(pos.getRank()
-							- this.pos.getRank()) == 1) {
-				result = true;
-				
-				this.pos = pos;
+		
+		if(this.isWhite()) {
+			if(this.pos.getRank() < pos.getRank()) {
+				if (firstMove) {
+					if (Math.abs(pos.getRank() - this.pos.getRank()) == 2 || Math.abs(pos.getRank() - this.pos.getRank()) == 1 && this.pos.getFile() == pos.getFile()) {
+						result = true;
+					}
+					firstMove = false;
+				} else {
+					if (Math.abs(pos.getRank() - this.pos.getRank()) == 1 && this.pos.getFile() == pos.getFile()) {
+						result = true;
+					} else if(Math.abs(pos.getRank() - this.pos.getRank()) == 1 && Math.abs(pos.getFile() - this.pos.getFile()) == 1 && cell[this.pos.getFile() + 1][this.pos.getRank() + 1].getPiece() != null) {
+						if(cell[pos.getFile()][pos.getRank()].getPiece().isBlack())
+							result = true;
+					}
+				}
 			}
-
-			firstMove = false;
-		} else {
-			if (Math.abs(pos.getRank() - this.pos.getRank()) == 1) {
-				result = true;
-				
-				this.pos = pos;
+		} else if(this.isBlack()) {
+			if(pos.getRank() < this.pos.getRank()) {
+				if (firstMove) {
+					if (Math.abs(pos.getRank() - this.pos.getRank()) == 2 || Math.abs(pos.getRank() - this.pos.getRank()) == 1) {
+						result = true;
+					}
+					firstMove = false;
+				} else {
+					if (Math.abs(pos.getRank() - this.pos.getRank()) == 1) {
+						result = true;
+					} else if(Math.abs(pos.getRank() - this.pos.getRank()) == 1 && Math.abs(pos.getFile() - this.pos.getFile()) == 1 && cell[pos.getFile()][pos.getRank()].getPiece() != null) {
+						if(cell[pos.getFile()][pos.getRank()].getPiece().isWhite())
+							result = true;
+					}
+				}
 			}
 		}
-
-		// result = true;
-		// this.pos = pos;
-		// System.out.println("Result: " + result);
+		
+		if(result == true) {
+			Scanner input = new Scanner(System.in);
+			String inputAns;
+			
+			
+			if(this.isWhite() && pos.getRank() == 7) {
+				System.out.println("Pawn is now promotable, what would you like to promote it to?\nQ for Queen, B for bishop, N for knight, or R for Rook");
+				inputAns = input.next();
+				
+				if(inputAns.equalsIgnoreCase("Q")) {
+					Piece promo = new Queen(PieceType.Color.WHITE);
+					cell[this.pos.getFile()][this.pos.getRank()].setPiece(null);
+					cell[pos.getFile()][pos.getRank()].setPiece(promo);
+				} else if(inputAns.equalsIgnoreCase("B")) {
+					Piece promo = new Bishop(PieceType.Color.WHITE);
+					cell[this.pos.getFile()][this.pos.getRank()].setPiece(null);
+					cell[pos.getFile()][pos.getRank()].setPiece(promo);
+				} else if(inputAns.equalsIgnoreCase("N")) {
+					Piece promo = new Knight(pieceType, PieceType.Color.WHITE);
+				} else if(inputAns.equalsIgnoreCase("R")) {
+					Piece promo = new Rook(pieceType, PieceType.Color.WHITE);
+				}
+			}
+		}
+		
 		return result;
-	}
-
-	/**
-	 * @author Patrick Nogaj
-	 * Helper method to determine if pos is a valid direction
-	 * 
-	 * @param pos the Position to evaluate if valid
-	 * 
-	 * @return true if pos is determined to be valid, false otherwise
-	 */
-	private boolean validDirection(Position pos) {
-		return (isWhite() ? (this.pos.getRank() <= pos.getRank())
-				: (pos.getRank() <= this.pos.getRank()));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see model.chess_set.Piece#move(model.chess_set.Board.Cell[][],
-	 * model.game.Position)
-	 */
-	protected boolean move(Cell[][] cell, Position pos) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override

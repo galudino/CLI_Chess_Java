@@ -50,6 +50,10 @@ public class Board {
 		public Piece getPiece() {
 			return piece;
 		}
+		
+		public void setPiece(Piece piece) {
+			this.piece = piece;
+		}
 
 		/**
 		 * Accessor method to retrieve the Position object within a Cell
@@ -138,9 +142,12 @@ public class Board {
 	public boolean movePiece(Piece piece, Position newPosition) {
 		boolean result = false;
 
+		Cell oldPositionCell = getCell(piece.pos);
 		Cell newPositionCell = getCell(newPosition);
 
 		boolean isLegalMove = piece.isMoveLegal(cell, newPosition);
+		
+		System.out.println(isLegalMove);
 
 		if (isLegalMove) {
 			Piece other = newPositionCell.piece;
@@ -171,8 +178,6 @@ public class Board {
 			// the Cell will no longer have a reference to that Piece.
 
 			if (result) {
-				Cell oldPositionCell = getCell(piece.pos);
-
 				// This statement nullifies any reference to a Piece
 				// for this Cell object. (Next line: piece will be reassigned
 				// to the newPositionCell.piece field).

@@ -73,7 +73,7 @@ public class Game {
 	 */
 	public boolean blackPlayMove(int file, int rank, int newFile, int newRank) {
 		blackPlay = new Position(file, rank);
-		blackNewPosition = new Position(file, rank);
+		blackNewPosition = new Position(newFile, newRank);
 		
 		return black.playMove(board, blackPlay, blackNewPosition);
 	}

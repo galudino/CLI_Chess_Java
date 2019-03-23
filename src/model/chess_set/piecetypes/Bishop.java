@@ -44,6 +44,10 @@ public class Bishop extends Piece {
 					? " (right)" : " (left)";
 		}
 	}
+	
+	public Bishop(PieceType.Color color) {
+		super(color);
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -53,37 +57,34 @@ public class Bishop extends Piece {
 	 */
 	@Override
 	protected boolean isMoveLegal(Cell[][] cell, Position pos) {
-		// TODO Auto-generated method stub
-		return true;
-	}
+		boolean result = true;
+		
+		if(this.pos.getRank() == pos.getRank() || this.pos.getFile() == pos.getFile())
+        	result = false;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see model.Piece#move(Position)
-	 */
-	@Override
-	public boolean move(Position pos) {
-		boolean result = false;
+		if(Math.abs(this.pos.getRank() - pos.getRank()) != Math.abs(this.pos.getFile() - pos.getFile()))
+			result = false;
 
-		// evaluate file and rank based on pos field
-		// set to true if file and rank agree with pos.
-		result = true;
+		int rowOffset, colOffset;
 
-		this.pos = pos;
+		if(this.pos.getFile() < pos.getFile())
+			colOffset = 1;
+		else
+			colOffset = -1;
+
+		if(this.pos.getRank() < pos.getRank())
+			rowOffset = 1;
+		else
+			rowOffset = -1;
+
+		for(int x = this.pos.getRank() + rowOffset, y = this.pos.getFile() + colOffset; x != pos.getRank(); x += rowOffset) {
+			if(cell[x][y].getPiece() != null)
+				result = false;
+
+			y += colOffset;
+		}
 
 		return result;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see model.chess_set.Piece#move(model.chess_set.Board.Cell[][],
-	 * model.game.Position)
-	 */
-	protected boolean move(Cell[][] cell, Position pos) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override

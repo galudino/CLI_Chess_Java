@@ -53,44 +53,17 @@ public class Knight extends Piece {
 	 */
 	@Override
 	protected boolean isMoveLegal(Cell[][] cell, Position pos) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see model.Piece#move(Position)
-	 */
-	@Override
-	public boolean move(Position pos) {
 		boolean result = false;
 
-		// evaluate file and rank based on pos field
-		// set to true if file and rank agree with pos.
-		if ((Math.abs(this.pos.getFile() - pos.getFile()) == 2
-				&& (Math.abs(this.pos.getRank() - pos.getRank()) == 1))
-				|| (Math.abs(this.pos.getFile() - pos.getFile()) == 1 && (Math
-						.abs(this.pos.getRank() - pos.getRank()) == 2))) {
+		if(Math.abs(pos.getFile() - this.pos.getFile()) == 2 && Math.abs(pos.getRank() - this.pos.getRank()) == 1) {
 			result = true;
-			this.pos = pos;
-		} else {
-			result = false;
-			System.out.println("Illegal move");
+		}
+		
+		if(Math.abs(pos.getFile() - this.pos.getFile()) == 1 && Math.abs(pos.getRank() - this.pos.getRank()) == 2) {
+			result = true;
 		}
 
 		return result;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see model.chess_set.Piece#move(model.chess_set.Board.Cell[][],
-	 * model.game.Position)
-	 */
-	protected boolean move(Cell[][] cell, Position pos) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override

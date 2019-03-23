@@ -34,37 +34,67 @@ public class Queen extends Piece {
 	}
 	
 	/* (non-Javadoc)
-	 * @see model.chess_set.Piece#isMoveLegal(model.chess_set.Board.Cell[][], model.game.Position)
+	 * @see model.chess_set.Piece#isMoveLegal(model.chess_set.Board.Cell[][], model.game.Position) 
 	 */
 	@Override
 	protected boolean isMoveLegal(Cell[][] cell, Position pos) {
-		// TODO Auto-generated method stub
-		return true;
-	}
+		boolean result = true;
+		
+		if(Math.abs(this.pos.getRank() - pos.getRank()) == Math.abs(this.pos.getFile() - pos.getFile())) {
+			int rowOffset, colOffset;
 
-	/* (non-Javadoc)
-	 * @see model.Piece#move(Position)
-	 */
-	@Override
-	public boolean move(Position pos) {
-		boolean result = false;
-		
-		// evaluate file and rank based on pos field
-		// set to true if file and rank agree with pos.
-		result = true;
-		
-		this.pos = pos;
+			if(this.pos.getFile() < pos.getFile())
+				colOffset = 1;
+			else
+				colOffset = -1;
+
+			if(this.pos.getRank() < pos.getRank())
+				rowOffset = 1;
+			else
+				rowOffset = -1;
+
+			for(int x = this.pos.getRank() + rowOffset, y = this.pos.getFile() + colOffset; x != pos.getRank(); x += rowOffset) {
+				if(cell[x][y].getPiece() != null)
+					result = false;
+
+				y += colOffset;
+			}
+		} else {
+			//This is to check if it is moving on one path aka not diagonal
+			if(pos.getRank() != this.pos.getRank() && pos.getFile() != this.pos.getFile()) {
+				result = false;
+			}
+			
+			int offset;
+			
+			if(pos.getFile() != this.pos.getFile()) {
+				if(this.pos.getFile() < pos.getFile())
+					offset = 1;
+				else
+					offset = -1;
+				
+				for(int x = this.pos.getFile() + offset; x != pos.getFile(); x += offset) {
+					if(cell[x][this.pos.getRank()].getPiece() != null) {
+						return false;
+					}
+				}
+			}
+			
+			if(pos.getRank() != this.pos.getRank()) {
+				if(this.pos.getRank() < pos.getRank())
+					offset = 1;
+				else
+					offset = -1;
+				
+				for(int x = this.pos.getRank() + offset; x != pos.getRank(); x += offset) {
+					if(cell[this.pos.getFile()][x].getPiece() != null) {
+						return false;
+					}
+				}
+			}
+		}
 		
 		return result;
-	}
-	
-	
-	/* (non-Javadoc)
-	 * @see model.chess_set.Piece#move(model.chess_set.Board.Cell[][], model.game.Position)
-	 */
-	protected boolean move(Cell[][] cell, Position pos) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 	
 	@Override
