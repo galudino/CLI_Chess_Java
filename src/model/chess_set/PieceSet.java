@@ -118,7 +118,7 @@ public class PieceSet {
 	@Override
 	public String toString() {
 		String str = "";
-		
+		str += "PIECESET LOG (" + color + ") -------------------\n";
 		str += "Symbol\tIdentifier\t\tPosition\n";
 		str += "----------------------------------------\n";
 		
