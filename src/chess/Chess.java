@@ -38,28 +38,9 @@ public class Chess {
 		
 		System.out.println("--- Move tests begin NOW ---\n");
 		
-		game.whitePlayMove(3, 1, 3, 2);
-		game.whitePlayMove(0, 1, 0, 3);
-		game.whitePlayMove(0, 3, 0, 4);
-		game.whitePlayMove(4, 1, 4, 2);
-		game.whitePlayMove(3, 0, 3, 1);
-		game.whitePlayMove(4, 2, 4, 3);
-		game.blackPlayMove(5, 6, 5, 4);
-		game.blackPlayMove(5, 4, 5, 3);
-		game.whitePlayMove(4, 3, 4, 4);
-		game.whitePlayMove(4, 4, 4, 5);
-		//game.whitePlayMove(4, 5, 4, 6);
-		//game.whitePlayMove(4, 6, 4, 7);
-		//game.whitePlayMove(5, 1, 5, 3);
-		//game.whitePlayMove(4, 7, 7, 4);
-		game.blackPlayMove(1, 6, 1, 4);
-		game.blackPlayMove(1, 4, 1, 3);
-		game.blackPlayMove(1, 3, 1, 2);
-		game.blackPlayMove(1, 2, 1, 1);
-		game.blackPlayMove(1, 1, 1, 0);
-		
-		
-		System.out.println(game.boardToString());
+		game.whitePlayMove(1, 1, 1, 3);
+		game.whitePlayMove(1, 3, 1, 4);
+		game.whitePlayMove(1, 4, 1, 5);
 		
 		/* POSSIBLY INVALIDATED */
 		// Diagnostic print of Piece positions is in

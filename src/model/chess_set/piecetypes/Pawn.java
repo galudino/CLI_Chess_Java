@@ -103,20 +103,19 @@ public class Pawn extends Piece {
 		if (this.isWhite()) {
 			if (this.pos.getRank() < pos.getRank()) {
 				if (firstMove) {
-					if (Math.abs(pos.getRank() - this.pos.getRank()) == 2
-							|| Math.abs(pos.getRank() - this.pos.getRank()) == 1
-									&& this.pos.getFile() == pos.getFile()) {
+					if ((Math.abs(pos.getRank() - this.pos.getRank()) == 2
+							|| Math.abs(pos.getRank() - this.pos.getRank()) == 1)
+									&& (this.pos.getFile() == pos.getFile() && (cell[pos.getFile()][pos.getRank()].getPiece() == null))) {
 						result = true;
 					}
 					firstMove = false;
 				} else {
 					if (Math.abs(pos.getRank() - this.pos.getRank()) == 1
-							&& this.pos.getFile() == pos.getFile()) {
+							&& this.pos.getFile() == pos.getFile() && (cell[pos.getFile()][pos.getRank()].getPiece() == null)) {
 						result = true;
 					} else if (Math.abs(pos.getRank() - this.pos.getRank()) == 1
 							&& Math.abs(pos.getFile() - this.pos.getFile()) == 1
-							&& cell[this.pos.getFile() + 1][this.pos.getRank()
-									+ 1].getPiece() != null) {
+							&& cell[this.pos.getFile() + 1][this.pos.getRank() + 1].getPiece() != null) {
 						if (cell[pos.getFile()][pos.getRank()].getPiece()
 								.isBlack())
 							result = true;
@@ -126,21 +125,17 @@ public class Pawn extends Piece {
 		} else if (this.isBlack()) {
 			if (pos.getRank() < this.pos.getRank()) {
 				if (firstMove) {
-					if (Math.abs(pos.getRank() - this.pos.getRank()) == 2
-							|| Math.abs(
-									pos.getRank() - this.pos.getRank()) == 1) {
+					if (Math.abs(pos.getRank() - this.pos.getRank()) == 2 || Math.abs(pos.getRank() - this.pos.getRank()) == 1) {
 						result = true;
 					}
 					firstMove = false;
 				} else {
-					if (Math.abs(pos.getRank() - this.pos.getRank()) == 1) {
+					if (Math.abs(pos.getRank() - this.pos.getRank()) == 1 && (cell[pos.getFile()][pos.getRank()].getPiece() == null)) {
 						result = true;
 					} else if (Math.abs(pos.getRank() - this.pos.getRank()) == 1
-							&& Math.abs(pos.getFile() - this.pos.getFile()) == 1
-							&& cell[pos.getFile()][pos.getRank()]
-									.getPiece() != null) {
-						if (cell[pos.getFile()][pos.getRank()].getPiece()
-								.isWhite())
+							&& Math.abs(pos.getFile() - this.pos.getFile()) == 1 && cell[pos.getFile()][pos.getRank()].getPiece() != null) {
+				
+						if (cell[pos.getFile()][pos.getRank()].getPiece().isWhite())
 							result = true;
 					}
 				}
