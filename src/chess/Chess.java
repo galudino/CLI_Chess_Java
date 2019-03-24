@@ -58,12 +58,13 @@ public class Chess {
 		
 		System.out.println(game.boardToString());
 		
-		
+		/* POSSIBLY INVALIDATED */
 		// Diagnostic print of Piece positions is in
 		// Player.java, playMove(), line 100.
 		
 		// Board.java, line 190
 		// State of board prints after movePiece() completes
+		/* END INVALIDATED */
 	}
 	
 }

@@ -25,7 +25,7 @@ public class Knight extends Piece {
 	 * Parameterized constructor
 	 * 
 	 * @param pieceType the PieceType to assign
-	 * @param color the Color of a Player's PieceSet
+	 * @param color     the Color of a Player's PieceSet
 	 */
 	public Knight(PieceType pieceType, PieceType.Color color) {
 		super(color);
@@ -39,9 +39,9 @@ public class Knight extends Piece {
 			identifier += " (invalid)";
 		} else {
 			identifier += "Knight";
-			
-			identifier += pieceType.equals(PieceType.KNIGHT_R) 
-					? " (right)" : " (left)";
+
+			identifier += pieceType.equals(PieceType.KNIGHT_R) ? " (right)"
+					: " (left)";
 		}
 	}
 
@@ -54,16 +54,32 @@ public class Knight extends Piece {
 	@Override
 	protected boolean isMoveLegal(Cell[][] cell, Position pos) {
 		boolean result = false;
-
-		if(Math.abs(pos.getFile() - this.pos.getFile()) == 2 && Math.abs(pos.getRank() - this.pos.getRank()) == 1) {
+		
+		if (Math.abs(pos.getFile() - this.pos.getFile()) == 2
+				&& Math.abs(pos.getRank() - this.pos.getRank()) == 1) {
 			result = true;
 		}
-		
-		if(Math.abs(pos.getFile() - this.pos.getFile()) == 1 && Math.abs(pos.getRank() - this.pos.getRank()) == 2) {
+
+		if (Math.abs(pos.getFile() - this.pos.getFile()) == 1
+				&& Math.abs(pos.getRank() - this.pos.getRank()) == 2) {
 			result = true;
 		}
 
 		return result;
+		
+		//@formatter:off
+		/*
+		boolean result = false;
+		
+		final int deltaFile = Math.abs(pos.getFile() - this.pos.getFile());
+		final int deltaRank = Math.abs(pos.getRank() - this.pos.getRank());
+		
+		result = (deltaFile == 2 && deltaRank == 1);
+		result = (deltaFile == 1 && deltaRank == 2);
+		
+		return result;
+		*/
+		//@formatter:on
 	}
 
 	@Override

@@ -20,18 +20,19 @@ import model.game.Position;
  * @author gemuelealudino
  */
 public class Rook extends Piece {
-	
+
 	private boolean canCastle;
 
 	/**
 	 * Parameterized constructor
 	 * 
 	 * @param pieceType the PieceType to assign
-	 * @param color the Color of a Player's PieceSet
+	 * @param color     the Color of a Player's PieceSet
 	 */
 	public Rook(PieceType pieceType, PieceType.Color color) {
 		super(color);
 		canCastle = true;
+		
 		this.pieceType = pieceType.equals(PieceType.ROOK_R)
 				|| pieceType.equals(PieceType.ROOK_L) ? pieceType : null;
 
@@ -41,54 +42,111 @@ public class Rook extends Piece {
 			identifier += " (invalid)";
 		} else {
 			identifier += "Rook";
-			
-			identifier += pieceType.equals(PieceType.ROOK_R) 
-					? "   (right)" : "   (left)";
+
+			identifier += pieceType.equals(PieceType.ROOK_R) ? "   (right)"
+					: "   (left)";
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see model.chess_set.Piece#isMoveLegal(model.chess_set.Board.Cell[][], model.game.Position)
+	public boolean canCastle() {
+		return canCastle;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see model.chess_set.Piece#isMoveLegal(model.chess_set.Board.Cell[][],
+	 * model.game.Position)
 	 */
 	@Override
 	protected boolean isMoveLegal(Cell[][] cell, Position pos) {
 		boolean result = true;
-		
-		//This is to check if it is moving on one path aka not diagonal
-		if(pos.getRank() != this.pos.getRank() && pos.getFile() != this.pos.getFile()) {
+	
+		// This is to check if it is moving on one path aka not diagonal
+		if (pos.getRank() != this.pos.getRank()
+				&& pos.getFile() != this.pos.getFile()) {
 			result = false;
 		}
-		
-		//Utilized to check if next piece will be null
+
+		// Utilized to check if next piece will be null
 		int offset;
-		
-		if(pos.getFile() != this.pos.getFile()) {
-			if(this.pos.getFile() < pos.getFile())
+
+		if (pos.getFile() != this.pos.getFile()) {
+			if (this.pos.getFile() < pos.getFile()) {
 				offset = 1;
-			else
+			} else {
 				offset = -1;
+			}
+
+			for (int x = this.pos.getFile() + offset; 
+					x != pos.getFile(); x += offset) {
+				if (cell[x][this.pos.getRank()].getPiece() != null) {
+					return false;
+				}
+			}
+		}
+
+		if (pos.getRank() != this.pos.getRank()) {
+			if (this.pos.getRank() < pos.getRank()) {
+				offset = 1;
+			} else {
+				offset = -1;
+			}
+
+			for (int x = this.pos.getRank() + offset; 
+					x != pos.getRank(); x += offset) {
+				if (cell[this.pos.getFile()][x].getPiece() != null) {
+					return false;
+				}
+			}
+		}
+
+		return result;
+
+		//@formatter:off
+		/*
+		boolean result = true;
+		
+		final boolean differentRanks = pos.getRank() != this.pos.getRank();
+		final boolean differentFiles = pos.getFile() != this.pos.getFile();
+		
+		result = (differentFiles && differentRanks) ? false : true;
+		
+		int offset = 0;
+		
+		if (differentFiles) {
+			offset = (this.pos.getFile() < pos.getFile()) ? 1 : -1;
 			
-			for(int x = this.pos.getFile() + offset; x != pos.getFile(); x += offset) {
-				if(cell[x][this.pos.getRank()].getPiece() != null) {
+			for (int x = this.pos.getFile() + offset;
+					x != pos.getFile(); 
+					x += offset) {
+				
+				Piece currentPiece = cell[x][this.pos.getRank()].getPiece();
+				
+				if (currentPiece != null) {
 					return false;
 				}
 			}
 		}
 		
-		if(pos.getRank() != this.pos.getRank()) {
-			if(this.pos.getRank() < pos.getRank())
-				offset = 1;
-			else
-				offset = -1;
+		if (differentRanks) {
+			offset = (this.pos.getRank() < pos.getRank()) ? 1 : -1;
 			
-			for(int x = this.pos.getRank() + offset; x != pos.getRank(); x += offset) {
-				if(cell[this.pos.getFile()][x].getPiece() != null) {
+			for (int x = this.pos.getRank() + offset;
+					x != pos.getRank();
+					x += offset) {
+				
+				Piece currentPiece = cell[this.pos.getFile()][x].getPiece();
+				
+				if (currentPiece != null) {
 					return false;
 				}
 			}
 		}
 		
 		return result;
+		*/
+		//@formatter:on
 	}
 
 	@Override
