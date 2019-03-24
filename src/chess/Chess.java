@@ -41,9 +41,7 @@ public class Chess {
 		game.whitePlayMove(1, 1, 1, 3);
 		game.whitePlayMove(1, 3, 1, 4);
 		game.whitePlayMove(1, 4, 1, 5);
-		
-		
-		
+			
 		/* POSSIBLY INVALIDATED */
 		// Diagnostic print of Piece positions is in
 		// Player.java, playMove(), line 100.

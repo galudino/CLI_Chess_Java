@@ -10,8 +10,13 @@
  */
 package model.chess_set;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.Scanner;
+import java.util.Stack;
 
 import model.PieceType;
 import model.chess_set.piecetypes.*;
@@ -78,27 +83,37 @@ public class Board {
 		}
 	}
 	
-
+	/**
+	 * Represents a move within a Chess game, for logging purposes
+	 * 
+	 * @version Mar 24, 2019
+	 * @author gemuelealudino
+	 */
 	public class MovePair {
+		LocalTime localTime;
 		Piece piece;
 		Position pos;
+		int moveNumber;
 		
-		public MovePair(Piece piece, Position pos) {
+		MovePair(Piece piece, Position pos, int moveNumber) {
+			localTime = LocalTime.now();
 			this.piece = piece;
 			this.pos = pos;
+			this.moveNumber = moveNumber;
 		}
 		
 		public String toString() {
-			return "MOVE: " + piece + "\t\t" + pos + "\n";
+			return localTime + "\t" + moveNumber + "\t" + piece + "\t" + pos;
 		}
 	}
-
+	
 	private static final int MAX_LENGTH_WIDTH = 8;
 
 	private Cell[][] cell;
 	
-	public ArrayList<MovePair> moveList;
-
+	private ArrayList<MovePair> moveList;
+	private int moves;
+	
 	private PieceSet whiteSet;
 	private PieceSet blackSet;
 
@@ -284,7 +299,6 @@ public class Board {
 					break;
 				}
 				
-				
 				// This statement nullifies any reference to a Piece
 				// for this Cell object. (Next line: piece will be reassigned
 				// to the newPositionCell.piece field).
@@ -300,17 +314,77 @@ public class Board {
 				// piece.move(newPosition) // why use this? pos is protected.
 					
 				System.out.println(this);
-			}
-		}
+			}	
+			
+			++moves;
+			MovePair move = new MovePair(piece, piece.pos, moves);
+			moveList.add(move);
+
+			// ENPASSANT LOGIC GOES HERE:
+			// AT THIS POINT,
+			//	param piece to be moved was legally moved to its new position.
+			//  said piece's move added to the move list (it's the last element)
+			//  said piece should be identified as a pawn before proceeding.
+			
+			// (param piece identified as pawn)
+			
+			// now seek moveList for the second to last element
+			// determine if it is an enemy pawn (opposite color to param Piece)
+			// if so, now begin enpassant evaluation
+			
+			// if enpassant is possible - do it
+		}	
 		
+		/*
 		MovePair move = new MovePair(piece, newPosition);
 		moveList.add(move);
+		//moveStack.push(move);
+
+		
+		Piece lastMovePiece = moveList.get(moveList.size() - 2).piece;
+		Position lastMovePosition = moveList.get(moveList.size() - 2).pos;
+		
+		PieceType pieceType = lastMovePiece.pieceType;
+		
+		switch (pieceType) {
+		case PAWN_0:
+		case PAWN_1:
+		case PAWN_2:
+		case PAWN_3:
+		case PAWN_4:
+		case PAWN_5:
+		case PAWN_6:
+		case PAWN_7:
+			
+			
+			break;
+		default:
+
+			break;
+		}
+		*/
+		printMoveLog();
+		return result;
+	}
+	
+	/**
+	 * Prints the log of moves as per the moveList field (ArrayList)
+	 */
+	public void printMoveLog() {
+		System.out.println("MOVE LOG (ALL PIECES) ------------------");
+		
+		String str = "";
+		
+		str += "Time\t\tMove #\tPiece\tPosition\n";
+		str += "----------------------------------------\n";
+		
+		System.out.print(str);
 		
 		for (MovePair mp : moveList) {
 			System.out.println(mp);
 		}
-
-		return result;
+		
+		System.out.println();
 	}
 
 	/**
