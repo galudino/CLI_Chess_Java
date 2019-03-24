@@ -117,6 +117,13 @@ public class Game {
 	Position getBlackNewPosition() {
 		return blackNewPosition;
 	}
+	
+	/**
+	 * Prints the current state of the move list
+	 */
+	public void printMoveLog() {
+		board.printMoveLog();
+	}
 
 	/**
 	 * Returns the current state of the Game as an ASCII chess board 
