@@ -195,39 +195,33 @@ public class Board {
 						String inputAns;
 
 						if (piece.isWhite() && newPosition.getRank() == 7) {
-							System.out.println(
-									"Pawn is now promotable, what would you like to promote it to?\nQ for Queen, B for bishop, N for knight, or R for Rook");
+							System.out.println("Pawn is now promotable, what would you like to promote it to?\nQ for Queen, B for bishop, N for knight, or R for Rook");
 							inputAns = input.next();
 
-							if (inputAns.equalsIgnoreCase("Q")) {
-								/*
-								Piece promo = new Queen(PieceType.Color.WHITE);
-								cell[piece.pos.getFile()][piece.pos.getRank()].setPiece(null);
-								cell[newPosition.getFile()][newPosition.getRank()].setPiece(promo);
-								*/
-								
-								
-								
+							if (inputAns.equalsIgnoreCase("Q")) {							
 								Piece promo = new Queen(PieceType.Color.WHITE);
 								promo.pos = piece.pos;
 								Piece p = pieceSet.getPieceByPosition(piece.pos);
-								
 								pieceSet.piece[p.pieceType.ordinal()] = promo;
-								
 								piece = promo;
-								//oldPositionCell.setPiece(promo);
-								
-				
-					
-						
 							} else if (inputAns.equalsIgnoreCase("B")) {
-								Piece promo = new Bishop(PieceType.Color.WHITE);
-								cell[piece.pos.getFile()][piece.pos.getRank()].setPiece(null);
-								cell[newPosition.getFile()][newPosition.getRank()].setPiece(promo);
+								Piece promo = new Bishop(PieceType.BISHOP_R, PieceType.Color.WHITE);
+								promo.pos = piece.pos;
+								Piece p = pieceSet.getPieceByPosition(piece.pos);
+								pieceSet.piece[p.pieceType.ordinal()] = promo;
+								piece = promo;
 							} else if (inputAns.equalsIgnoreCase("N")) {
 								Piece promo = new Knight(PieceType.KNIGHT_R, PieceType.Color.WHITE);
+								promo.pos = piece.pos;
+								Piece p = pieceSet.getPieceByPosition(piece.pos);
+								pieceSet.piece[p.pieceType.ordinal()] = promo;
+								piece = promo;
 							} else if (inputAns.equalsIgnoreCase("R")) {
 								Piece promo = new Rook(PieceType.ROOK_R, PieceType.Color.WHITE);
+								promo.pos = piece.pos;
+								Piece p = pieceSet.getPieceByPosition(piece.pos);
+								pieceSet.piece[p.pieceType.ordinal()] = promo;
+								piece = promo;
 							}
 						}
 						
@@ -255,11 +249,7 @@ public class Board {
 				// data within a Piece object.
 				piece.pos = newPosition;
 				// piece.move(newPosition) // why use this? pos is protected.
-				
-				
-				System.out.println("THIS IS A " + piece);
-				
-				
+					
 				System.out.println(this);
 			}
 		}
