@@ -1,5 +1,24 @@
 ---DELETE THIS SCRATCHPAD FILE UPON RELEASE---
 
+						final String prompt = String.format("\n%s\n"
+								+ "\t%s\n"
+								+ "\t%s\n"
+								+ "\t%s\n"
+								+ "\t%s\n"
+								+ "\n%7s ",
+								"Pawn is now promotable, "
+								+ "what would you like to promote it to?", 
+								"Q for Queen",
+								"B for Bishop",
+								"N for Knight",
+								"R for Rook",
+								"==>"
+								);
+						
+						System.out.print(prompt);
+						inputAns = input.next();
+						System.out.println();
+
 for all overridden move methods,
 perhaps another param is required:
 an array of Position[] that denotes

@@ -43,7 +43,7 @@ public class Game {
 		white.assignPieceSet(board);
 		black.assignPieceSet(board);
 	}
-	
+		
 	/**
 	 * Piece from the white PieceSet will be moved to a new Cell on the Board
 	 * 

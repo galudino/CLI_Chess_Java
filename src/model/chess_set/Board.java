@@ -10,6 +10,7 @@
  */
 package model.chess_set;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import model.PieceType;
@@ -76,10 +77,27 @@ public class Board {
 			return piece == null ? "--" : piece.toString();
 		}
 	}
+	
+
+	public class MovePair {
+		Piece piece;
+		Position pos;
+		
+		public MovePair(Piece piece, Position pos) {
+			this.piece = piece;
+			this.pos = pos;
+		}
+		
+		public String toString() {
+			return "MOVE: " + piece + "\t\t" + pos + "\n";
+		}
+	}
 
 	private static final int MAX_LENGTH_WIDTH = 8;
 
 	private Cell[][] cell;
+	
+	public ArrayList<MovePair> moveList;
 
 	private PieceSet whiteSet;
 	private PieceSet blackSet;
@@ -101,6 +119,8 @@ public class Board {
 
 		assignWhitePieces();
 		assignBlackPieces();
+		
+		moveList = new ArrayList<MovePair>();
 	}
 
 	/**
@@ -198,7 +218,7 @@ public class Board {
 							System.out.println("Pawn is now promotable, what would you like to promote it to?\nQ for Queen, B for bishop, N for knight, or R for Rook");
 							inputAns = input.next();
 
-							if (inputAns.equalsIgnoreCase("Q")) {							
+							if (inputAns.equalsIgnoreCase("Q")) {				
 								Piece promo = new Queen(PieceType.Color.WHITE);
 								promo.pos = piece.pos;
 								Piece p = pieceSet.getPieceByPosition(piece.pos);
@@ -281,6 +301,13 @@ public class Board {
 					
 				System.out.println(this);
 			}
+		}
+		
+		MovePair move = new MovePair(piece, newPosition);
+		moveList.add(move);
+		
+		for (MovePair mp : moveList) {
+			System.out.println(mp);
 		}
 
 		return result;
