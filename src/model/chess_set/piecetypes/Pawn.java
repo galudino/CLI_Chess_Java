@@ -23,6 +23,7 @@ import java.util.Scanner;
 public class Pawn extends Piece {
 
 	private boolean firstMove = true;
+	private boolean isPromoted = false;
 
 	/**
 	 * Parameterized constructor
@@ -84,6 +85,10 @@ public class Pawn extends Piece {
 			break;
 		}
 	}
+	
+	public boolean isPromoted() {
+		return isPromoted;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -142,6 +147,7 @@ public class Pawn extends Piece {
 			}
 		}
 		
+		/*
 		if (result == true) {
 			Scanner input = new Scanner(System.in);
 			String inputAns;
@@ -166,7 +172,12 @@ public class Pawn extends Piece {
 				}
 			}
 			
-			input.close();
+			//input.close();
+		}
+		*/
+		
+		if (result == true) {
+			isPromoted = true;
 		}
 		
 		return result;

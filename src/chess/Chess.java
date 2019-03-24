@@ -49,11 +49,11 @@ public class Chess {
 		game.whitePlayMove(4, 3, 4, 4);
 		game.whitePlayMove(4, 4, 4, 5);
 		game.whitePlayMove(4, 5, 4, 6);
-		//game.whitePlayMove(4, 6, 4, 7);
-		//game.whitePlayMove(5, 1, 5, 3);
+		game.whitePlayMove(4, 6, 4, 7);
+		game.whitePlayMove(5, 1, 5, 3);
 		
 		
-		//game.whitePlayMove(4, 7, 7, 4);
+		game.whitePlayMove(4, 7, 7, 4);
 		
 		
 		System.out.println(game.boardToString());

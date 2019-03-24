@@ -85,7 +85,7 @@ class Player {
 						color, piecePosition);
 				System.err.println(error);
 			} else {
-				result = board.movePiece(pieceRequested, newPosition);
+				result = board.movePiece(pieceRequested, pieceSet, newPosition);
 
 				/*
 				 *  Not necessary, because pieceRequested

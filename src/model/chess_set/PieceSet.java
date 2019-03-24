@@ -24,7 +24,7 @@ public class PieceSet {
 	private int PIECE_COUNT = 16;
 	
 	private PieceType.Color color;
-	private Piece[] piece;
+	Piece[] piece;
 	
 	/**
 	 * Parameterized constructor

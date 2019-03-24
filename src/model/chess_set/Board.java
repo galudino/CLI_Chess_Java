@@ -10,7 +10,10 @@
  */
 package model.chess_set;
 
+import java.util.Scanner;
+
 import model.PieceType;
+import model.chess_set.piecetypes.*;
 import model.game.Position;
 
 /**
@@ -139,7 +142,7 @@ public class Board {
 	 * 
 	 * @return true if successful, false otherwise
 	 */
-	public boolean movePiece(Piece piece, Position newPosition) {
+	public boolean movePiece(Piece piece, PieceSet pieceSet, Position newPosition) {
 		boolean result = false;
 
 		Cell oldPositionCell = getCell(piece.pos);
@@ -178,6 +181,67 @@ public class Board {
 			// the Cell will no longer have a reference to that Piece.
 
 			if (result) {
+				switch (piece.pieceType) {
+				case PAWN_0:
+				case PAWN_1:
+				case PAWN_2:
+				case PAWN_3:
+				case PAWN_4:
+				case PAWN_5:
+				case PAWN_6:
+				case PAWN_7:
+					if (result == true) {
+						Scanner input = new Scanner(System.in);
+						String inputAns;
+
+						if (piece.isWhite() && newPosition.getRank() == 7) {
+							System.out.println(
+									"Pawn is now promotable, what would you like to promote it to?\nQ for Queen, B for bishop, N for knight, or R for Rook");
+							inputAns = input.next();
+
+							if (inputAns.equalsIgnoreCase("Q")) {
+								/*
+								Piece promo = new Queen(PieceType.Color.WHITE);
+								cell[piece.pos.getFile()][piece.pos.getRank()].setPiece(null);
+								cell[newPosition.getFile()][newPosition.getRank()].setPiece(promo);
+								*/
+								
+								
+								
+								Piece promo = new Queen(PieceType.Color.WHITE);
+								promo.pos = piece.pos;
+								Piece p = pieceSet.getPieceByPosition(piece.pos);
+								
+								pieceSet.piece[p.pieceType.ordinal()] = promo;
+								
+								piece = promo;
+								//oldPositionCell.setPiece(promo);
+								
+				
+					
+						
+							} else if (inputAns.equalsIgnoreCase("B")) {
+								Piece promo = new Bishop(PieceType.Color.WHITE);
+								cell[piece.pos.getFile()][piece.pos.getRank()].setPiece(null);
+								cell[newPosition.getFile()][newPosition.getRank()].setPiece(promo);
+							} else if (inputAns.equalsIgnoreCase("N")) {
+								Piece promo = new Knight(PieceType.KNIGHT_R, PieceType.Color.WHITE);
+							} else if (inputAns.equalsIgnoreCase("R")) {
+								Piece promo = new Rook(PieceType.ROOK_R, PieceType.Color.WHITE);
+							}
+						}
+						
+						//input.close();
+					}
+					
+					//input.close();
+					
+					break;
+				default:
+					break;
+				}
+				
+				
 				// This statement nullifies any reference to a Piece
 				// for this Cell object. (Next line: piece will be reassigned
 				// to the newPositionCell.piece field).
@@ -191,6 +255,10 @@ public class Board {
 				// data within a Piece object.
 				piece.pos = newPosition;
 				// piece.move(newPosition) // why use this? pos is protected.
+				
+				
+				System.out.println("THIS IS A " + piece);
+				
 				
 				System.out.println(this);
 			}
