@@ -48,12 +48,15 @@ public class Chess {
 		game.blackPlayMove(5, 4, 5, 3);
 		game.whitePlayMove(4, 3, 4, 4);
 		game.whitePlayMove(4, 4, 4, 5);
-		game.whitePlayMove(4, 5, 4, 6);
-		game.whitePlayMove(4, 6, 4, 7);
-		game.whitePlayMove(5, 1, 5, 3);
-		
-		
-		game.whitePlayMove(4, 7, 7, 4);
+		//game.whitePlayMove(4, 5, 4, 6);
+		//game.whitePlayMove(4, 6, 4, 7);
+		//game.whitePlayMove(5, 1, 5, 3);
+		//game.whitePlayMove(4, 7, 7, 4);
+		game.blackPlayMove(1, 6, 1, 4);
+		game.blackPlayMove(1, 4, 1, 3);
+		game.blackPlayMove(1, 3, 1, 2);
+		game.blackPlayMove(1, 2, 1, 1);
+		game.blackPlayMove(1, 1, 1, 0);
 		
 		
 		System.out.println(game.boardToString());
