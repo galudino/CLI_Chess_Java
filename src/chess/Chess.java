@@ -33,11 +33,12 @@ public class Chess {
 		// A 'player' can request a move, 
 		// but the Board/Pieces have the final word.
 
-		System.out.println("\nNew game\n-------------------------");
-		System.out.println(game.boardToString());
+		//System.out.println("\nNew game\n-------------------------");
+		//System.out.println(game.boardToString());
 		
-		System.out.println("--- Move tests begin NOW ---\n");
+		//System.out.println("--- Move tests begin NOW ---\n");
 		
+		/*
 		game.whitePlayMove(1, 1, 1, 3);
 		game.whitePlayMove(1, 3, 1, 4);
 		game.blackPlayMove(0, 6, 0, 4);
@@ -49,17 +50,10 @@ public class Chess {
 		
 		game.whitePlayMove(5, 2, 6, 3);
 		game.blackPlayMove(6, 7, 7, 5);
+		*/
 		
-		//game.blackPlayMove(6, 6, 6, 4);
-		//game.blackPlayMove(6, 4, 6, 3);
-	
-		/* POSSIBLY INVALIDATED */
-		// Diagnostic print of Piece positions is in
-		// Player.java, playMove(), line 100.
-		
-		// Board.java, line 190
-		// State of board prints after movePiece() completes
-		/* END INVALIDATED */
+		game.start();
+
 	}
 	
 }
