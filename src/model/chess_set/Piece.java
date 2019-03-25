@@ -12,6 +12,7 @@ package model.chess_set;
 
 import model.PieceType;
 import model.chess_set.Board.Cell;
+import model.chess_set.piecetypes.Pawn;
 import model.game.Position;
 
 /**
@@ -80,6 +81,23 @@ public abstract class Piece {
 	 */
 	public boolean isBlack() {
 		return color.equals(PieceType.Color.BLACK);
+	}
+	
+	/**
+	 * Determines if a Piece p is a Pawn, or not
+	 * 
+	 * @param p Piece to assess for type (pawn or not)
+	 * @return true if p is a type PieceType.PAWN_n, false otherwise
+	 */
+	public boolean isPawn() {
+		PieceType pt = pieceType;
+		
+		boolean isPieceTypePawn = pt.equals(PieceType.PAWN_0) || pt.equals(PieceType.PAWN_1)
+				|| pt.equals(PieceType.PAWN_2) || pt.equals(PieceType.PAWN_3)
+				|| pt.equals(PieceType.PAWN_4) || pt.equals(PieceType.PAWN_5)
+				|| pt.equals(PieceType.PAWN_6) || pt.equals(PieceType.PAWN_7);
+		
+		return isPieceTypePawn && this instanceof Pawn;
 	}
 	
 	/**
