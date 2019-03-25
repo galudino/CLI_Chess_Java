@@ -97,7 +97,7 @@ class Player {
 				}
 				*/
 				
-				System.out.println(pieceSet);
+				//System.out.println(pieceSet);
 			}
 		}
 		
