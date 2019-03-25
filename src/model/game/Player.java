@@ -103,4 +103,8 @@ class Player {
 		
 		return result;
 	}
+	
+	public void printPieceSet() {
+		System.out.println(pieceSet);
+	}
 }

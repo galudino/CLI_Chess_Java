@@ -53,7 +53,6 @@ public class Chess {
 		*/
 		
 		game.start();
-
 	}
 	
 }

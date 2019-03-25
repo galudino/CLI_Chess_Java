@@ -55,7 +55,7 @@ public class Board {
 		public Piece getPiece() {
 			return piece;
 		}
-		
+
 		public void setPiece(Piece piece) {
 			this.piece = piece;
 		}
@@ -68,26 +68,26 @@ public class Board {
 		public Position getPosition() {
 			return loc;
 		}
-		
+
 		public Move getLastMove() {
 			return moveList.get(moveList.size() - 1);
 		}
-		
+
 		public void setPieceNull(int file, int rank) {
 			loc = new Position(file, rank);
 			piece = null;
 		}
 
 		/**
-		 * Returns a string representation of the Piece occupying the cell,
-		 * if there is a Piece present
+		 * Returns a string representation of the Piece occupying the cell, if
+		 * there is a Piece present
 		 */
 		@Override
 		public String toString() {
 			return piece == null ? "--" : piece.toString();
 		}
 	}
-	
+
 	/**
 	 * Represents a move within a Chess game, for logging purposes
 	 * 
@@ -96,47 +96,48 @@ public class Board {
 	 */
 	public class Move {
 		Piece piece;
-		
+
 		Position startPos;
 		Position endPos;
-		
+
 		LocalTime localTime;
 
 		int moveNumber;
-		
+
 		Move(Piece piece, Position startPos, Position endPos, int moveNumber) {
 			this.piece = piece;
 			this.startPos = startPos;
 			this.endPos = endPos;
-			
+
 			this.moveNumber = moveNumber;
+			localTime = LocalTime.now();
 		}
-		
+
 		public Piece getLastPiece() {
 			return piece;
 		}
-		
+
 		public Position getStartPosition() {
 			return startPos;
 		}
-		
+
 		public Position getEndPosition() {
 			return endPos;
 		}
-		
+
 		public String toString() {
-			return  moveNumber + "\t" 
-		+ piece + "\t" + startPos + "\t" + endPos;
+			return localTime.toString() + "\t" + moveNumber + "\t" 
+					+ piece + "\t" + startPos + "\t" + endPos;
 		}
 	}
-	
+
 	private static final int MAX_LENGTH_WIDTH = 8;
 
 	private Cell[][] cell;
-	
+
 	private ArrayList<Move> moveList;
 	private int moves;
-	
+
 	private PieceSet whiteSet;
 	private PieceSet blackSet;
 
@@ -157,7 +158,7 @@ public class Board {
 
 		assignWhitePieces();
 		assignBlackPieces();
-		
+
 		moveList = new ArrayList<Move>();
 	}
 
@@ -191,24 +192,25 @@ public class Board {
 	}
 
 	/**
-	 * Requested Piece will be moved to a Cell corresponding to the file
-	 * and rank of newPosition, provided newPosition is a legal move
-	 * for a given Piece
+	 * Requested Piece will be moved to a Cell corresponding to the file and
+	 * rank of newPosition, provided newPosition is a legal move for a given
+	 * Piece
 	 * 
 	 * @param piece       accessed by a Player for a move
 	 * @param newPosition the new Position desired by the Player for a Piece
 	 * 
 	 * @return true if successful, false otherwise
 	 */
-	public boolean movePiece(Piece piece, PieceSet pieceSet, Position newPosition) {
+	public boolean movePiece(Piece piece, PieceSet pieceSet,
+			Position newPosition) {
 		boolean result = false;
 
 		Cell oldPositionCell = getCell(piece.pos);
 		Cell newPositionCell = getCell(newPosition);
 
 		boolean isLegalMove = piece.isMoveLegal(cell, newPosition);
-		
-		//System.out.println(isLegalMove);
+
+		// System.out.println(isLegalMove);
 
 		if (isLegalMove) {
 			Piece other = newPositionCell.piece;
@@ -253,85 +255,111 @@ public class Board {
 						String inputAns;
 
 						if (piece.isWhite()) {
-							
-							if(newPosition.getRank() == 7) {
-								System.out.println("Pawn is now promotable, what would you like to promote it to?\nQ for Queen, B for bishop, N for knight, or R for Rook");
+
+							if (newPosition.getRank() == 7) {
+								System.out.println(
+										"Pawn is now promotable, what would you like to promote it to?\nQ for Queen, B for bishop, N for knight, or R for Rook");
 								inputAns = input.next();
 
-								if (inputAns.equalsIgnoreCase("Q")) {				
-									Piece promo = new Queen(PieceType.Color.WHITE);
+								if (inputAns.equalsIgnoreCase("Q")) {
+									Piece promo = new Queen(
+											PieceType.Color.WHITE);
 									promo.pos = piece.pos;
-									Piece p = pieceSet.getPieceByPosition(piece.pos);
-									pieceSet.piece[p.pieceType.ordinal()] = promo;
+									Piece p = pieceSet
+											.getPieceByPosition(piece.pos);
+									pieceSet.piece[p.pieceType
+											.ordinal()] = promo;
 									piece = promo;
 								} else if (inputAns.equalsIgnoreCase("B")) {
-									Piece promo = new Bishop(PieceType.BISHOP_R, PieceType.Color.WHITE);
+									Piece promo = new Bishop(PieceType.BISHOP_R,
+											PieceType.Color.WHITE);
 									promo.pos = piece.pos;
-									Piece p = pieceSet.getPieceByPosition(piece.pos);
-									pieceSet.piece[p.pieceType.ordinal()] = promo;
+									Piece p = pieceSet
+											.getPieceByPosition(piece.pos);
+									pieceSet.piece[p.pieceType
+											.ordinal()] = promo;
 									piece = promo;
 								} else if (inputAns.equalsIgnoreCase("N")) {
-									Piece promo = new Knight(PieceType.KNIGHT_R, PieceType.Color.WHITE);
+									Piece promo = new Knight(PieceType.KNIGHT_R,
+											PieceType.Color.WHITE);
 									promo.pos = piece.pos;
-									Piece p = pieceSet.getPieceByPosition(piece.pos);
-									pieceSet.piece[p.pieceType.ordinal()] = promo;
+									Piece p = pieceSet
+											.getPieceByPosition(piece.pos);
+									pieceSet.piece[p.pieceType
+											.ordinal()] = promo;
 									piece = promo;
 								} else if (inputAns.equalsIgnoreCase("R")) {
-									Piece promo = new Rook(PieceType.ROOK_R, PieceType.Color.WHITE);
+									Piece promo = new Rook(PieceType.ROOK_R,
+											PieceType.Color.WHITE);
 									promo.pos = piece.pos;
-									Piece p = pieceSet.getPieceByPosition(piece.pos);
-									pieceSet.piece[p.pieceType.ordinal()] = promo;
+									Piece p = pieceSet
+											.getPieceByPosition(piece.pos);
+									pieceSet.piece[p.pieceType
+											.ordinal()] = promo;
 									piece = promo;
 								}
 							}
 						} else if (piece.isBlack()) {
-							if(newPosition.getRank() == 0) {
-								System.out.println("Pawn is now promotable, what would you like to promote it to?\nQ for Queen, B for bishop, N for knight, or R for Rook");
+							if (newPosition.getRank() == 0) {
+								System.out.println(
+										"Pawn is now promotable, what would you like to promote it to?\nQ for Queen, B for bishop, N for knight, or R for Rook");
 								inputAns = input.next();
 
-								if (inputAns.equalsIgnoreCase("Q")) {							
-									Piece promo = new Queen(PieceType.Color.BLACK);
+								if (inputAns.equalsIgnoreCase("Q")) {
+									Piece promo = new Queen(
+											PieceType.Color.BLACK);
 									promo.pos = piece.pos;
-									Piece p = pieceSet.getPieceByPosition(piece.pos);
-									pieceSet.piece[p.pieceType.ordinal()] = promo;
+									Piece p = pieceSet
+											.getPieceByPosition(piece.pos);
+									pieceSet.piece[p.pieceType
+											.ordinal()] = promo;
 									piece = promo;
 								} else if (inputAns.equalsIgnoreCase("B")) {
-									Piece promo = new Bishop(PieceType.BISHOP_R, PieceType.Color.BLACK);
+									Piece promo = new Bishop(PieceType.BISHOP_R,
+											PieceType.Color.BLACK);
 									promo.pos = piece.pos;
-									Piece p = pieceSet.getPieceByPosition(piece.pos);
-									pieceSet.piece[p.pieceType.ordinal()] = promo;
+									Piece p = pieceSet
+											.getPieceByPosition(piece.pos);
+									pieceSet.piece[p.pieceType
+											.ordinal()] = promo;
 									piece = promo;
 								} else if (inputAns.equalsIgnoreCase("N")) {
-									Piece promo = new Knight(PieceType.KNIGHT_R, PieceType.Color.BLACK);
+									Piece promo = new Knight(PieceType.KNIGHT_R,
+											PieceType.Color.BLACK);
 									promo.pos = piece.pos;
-									Piece p = pieceSet.getPieceByPosition(piece.pos);
-									pieceSet.piece[p.pieceType.ordinal()] = promo;
+									Piece p = pieceSet
+											.getPieceByPosition(piece.pos);
+									pieceSet.piece[p.pieceType
+											.ordinal()] = promo;
 									piece = promo;
 								} else if (inputAns.equalsIgnoreCase("R")) {
-									Piece promo = new Rook(PieceType.ROOK_R, PieceType.Color.BLACK);
+									Piece promo = new Rook(PieceType.ROOK_R,
+											PieceType.Color.BLACK);
 									promo.pos = piece.pos;
-									Piece p = pieceSet.getPieceByPosition(piece.pos);
-									pieceSet.piece[p.pieceType.ordinal()] = promo;
+									Piece p = pieceSet
+											.getPieceByPosition(piece.pos);
+									pieceSet.piece[p.pieceType
+											.ordinal()] = promo;
 									piece = promo;
 								}
 							}
 						}
-						
-						//input.close();
+
+						// input.close();
 					}
-					
-					//input.close();
-					
+
+					// input.close();
+
 					break;
 				default:
 					break;
 				}
-				
+
 				// This statement nullifies any reference to a Piece
 				// for this Cell object. (Next line: piece will be reassigned
 				// to the newPositionCell.piece field).
 				oldPositionCell.piece = null;
-				
+
 				// This statement affects what Pieces print
 				// at which cells when board.toString() is called.
 				newPositionCell.piece = piece;
@@ -340,116 +368,106 @@ public class Board {
 				// data within a Piece object.
 				piece.pos = newPosition;
 				// piece.move(newPosition) // why use this? pos is protected.
-					
-				//System.out.println(this);
-			}	
-			
+
+				// System.out.println(this);
+			}
+
 			++moves;
-			Move newestMove 
-			= new Move(piece, oldPositionCell.loc, piece.pos, moves);
+			Move newestMove = new Move(piece, oldPositionCell.loc, piece.pos,
+					moves);
 			moveList.add(newestMove);
-			
+
 			final int moveListLastIndex = moveList.size() - 1;
-		
-			//Move lastMove = moveList.get(moveListLastIndex - 2);
-			//Move beforeLastMove = moveList.get(moveListLastIndex - 3);
-			//Move beforeBeforeLastMove = moveList.get(moveListLastIndex - 4);
-			
+
+			// Move lastMove = moveList.get(moveListLastIndex - 2);
+			// Move beforeLastMove = moveList.get(moveListLastIndex - 3);
+			// Move beforeBeforeLastMove = moveList.get(moveListLastIndex - 4);
+
 			// Conditions for enpassant (wikipedia)
 			// capturing pawn must be on rank 5
 			// captured pawn must be on an adjacent file
-				// and must have just moved two squares in a single move
-				// i.e. a double-step move
+			// and must have just moved two squares in a single move
+			// i.e. a double-step move
 			// capture can only be made on the move immediately after
 			// the opposing pawn makes the double-step move;
 			// otherwise the right to capture it via enpassant is lost.
-			
-			// NOTE: 
-			// file A-H 
-			//   is 0-7
+
+			// NOTE:
+			// file A-H
+			// is 0-7
 			//
-			// rank 1-8 
-			//   is 0-7
-			
-			
-			final boolean capturingPawnOnRank5
-			= newestMove.startPos.getRank() == 5;
+			// rank 1-8
+			// is 0-7
+
+			final boolean capturingPawnOnRank5 = newestMove.startPos
+					.getRank() == 5;
 
 			/*
-			MovePair move = new MovePair(piece, newPosition);
-			moveList.add(move);
-			//moveStack.push(move);
-
-			
-			Piece lastMovePiece = moveList.get(moveList.size() - 2).piece;
-			Position lastMovePosition = moveList.get(moveList.size() - 2).pos;
-			
-			PieceType pieceType = lastMovePiece.pieceType;
-			
-			switch (pieceType) {
-			case PAWN_0:
-			case PAWN_1:
-			case PAWN_2:
-			case PAWN_3:
-			case PAWN_4:
-			case PAWN_5:
-			case PAWN_6:
-			case PAWN_7:
-				
-				
-				break;
-			default:
-
-				break;
-			}
-			*/
+			 * MovePair move = new MovePair(piece, newPosition);
+			 * moveList.add(move); //moveStack.push(move);
+			 * 
+			 * 
+			 * Piece lastMovePiece = moveList.get(moveList.size() - 2).piece;
+			 * Position lastMovePosition = moveList.get(moveList.size() -
+			 * 2).pos;
+			 * 
+			 * PieceType pieceType = lastMovePiece.pieceType;
+			 * 
+			 * switch (pieceType) { case PAWN_0: case PAWN_1: case PAWN_2: case
+			 * PAWN_3: case PAWN_4: case PAWN_5: case PAWN_6: case PAWN_7:
+			 * 
+			 * 
+			 * break; default:
+			 * 
+			 * break; }
+			 */
 
 		}
 		canCheck(piece);
 		return result;
 	}
-		
+
 	/**
 	 * Prints the log of moves as per the moveList field (ArrayList)
 	 */
 	public void printMoveLog() {
 		System.out.println("MOVE LOG (ALL PIECES) ---------------------");
-		
+
 		String str = "";
-		
+
 		str += "Time\t\tMove #\tPiece\tStart\tEnd\n";
 		str += "-------------------------------------------\n";
-		
+
 		System.out.print(str);
-		
+
 		for (Move mp : moveList) {
 			System.out.println(mp);
 		}
-		
+
 		System.out.println();
 	}
-	
+
 	public boolean canCheck(Piece piece) {
 		boolean result = false;
-		
+
 		Position oppositeKing = null;
 		Piece oppositeK = null;
-		
-		if(piece.isWhite()) {
+
+		if (piece.isWhite()) {
 			oppositeK = getBlackSet().getPiece(PieceType.KING);
 			oppositeKing = oppositeK.pos;
 		} else if (piece.isBlack()) {
 			oppositeK = getWhiteSet().getPiece(PieceType.KING);
 			oppositeKing = oppositeK.pos;
 		}
-		
+
 		boolean isMoveLegal = piece.isMoveLegal(cell, oppositeKing);
-		
-		if(isMoveLegal) {
+
+		if (isMoveLegal) {
 			System.out.println("Check");
 			result = true;
 		}
-		
+
 		return result;
 	}
 
@@ -492,7 +510,7 @@ public class Board {
 					str += String.format("%d", rank + 1); // FOR RELEASE
 
 					// FOR DEBUGGING: Print rank indices as per an array
-					//str += String.format("%d", rank);
+					// str += String.format("%d", rank);
 				}
 			}
 
@@ -503,7 +521,7 @@ public class Board {
 		str += String.format(" a  b  c  d  e  f  g  h\n");
 
 		// FOR DEBUGGING: Print file indices as per an array
-		//str += String.format(" 0  1  2  3  4  5  6  7\n");
+		// str += String.format(" 0 1 2 3 4 5 6 7\n");
 
 		return str;
 	}

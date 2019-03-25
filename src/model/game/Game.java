@@ -265,11 +265,23 @@ public class Game {
 			whitesMove = whitesMove ? false : true;
 			willDraw = willDraw ? false : willDraw;
 
-			System.out.println(board);
+			boardToString();
+			
+			/**
+			 * DIAGNOSTICS
+			 */
+			printMoveLog();
+			
+			if (whitesMove == false) {
+				white.printPieceSet();
+			} else {
+				black.printPieceSet();
+			}
 		}
 
 		scan.close();
 	}
+	
 
 	/**
 	 * Accessor to retrieve the Position of the white Player's most recent Piece
