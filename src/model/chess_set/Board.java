@@ -68,6 +68,15 @@ public class Board {
 		public Position getPosition() {
 			return loc;
 		}
+		
+		public Move getLastMove() {
+			return moveList.get(moveList.size() - 1);
+		}
+		
+		public void setPieceNull(int file, int rank) {
+			loc = new Position(file, rank);
+			piece = null;
+		}
 
 		/**
 		 * Returns a string representation of the Piece occupying the cell,
@@ -100,13 +109,23 @@ public class Board {
 			this.startPos = startPos;
 			this.endPos = endPos;
 			
-			localTime = LocalTime.now();
-			
 			this.moveNumber = moveNumber;
 		}
 		
+		public Piece getLastPiece() {
+			return piece;
+		}
+		
+		public Position getStartPosition() {
+			return startPos;
+		}
+		
+		public Position getEndPosition() {
+			return endPos;
+		}
+		
 		public String toString() {
-			return localTime + "\t" + moveNumber + "\t" 
+			return  moveNumber + "\t" 
 		+ piece + "\t" + startPos + "\t" + endPos;
 		}
 	}
@@ -233,7 +252,9 @@ public class Board {
 						Scanner input = new Scanner(System.in);
 						String inputAns;
 
-						if (piece.isWhite()) {	
+						if (piece.isWhite()) {
+							
+							
 							
 							if(newPosition.getRank() == 7) {
 								System.out.println("Pawn is now promotable, what would you like to promote it to?\nQ for Queen, B for bishop, N for knight, or R for Rook");
@@ -332,9 +353,9 @@ public class Board {
 			
 			final int moveListLastIndex = moveList.size() - 1;
 		
-			Move lastMove = moveList.get(moveListLastIndex - 2);
-			Move beforeLastMove = moveList.get(moveListLastIndex - 3);
-			Move beforeBeforeLastMove = moveList.get(moveListLastIndex - 4);
+			//Move lastMove = moveList.get(moveListLastIndex - 2);
+			//Move beforeLastMove = moveList.get(moveListLastIndex - 3);
+			//Move beforeBeforeLastMove = moveList.get(moveListLastIndex - 4);
 			
 			// Conditions for enpassant (wikipedia)
 			// capturing pawn must be on rank 5
@@ -356,43 +377,36 @@ public class Board {
 			final boolean capturingPawnOnRank5
 			= newestMove.startPos.getRank() == 5;
 
-			
+			/*
+			MovePair move = new MovePair(piece, newPosition);
+			moveList.add(move);
+			//moveStack.push(move);
 
-		}	
-		
-<<<<<<< HEAD
-		/*
-		MovePair move = new MovePair(piece, newPosition);
-		moveList.add(move);
-		//moveStack.push(move);
-
-		
-		Piece lastMovePiece = moveList.get(moveList.size() - 2).piece;
-		Position lastMovePosition = moveList.get(moveList.size() - 2).pos;
-		
-		PieceType pieceType = lastMovePiece.pieceType;
-		
-		switch (pieceType) {
-		case PAWN_0:
-		case PAWN_1:
-		case PAWN_2:
-		case PAWN_3:
-		case PAWN_4:
-		case PAWN_5:
-		case PAWN_6:
-		case PAWN_7:
 			
+			Piece lastMovePiece = moveList.get(moveList.size() - 2).piece;
+			Position lastMovePosition = moveList.get(moveList.size() - 2).pos;
 			
-			break;
-		default:
+			PieceType pieceType = lastMovePiece.pieceType;
+			
+			switch (pieceType) {
+			case PAWN_0:
+			case PAWN_1:
+			case PAWN_2:
+			case PAWN_3:
+			case PAWN_4:
+			case PAWN_5:
+			case PAWN_6:
+			case PAWN_7:
+				
+				
+				break;
+			default:
 
-			break;
+				break;
+			}
+			*/
+
 		}
-		*/
-		//printMoveLog();
-=======
-		printMoveLog();
->>>>>>> branch 'master' of https://Patricknogaj@bitbucket.org/galudino/chess22.git
 		return result;
 	}
 		

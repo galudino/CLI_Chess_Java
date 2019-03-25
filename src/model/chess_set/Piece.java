@@ -114,15 +114,6 @@ public abstract class Piece {
 	}
 	
 	/**
-	 * Set a piece type (utilized for Promotion)
-	 * @param pieceType -- set piece type inputed by user.
-	 * @return It allows the user to set a new piece type.
-	 */
-	protected void setPieceType(Piece piece) {
-		this.piece = piece;
-	}
-	
-	/**
 	 * Determine if a move is legal given a Position pos
 	 * 
 	 * @param cell current state of the Board

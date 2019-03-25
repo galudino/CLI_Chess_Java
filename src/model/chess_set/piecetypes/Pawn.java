@@ -14,7 +14,7 @@ import model.PieceType;
 import model.chess_set.Piece;
 import model.chess_set.Board.Cell;
 import model.game.Position;
-import java.util.Scanner;
+import model.chess_set.Board;
 
 /**
  * @version Mar 3, 2019
@@ -23,9 +23,8 @@ import java.util.Scanner;
 public class Pawn extends Piece {
 
 	private boolean firstMove = true;
-	private boolean isPromoted = false;
 	private boolean checkEnpassant = false;
-
+	
 	/**
 	 * Parameterized constructor
 	 * 
@@ -87,8 +86,8 @@ public class Pawn extends Piece {
 		}
 	}
 	
-	public boolean isPromoted() {
-		return isPromoted;
+	public Pawn(PieceType.Color color) {
+		super(color);
 	}
 
 	/*
@@ -114,40 +113,52 @@ public class Pawn extends Piece {
 					if (Math.abs(pos.getRank() - this.pos.getRank()) == 1
 							&& this.pos.getFile() == pos.getFile() && (cell[pos.getFile()][pos.getRank()].getPiece() == null)) {
 						result = true;
-					} else if (Math.abs(pos.getRank() - this.pos.getRank()) == 1
-							&& Math.abs(pos.getFile() - this.pos.getFile()) == 1
-							&& cell[this.pos.getFile() + 1][this.pos.getRank() + 1].getPiece() != null) {
-						if (cell[pos.getFile()][pos.getRank()].getPiece()
-								.isBlack())
+					} else if (Math.abs(pos.getRank() - this.pos.getRank()) == 1 && Math.abs(pos.getFile() - this.pos.getFile()) == 1 && cell[pos.getFile()][pos.getRank()].getPiece() != null) {
+						if (cell[pos.getFile()][pos.getRank()].getPiece().isBlack())
 							result = true;
 					} else if (Math.abs(pos.getRank() - this.pos.getRank()) == 1 && Math.abs(pos.getFile() - this.pos.getFile()) == 1 && cell[pos.getFile()][pos.getRank()].getPiece() == null) {
-							checkEnpassant = true;
-							
-							//need to somehow get access of the MoveLog into here.
-							
-							result = true;
+						checkEnpassant = true;
+						if(checkEnpassant) {
+							if(cell[pos.getFile()][pos.getRank()].getLastMove().getLastPiece().isPawn() == this.isPawn()) {
+								if(this.pos.getRank() == cell[pos.getFile()][pos.getRank()].getLastMove().getEndPosition().getRank()) {
+									Position pieceEndPos = cell[pos.getFile()][pos.getRank()].getLastMove().getEndPosition();
+									cell[pieceEndPos.getFile()][pieceEndPos.getRank()].setPieceNull(pieceEndPos.getFile(), pieceEndPos.getRank());
+									result = true;
+								} else {
+									result = false;
+								}
+							} 
+						}
 					}
 				}
 			}
 		} else if (this.isBlack()) {
 			if (pos.getRank() < this.pos.getRank()) {
 				if (firstMove) {
-					if (Math.abs(pos.getRank() - this.pos.getRank()) == 2 || Math.abs(pos.getRank() - this.pos.getRank()) == 1) {
+					if (Math.abs(pos.getRank() - this.pos.getRank()) == 2 || Math.abs(pos.getRank() - this.pos.getRank()) == 1 && (this.pos.getFile() == pos.getFile() && (cell[pos.getFile()][pos.getRank()].getPiece() == null))) {
 						result = true;
 					}
 					firstMove = false;
 				} else {
-					if (Math.abs(pos.getRank() - this.pos.getRank()) == 1 && (cell[pos.getFile()][pos.getRank()].getPiece() == null)) {
+					if (Math.abs(pos.getRank() - this.pos.getRank()) == 1
+							&& this.pos.getFile() == pos.getFile() && (cell[pos.getFile()][pos.getRank()].getPiece() == null)) {
 						result = true;
 					} else if (Math.abs(pos.getRank() - this.pos.getRank()) == 1 && Math.abs(pos.getFile() - this.pos.getFile()) == 1 && cell[pos.getFile()][pos.getRank()].getPiece() != null) {
 						if (cell[pos.getFile()][pos.getRank()].getPiece().isWhite())
 							result = true;
 					} else if (Math.abs(pos.getRank() - this.pos.getRank()) == 1 && Math.abs(pos.getFile() - this.pos.getFile()) == 1 && cell[pos.getFile()][pos.getRank()].getPiece() == null) {
 						checkEnpassant = true;
-						
-						//need to somehow get access of the MoveLog into here.
-						
-						result = true;
+						if(checkEnpassant) {
+							if(cell[pos.getFile()][pos.getRank()].getLastMove().getLastPiece().isPawn() == this.isPawn()) {
+								if(this.pos.getRank() == cell[pos.getFile()][pos.getRank()].getLastMove().getEndPosition().getRank()) {
+									Position pieceEndPos = cell[pos.getFile()][pos.getRank()].getLastMove().getEndPosition();
+									cell[pieceEndPos.getFile()][pieceEndPos.getRank()].setPieceNull(pieceEndPos.getFile(), pieceEndPos.getRank());
+									result = true;
+								} else {
+									result = false;
+								}
+							} 
+						}
 					}
 				}
 			}
@@ -181,10 +192,6 @@ public class Pawn extends Piece {
 			//input.close();
 		}
 		*/
-		
-		if (result == true) {
-			isPromoted = true;
-		}
 		
 		return result;
 		
@@ -307,10 +314,6 @@ public class Pawn extends Piece {
 		return result;
 		*/
 		//@formatter:on
-	}
-	
-	public boolean getCheckEnpassant() {
-		return checkEnpassant;
 	}
 
 	@Override
