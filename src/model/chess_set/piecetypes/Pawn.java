@@ -122,8 +122,13 @@ public class Pawn extends Piece {
 							if(cell[pos.getFile()][pos.getRank()].getLastMove().getLastPiece().isPawn() == this.isPawn()) {
 								if(this.pos.getRank() == cell[pos.getFile()][pos.getRank()].getLastMove().getEndPosition().getRank()) {
 									Position pieceEndPos = cell[pos.getFile()][pos.getRank()].getLastMove().getEndPosition();
-									cell[pieceEndPos.getFile()][pieceEndPos.getRank()].setPieceNull(pieceEndPos.getFile(), pieceEndPos.getRank());
-									result = true;
+									Position pieceStartPos = cell[pos.getFile()][pos.getRank()].getLastMove().getStartPosition();
+									if(this.pos.getRank() == 4 && pieceEndPos.getRank() == 4) {										
+										if(Math.abs(pieceStartPos.getRank() - pieceEndPos.getRank()) == 2) {
+											cell[pieceEndPos.getFile()][pieceEndPos.getRank()].setPieceNull(pieceEndPos.getFile(), pieceEndPos.getRank());
+											result = true;
+										}
+									}
 								} else {
 									result = false;
 								}
@@ -152,8 +157,13 @@ public class Pawn extends Piece {
 							if(cell[pos.getFile()][pos.getRank()].getLastMove().getLastPiece().isPawn() == this.isPawn()) {
 								if(this.pos.getRank() == cell[pos.getFile()][pos.getRank()].getLastMove().getEndPosition().getRank()) {
 									Position pieceEndPos = cell[pos.getFile()][pos.getRank()].getLastMove().getEndPosition();
-									cell[pieceEndPos.getFile()][pieceEndPos.getRank()].setPieceNull(pieceEndPos.getFile(), pieceEndPos.getRank());
-									result = true;
+									Position pieceStartPos = cell[pos.getFile()][pos.getRank()].getLastMove().getStartPosition();
+									if(this.pos.getRank() == 3 && pieceEndPos.getRank() == 3) {										
+										if(Math.abs(pieceStartPos.getRank() - pieceEndPos.getRank()) == 2) {
+											cell[pieceEndPos.getFile()][pieceEndPos.getRank()].setPieceNull(pieceEndPos.getFile(), pieceEndPos.getRank());
+											result = true;
+										}
+									}
 								} else {
 									result = false;
 								}
