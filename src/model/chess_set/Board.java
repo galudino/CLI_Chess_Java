@@ -229,63 +229,68 @@ public class Board {
 						Scanner input = new Scanner(System.in);
 						String inputAns;
 
-						if (piece.isWhite() && newPosition.getRank() == 7) {
-							System.out.println("Pawn is now promotable, what would you like to promote it to?\nQ for Queen, B for bishop, N for knight, or R for Rook");
-							inputAns = input.next();
+						if (piece.isWhite()) {	
+							
+							if(newPosition.getRank() == 7) {
+								System.out.println("Pawn is now promotable, what would you like to promote it to?\nQ for Queen, B for bishop, N for knight, or R for Rook");
+								inputAns = input.next();
 
-							if (inputAns.equalsIgnoreCase("Q")) {				
-								Piece promo = new Queen(PieceType.Color.WHITE);
-								promo.pos = piece.pos;
-								Piece p = pieceSet.getPieceByPosition(piece.pos);
-								pieceSet.piece[p.pieceType.ordinal()] = promo;
-								piece = promo;
-							} else if (inputAns.equalsIgnoreCase("B")) {
-								Piece promo = new Bishop(PieceType.BISHOP_R, PieceType.Color.WHITE);
-								promo.pos = piece.pos;
-								Piece p = pieceSet.getPieceByPosition(piece.pos);
-								pieceSet.piece[p.pieceType.ordinal()] = promo;
-								piece = promo;
-							} else if (inputAns.equalsIgnoreCase("N")) {
-								Piece promo = new Knight(PieceType.KNIGHT_R, PieceType.Color.WHITE);
-								promo.pos = piece.pos;
-								Piece p = pieceSet.getPieceByPosition(piece.pos);
-								pieceSet.piece[p.pieceType.ordinal()] = promo;
-								piece = promo;
-							} else if (inputAns.equalsIgnoreCase("R")) {
-								Piece promo = new Rook(PieceType.ROOK_R, PieceType.Color.WHITE);
-								promo.pos = piece.pos;
-								Piece p = pieceSet.getPieceByPosition(piece.pos);
-								pieceSet.piece[p.pieceType.ordinal()] = promo;
-								piece = promo;
+								if (inputAns.equalsIgnoreCase("Q")) {				
+									Piece promo = new Queen(PieceType.Color.WHITE);
+									promo.pos = piece.pos;
+									Piece p = pieceSet.getPieceByPosition(piece.pos);
+									pieceSet.piece[p.pieceType.ordinal()] = promo;
+									piece = promo;
+								} else if (inputAns.equalsIgnoreCase("B")) {
+									Piece promo = new Bishop(PieceType.BISHOP_R, PieceType.Color.WHITE);
+									promo.pos = piece.pos;
+									Piece p = pieceSet.getPieceByPosition(piece.pos);
+									pieceSet.piece[p.pieceType.ordinal()] = promo;
+									piece = promo;
+								} else if (inputAns.equalsIgnoreCase("N")) {
+									Piece promo = new Knight(PieceType.KNIGHT_R, PieceType.Color.WHITE);
+									promo.pos = piece.pos;
+									Piece p = pieceSet.getPieceByPosition(piece.pos);
+									pieceSet.piece[p.pieceType.ordinal()] = promo;
+									piece = promo;
+								} else if (inputAns.equalsIgnoreCase("R")) {
+									Piece promo = new Rook(PieceType.ROOK_R, PieceType.Color.WHITE);
+									promo.pos = piece.pos;
+									Piece p = pieceSet.getPieceByPosition(piece.pos);
+									pieceSet.piece[p.pieceType.ordinal()] = promo;
+									piece = promo;
+								}
 							}
-						} else if (piece.isBlack() && newPosition.getRank() == 0) {
-							System.out.println("Pawn is now promotable, what would you like to promote it to?\nQ for Queen, B for bishop, N for knight, or R for Rook");
-							inputAns = input.next();
+						} else if (piece.isBlack()) {
+							if(newPosition.getRank() == 0) {
+								System.out.println("Pawn is now promotable, what would you like to promote it to?\nQ for Queen, B for bishop, N for knight, or R for Rook");
+								inputAns = input.next();
 
-							if (inputAns.equalsIgnoreCase("Q")) {							
-								Piece promo = new Queen(PieceType.Color.BLACK);
-								promo.pos = piece.pos;
-								Piece p = pieceSet.getPieceByPosition(piece.pos);
-								pieceSet.piece[p.pieceType.ordinal()] = promo;
-								piece = promo;
-							} else if (inputAns.equalsIgnoreCase("B")) {
-								Piece promo = new Bishop(PieceType.BISHOP_R, PieceType.Color.BLACK);
-								promo.pos = piece.pos;
-								Piece p = pieceSet.getPieceByPosition(piece.pos);
-								pieceSet.piece[p.pieceType.ordinal()] = promo;
-								piece = promo;
-							} else if (inputAns.equalsIgnoreCase("N")) {
-								Piece promo = new Knight(PieceType.KNIGHT_R, PieceType.Color.BLACK);
-								promo.pos = piece.pos;
-								Piece p = pieceSet.getPieceByPosition(piece.pos);
-								pieceSet.piece[p.pieceType.ordinal()] = promo;
-								piece = promo;
-							} else if (inputAns.equalsIgnoreCase("R")) {
-								Piece promo = new Rook(PieceType.ROOK_R, PieceType.Color.BLACK);
-								promo.pos = piece.pos;
-								Piece p = pieceSet.getPieceByPosition(piece.pos);
-								pieceSet.piece[p.pieceType.ordinal()] = promo;
-								piece = promo;
+								if (inputAns.equalsIgnoreCase("Q")) {							
+									Piece promo = new Queen(PieceType.Color.BLACK);
+									promo.pos = piece.pos;
+									Piece p = pieceSet.getPieceByPosition(piece.pos);
+									pieceSet.piece[p.pieceType.ordinal()] = promo;
+									piece = promo;
+								} else if (inputAns.equalsIgnoreCase("B")) {
+									Piece promo = new Bishop(PieceType.BISHOP_R, PieceType.Color.BLACK);
+									promo.pos = piece.pos;
+									Piece p = pieceSet.getPieceByPosition(piece.pos);
+									pieceSet.piece[p.pieceType.ordinal()] = promo;
+									piece = promo;
+								} else if (inputAns.equalsIgnoreCase("N")) {
+									Piece promo = new Knight(PieceType.KNIGHT_R, PieceType.Color.BLACK);
+									promo.pos = piece.pos;
+									Piece p = pieceSet.getPieceByPosition(piece.pos);
+									pieceSet.piece[p.pieceType.ordinal()] = promo;
+									piece = promo;
+								} else if (inputAns.equalsIgnoreCase("R")) {
+									Piece promo = new Rook(PieceType.ROOK_R, PieceType.Color.BLACK);
+									promo.pos = piece.pos;
+									Piece p = pieceSet.getPieceByPosition(piece.pos);
+									pieceSet.piece[p.pieceType.ordinal()] = promo;
+									piece = promo;
+								}
 							}
 						}
 						
@@ -363,7 +368,7 @@ public class Board {
 			break;
 		}
 		*/
-		printMoveLog();
+		//printMoveLog();
 		return result;
 	}
 	

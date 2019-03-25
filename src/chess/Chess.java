@@ -41,6 +41,8 @@ public class Chess {
 		game.whitePlayMove(1, 1, 1, 3);
 		game.whitePlayMove(1, 3, 1, 4);
 		game.whitePlayMove(1, 4, 1, 5);
+		game.blackPlayMove(2, 6, 2, 5);
+		game.whitePlayMove(1, 5, 2, 6);
 			
 		/* POSSIBLY INVALIDATED */
 		// Diagnostic print of Piece positions is in

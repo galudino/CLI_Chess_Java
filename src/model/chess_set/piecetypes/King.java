@@ -53,73 +53,15 @@ public class King extends Piece {
 	 */
 	@Override
 	protected boolean isMoveLegal(Cell[][] cell, Position pos) {
-		boolean result = true;
+		boolean result = false;
 
-		if (Math.abs(this.pos.getFile() - pos.getFile()) <= 1
-				&& (Math.abs(this.pos.getRank() - pos.getRank()) <= 1)) {
-
-			// Castling logic.
-			if (pos.getFile() - this.pos.getFile() == 2
-					&& pos.getRank() == this.pos.getRank()) {
-				if (cell[pos.getRank()][this.pos.getFile() + 1] != null
-						|| cell[pos.getRank()][this.pos.getFile()
-								+ 2] != null) {
-					castled = false;
-					result = false;
-				}
-			} else if (this.pos.getFile() - pos.getFile() == 3
-					&& this.pos.getRank() == pos.getRank()) {
-				if (cell[pos.getRank()][this.pos.getFile() - 1] != null
-						|| cell[pos.getRank()][this.pos.getFile() - 2] != null
-						|| cell[pos.getRank()][this.pos.getFile()
-								- 3] != null) {
-					castled = false;
-					result = false;
-				}
-			} else {
-				castled = false;
-				result = false;
-			}
-			
-			castled = true;
+		if (Math.abs(this.pos.getFile() - pos.getFile()) <= 1 && (Math.abs(this.pos.getRank() - pos.getRank()) <= 1)) {
+			result = true;
+		} else {
+			result = false;
 		}
 		
 		return result;
-
-		//@formatter:off
-		/*
-		boolean result = true;
-		
-		final int deltaFile = Math.abs(this.pos.getFile() - pos.getFile());
-		final int deltaRank = Math.abs(this.pos.getRank() - pos.getRank());
-		
-		final boolean sameRankAsOpponent = pos.getRank() == this.pos.getRank();
-		
-		if (deltaFile <= 1 && deltaRank <= 1) {
-			if (deltaFile == 2 && sameRankAsOpponent) {
-				if (cell[pos.getRank()][this.pos.getFile() + 1] != null || 
-						cell[pos.getRank()][this.pos.getFile() + 2] != null) {
-					castled = false;
-					result = false;
-				}
-			} else if (deltaFile == 3 && sameRankAsOpponent) {
-				if (cell[pos.getRank()][this.pos.getFile() - 1] != null ||
-						cell[pos.getRank()][this.pos.getFile() - 2] != null ||
-						cell[pos.getRank()][this.pos.getFile() - 3] != null) {
-					castled = false;
-					result = false;
-				}
-			} else {
-				castled = false;
-				result = false;
-			}
-			
-			castled = true;
-		}
-		
-		return result;
-		*/
-		//@formatter:on
 	}
 
 	@Override

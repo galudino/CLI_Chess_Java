@@ -24,6 +24,7 @@ public class Pawn extends Piece {
 
 	private boolean firstMove = true;
 	private boolean isPromoted = false;
+	private boolean checkEnpassant = false;
 
 	/**
 	 * Parameterized constructor
@@ -119,6 +120,12 @@ public class Pawn extends Piece {
 						if (cell[pos.getFile()][pos.getRank()].getPiece()
 								.isBlack())
 							result = true;
+					} else if (Math.abs(pos.getRank() - this.pos.getRank()) == 1 && Math.abs(pos.getFile() - this.pos.getFile()) == 1 && cell[pos.getFile()][pos.getRank()].getPiece() == null) {
+							checkEnpassant = true;
+							
+							//need to somehow get access of the MoveLog into here.
+							
+							result = true;
 					}
 				}
 			}
@@ -132,11 +139,15 @@ public class Pawn extends Piece {
 				} else {
 					if (Math.abs(pos.getRank() - this.pos.getRank()) == 1 && (cell[pos.getFile()][pos.getRank()].getPiece() == null)) {
 						result = true;
-					} else if (Math.abs(pos.getRank() - this.pos.getRank()) == 1
-							&& Math.abs(pos.getFile() - this.pos.getFile()) == 1 && cell[pos.getFile()][pos.getRank()].getPiece() != null) {
-				
+					} else if (Math.abs(pos.getRank() - this.pos.getRank()) == 1 && Math.abs(pos.getFile() - this.pos.getFile()) == 1 && cell[pos.getFile()][pos.getRank()].getPiece() != null) {
 						if (cell[pos.getFile()][pos.getRank()].getPiece().isWhite())
 							result = true;
+					} else if (Math.abs(pos.getRank() - this.pos.getRank()) == 1 && Math.abs(pos.getFile() - this.pos.getFile()) == 1 && cell[pos.getFile()][pos.getRank()].getPiece() == null) {
+						checkEnpassant = true;
+						
+						//need to somehow get access of the MoveLog into here.
+						
+						result = true;
 					}
 				}
 			}
@@ -296,6 +307,10 @@ public class Pawn extends Piece {
 		return result;
 		*/
 		//@formatter:on
+	}
+	
+	public boolean getCheckEnpassant() {
+		return checkEnpassant;
 	}
 
 	@Override
