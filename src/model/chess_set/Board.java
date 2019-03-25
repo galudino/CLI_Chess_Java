@@ -208,7 +208,7 @@ public class Board {
 
 		boolean isLegalMove = piece.isMoveLegal(cell, newPosition);
 		
-		System.out.println(isLegalMove);
+		//System.out.println(isLegalMove);
 
 		if (isLegalMove) {
 			Piece other = newPositionCell.piece;
@@ -341,7 +341,7 @@ public class Board {
 				piece.pos = newPosition;
 				// piece.move(newPosition) // why use this? pos is protected.
 					
-				System.out.println(this);
+				//System.out.println(this);
 			}	
 			
 			++moves;
@@ -489,10 +489,10 @@ public class Board {
 
 				if (file == cell[rank].length - 1) {
 					// FOR RELEASE: Print real rank enumerations
-					// str += String.format("%d", rank + 1); // FOR RELEASE
+					str += String.format("%d", rank + 1); // FOR RELEASE
 
 					// FOR DEBUGGING: Print rank indices as per an array
-					str += String.format("%d", rank);
+					//str += String.format("%d", rank);
 				}
 			}
 
@@ -500,10 +500,10 @@ public class Board {
 		}
 
 		// FOR RELEASE: Print real file characters
-		// str += String.format(" a b c d e f g h\n");
+		str += String.format(" a  b  c  d  e  f  g  h\n");
 
 		// FOR DEBUGGING: Print file indices as per an array
-		str += String.format(" 0  1  2  3  4  5  6  7\n");
+		//str += String.format(" 0  1  2  3  4  5  6  7\n");
 
 		return str;
 	}
