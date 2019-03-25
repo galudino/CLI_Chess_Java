@@ -14,7 +14,6 @@ import model.PieceType;
 import model.chess_set.Piece;
 import model.chess_set.Board.Cell;
 import model.game.Position;
-import model.chess_set.Board;
 
 /**
  * @version Mar 3, 2019

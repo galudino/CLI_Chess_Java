@@ -63,8 +63,7 @@ public class Rook extends Piece {
 		boolean result = true;
 	
 		// This is to check if it is moving on one path aka not diagonal
-		if (pos.getRank() != this.pos.getRank()
-				&& pos.getFile() != this.pos.getFile()) {
+		if (pos.getRank() != this.pos.getRank() && pos.getFile() != this.pos.getFile()) {
 			result = false;
 		}
 
@@ -78,8 +77,7 @@ public class Rook extends Piece {
 				offset = -1;
 			}
 
-			for (int x = this.pos.getFile() + offset; 
-					x != pos.getFile(); x += offset) {
+			for (int x = this.pos.getFile() + offset; x != pos.getFile(); x += offset) {
 				if (cell[x][this.pos.getRank()].getPiece() != null) {
 					return false;
 				}
@@ -93,8 +91,7 @@ public class Rook extends Piece {
 				offset = -1;
 			}
 
-			for (int x = this.pos.getRank() + offset; 
-					x != pos.getRank(); x += offset) {
+			for (int x = this.pos.getRank() + offset; x != pos.getRank(); x += offset) {
 				if (cell[this.pos.getFile()][x].getPiece() != null) {
 					return false;
 				}

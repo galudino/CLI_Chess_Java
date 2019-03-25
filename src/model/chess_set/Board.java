@@ -254,8 +254,6 @@ public class Board {
 
 						if (piece.isWhite()) {
 							
-							
-							
 							if(newPosition.getRank() == 7) {
 								System.out.println("Pawn is now promotable, what would you like to promote it to?\nQ for Queen, B for bishop, N for knight, or R for Rook");
 								inputAns = input.next();
@@ -407,6 +405,7 @@ public class Board {
 			*/
 
 		}
+		canCheck(piece);
 		return result;
 	}
 		
@@ -428,6 +427,30 @@ public class Board {
 		}
 		
 		System.out.println();
+	}
+	
+	public boolean canCheck(Piece piece) {
+		boolean result = false;
+		
+		Position oppositeKing = null;
+		Piece oppositeK = null;
+		
+		if(piece.isWhite()) {
+			oppositeK = getBlackSet().getPiece(PieceType.KING);
+			oppositeKing = oppositeK.pos;
+		} else if (piece.isBlack()) {
+			oppositeK = getWhiteSet().getPiece(PieceType.KING);
+			oppositeKing = oppositeK.pos;
+		}
+		
+		boolean isMoveLegal = piece.isMoveLegal(cell, oppositeKing);
+		
+		if(isMoveLegal) {
+			System.out.println("Check");
+			result = true;
+		}
+		
+		return result;
 	}
 
 	/**
