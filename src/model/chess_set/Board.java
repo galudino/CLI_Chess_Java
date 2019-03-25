@@ -10,13 +10,9 @@
  */
 package model.chess_set;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.Scanner;
-import java.util.Stack;
 
 import model.PieceType;
 import model.chess_set.piecetypes.*;
@@ -89,21 +85,29 @@ public class Board {
 	 * @version Mar 24, 2019
 	 * @author gemuelealudino
 	 */
-	public class MovePair {
-		LocalTime localTime;
+	public class Move {
 		Piece piece;
-		Position pos;
+		
+		Position startPos;
+		Position endPos;
+		
+		LocalTime localTime;
+
 		int moveNumber;
 		
-		MovePair(Piece piece, Position pos, int moveNumber) {
-			localTime = LocalTime.now();
+		Move(Piece piece, Position startPos, Position endPos, int moveNumber) {
 			this.piece = piece;
-			this.pos = pos;
+			this.startPos = startPos;
+			this.endPos = endPos;
+			
+			localTime = LocalTime.now();
+			
 			this.moveNumber = moveNumber;
 		}
 		
 		public String toString() {
-			return localTime + "\t" + moveNumber + "\t" + piece + "\t" + pos;
+			return localTime + "\t" + moveNumber + "\t" 
+		+ piece + "\t" + startPos + "\t" + endPos;
 		}
 	}
 	
@@ -111,7 +115,7 @@ public class Board {
 
 	private Cell[][] cell;
 	
-	private ArrayList<MovePair> moveList;
+	private ArrayList<Move> moveList;
 	private int moves;
 	
 	private PieceSet whiteSet;
@@ -135,7 +139,7 @@ public class Board {
 		assignWhitePieces();
 		assignBlackPieces();
 		
-		moveList = new ArrayList<MovePair>();
+		moveList = new ArrayList<Move>();
 	}
 
 	/**
@@ -317,70 +321,58 @@ public class Board {
 			}	
 			
 			++moves;
-			MovePair move = new MovePair(piece, piece.pos, moves);
-			moveList.add(move);
+			Move newestMove 
+			= new Move(piece, oldPositionCell.loc, piece.pos, moves);
+			moveList.add(newestMove);
+			
+			final int moveListLastIndex = moveList.size() - 1;
+		
+			Move lastMove = moveList.get(moveListLastIndex - 2);
+			Move beforeLastMove = moveList.get(moveListLastIndex - 3);
+			Move beforeBeforeLastMove = moveList.get(moveListLastIndex - 4);
+			
+			// Conditions for enpassant (wikipedia)
+			// capturing pawn must be on rank 5
+			// captured pawn must be on an adjacent file
+				// and must have just moved two squares in a single move
+				// i.e. a double-step move
+			// capture can only be made on the move immediately after
+			// the opposing pawn makes the double-step move;
+			// otherwise the right to capture it via enpassant is lost.
+			
+			// NOTE: 
+			// file A-H 
+			//   is 0-7
+			//
+			// rank 1-8 
+			//   is 0-7
+			
+			
+			final boolean capturingPawnOnRank5
+			= newestMove.startPos.getRank() == 5;
 
-			// ENPASSANT LOGIC GOES HERE:
-			// AT THIS POINT,
-			//	param piece to be moved was legally moved to its new position.
-			//  said piece's move added to the move list (it's the last element)
-			//  said piece should be identified as a pawn before proceeding.
 			
-			// (param piece identified as pawn)
-			
-			// now seek moveList for the second to last element
-			// determine if it is an enemy pawn (opposite color to param Piece)
-			// if so, now begin enpassant evaluation
-			
-			// if enpassant is possible - do it
+
 		}	
 		
-		/*
-		MovePair move = new MovePair(piece, newPosition);
-		moveList.add(move);
-		//moveStack.push(move);
-
-		
-		Piece lastMovePiece = moveList.get(moveList.size() - 2).piece;
-		Position lastMovePosition = moveList.get(moveList.size() - 2).pos;
-		
-		PieceType pieceType = lastMovePiece.pieceType;
-		
-		switch (pieceType) {
-		case PAWN_0:
-		case PAWN_1:
-		case PAWN_2:
-		case PAWN_3:
-		case PAWN_4:
-		case PAWN_5:
-		case PAWN_6:
-		case PAWN_7:
-			
-			
-			break;
-		default:
-
-			break;
-		}
-		*/
 		printMoveLog();
 		return result;
 	}
-	
+		
 	/**
 	 * Prints the log of moves as per the moveList field (ArrayList)
 	 */
 	public void printMoveLog() {
-		System.out.println("MOVE LOG (ALL PIECES) ------------------");
+		System.out.println("MOVE LOG (ALL PIECES) ---------------------");
 		
 		String str = "";
 		
-		str += "Time\t\tMove #\tPiece\tPosition\n";
-		str += "----------------------------------------\n";
+		str += "Time\t\tMove #\tPiece\tStart\tEnd\n";
+		str += "-------------------------------------------\n";
 		
 		System.out.print(str);
 		
-		for (MovePair mp : moveList) {
+		for (Move mp : moveList) {
 			System.out.println(mp);
 		}
 		
