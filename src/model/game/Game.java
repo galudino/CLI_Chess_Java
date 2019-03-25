@@ -106,7 +106,7 @@ public class Game {
 		newFileNewRankStr = parse.next(fileRankRegex).toLowerCase();
 
 		char chFile = fileRankStr.charAt(0);
-		char chNewFile = fileRankStr.charAt(0);
+		char chNewFile = newFileNewRankStr.charAt(0);
 
 		switch (chFile) {
 		case 'a':
