@@ -183,7 +183,7 @@ public class Game {
 		final String validFileRankRegex = String.format("%s%s%s", fileRankRegex,
 				whiteSpaceRegex, fileRankRegex);
 
-		final String drawRegex = "draw?";
+		final String drawRegex = "draw\\?";
 		final String validFileRankWithDrawRegex = String.format("%s%s%s",
 				validFileRankRegex, whiteSpaceRegex, drawRegex);
 
@@ -220,6 +220,7 @@ public class Game {
 
 					fileRankArray = getFileRankArray(input);
 				} else if (willDraw && input.equals("draw")) {
+					didDraw = true;
 					output = "draw";
 				} else if (input.matches(validFileRankWithDrawRegex)) {
 					validMove = true;
@@ -263,8 +264,7 @@ public class Game {
 			} while (validMove == false);
 
 			whitesMove = whitesMove ? false : true;
-			willDraw = willDraw ? false : willDraw;
-
+						
 			System.out.println(boardToString());
 			
 			/**
