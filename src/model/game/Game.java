@@ -265,7 +265,7 @@ public class Game {
 			whitesMove = whitesMove ? false : true;
 			willDraw = willDraw ? false : willDraw;
 
-			boardToString();
+			System.out.println(boardToString());
 			
 			/**
 			 * DIAGNOSTICS
