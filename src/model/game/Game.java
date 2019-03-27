@@ -206,6 +206,9 @@ public class Game {
 		return result;
 	}
 
+	/**
+	 * Begins game loop
+	 */
 	public void start() {
 		int[] fileRankArray = null;
 
