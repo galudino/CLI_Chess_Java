@@ -20,12 +20,12 @@ import model.game.Position;
  *
  */
 public class PieceSet {
-	
+
 	private int PIECE_COUNT = 16;
-	
+
 	private PieceType.Color color;
-	Piece[] piece;
-	
+	private Piece[] piece;
+
 	/**
 	 * Parameterized constructor
 	 * 
@@ -33,9 +33,9 @@ public class PieceSet {
 	 */
 	PieceSet(PieceType.Color color) {
 		this.color = color;
-		
+
 		piece = new Piece[PIECE_COUNT];
-				
+
 		Piece king = new King(color);
 		Piece queen = new Queen(color);
 		Piece bishop_l = new Bishop(PieceType.BISHOP_L, color);
@@ -52,7 +52,7 @@ public class PieceSet {
 		Piece pawn_5 = new Pawn(PieceType.PAWN_5, color);
 		Piece pawn_6 = new Pawn(PieceType.PAWN_6, color);
 		Piece pawn_7 = new Pawn(PieceType.PAWN_7, color);
-		
+
 		piece[PieceType.KING.ordinal()] = king;
 		piece[PieceType.QUEEN.ordinal()] = queen;
 		piece[PieceType.BISHOP_L.ordinal()] = bishop_l;
@@ -70,7 +70,7 @@ public class PieceSet {
 		piece[PieceType.PAWN_6.ordinal()] = pawn_6;
 		piece[PieceType.PAWN_7.ordinal()] = pawn_7;
 	}
-	
+
 	/**
 	 * Accessor to retrieve a Piece by PieceType
 	 * 
@@ -81,7 +81,133 @@ public class PieceSet {
 	Piece getPiece(PieceType pieceType) {
 		return piece[pieceType.ordinal()];
 	}
-	
+
+	/**
+	 * Routine to promote a Pawn to a desired PieceType
+	 * 
+	 * @param pawnPiece the Pawn Piece to promote
+	 * @param promoType the PieceType of the Piece to promote
+	 */
+	public void promotePawn(Piece pawnPiece, PieceType promoType) {
+		if (pawnPiece.isPawn() && promoType != null) {
+			Piece promo = null;
+
+			switch (promoType) {
+			case QUEEN:
+				promo = pawnPiece.isWhite() ? new Queen(PieceType.Color.WHITE)
+						: new Queen(PieceType.Color.BLACK);
+
+				promo.pos = pawnPiece.pos;
+				piece[pawnPiece.pieceType.ordinal()] = promo;
+
+				break;
+			case BISHOP_R:
+				switch (pawnPiece.pieceType) {
+				case PAWN_0:
+				case PAWN_1:
+				case PAWN_2:
+				case PAWN_3:
+					promo = pawnPiece.isWhite()
+							? new Bishop(PieceType.BISHOP_L,
+									PieceType.Color.WHITE)
+							: new Bishop(PieceType.BISHOP_L,
+									PieceType.Color.BLACK);
+
+					promo.pos = pawnPiece.pos;
+					piece[pawnPiece.pieceType.ordinal()] = promo;
+
+					break;
+				case PAWN_4:
+				case PAWN_5:
+				case PAWN_6:
+				case PAWN_7:
+					promo = pawnPiece.isWhite()
+							? new Bishop(PieceType.BISHOP_R,
+									PieceType.Color.WHITE)
+							: new Bishop(PieceType.BISHOP_R,
+									PieceType.Color.BLACK);
+
+					promo.pos = pawnPiece.pos;
+					piece[pawnPiece.pieceType.ordinal()] = promo;
+
+					break;
+				default:
+					break;
+				}
+
+				break;
+			case KNIGHT_R:
+				switch (pawnPiece.pieceType) {
+				case PAWN_0:
+				case PAWN_1:
+				case PAWN_2:
+				case PAWN_3:
+					promo = pawnPiece.isWhite()
+							? new Knight(PieceType.KNIGHT_L,
+									PieceType.Color.WHITE)
+							: new Knight(PieceType.KNIGHT_L,
+									PieceType.Color.BLACK);
+
+					promo.pos = pawnPiece.pos;
+					piece[pawnPiece.pieceType.ordinal()] = promo;
+
+					break;
+				case PAWN_4:
+				case PAWN_5:
+				case PAWN_6:
+				case PAWN_7:
+					promo = pawnPiece.isWhite()
+							? new Knight(PieceType.KNIGHT_R,
+									PieceType.Color.WHITE)
+							: new Knight(PieceType.KNIGHT_R,
+									PieceType.Color.BLACK);
+
+					promo.pos = pawnPiece.pos;
+					piece[pawnPiece.pieceType.ordinal()] = promo;
+
+					break;
+				default:
+					break;
+				}
+			case ROOK_R:
+				switch (pawnPiece.pieceType) {
+				case PAWN_0:
+				case PAWN_1:
+				case PAWN_2:
+				case PAWN_3:
+					promo = pawnPiece.isWhite()
+							? new Rook(PieceType.ROOK_L, PieceType.Color.WHITE)
+							: new Rook(PieceType.ROOK_L, PieceType.Color.BLACK);
+
+					promo.pos = pawnPiece.pos;
+					piece[pawnPiece.pieceType.ordinal()] = promo;
+
+					break;
+				case PAWN_4:
+				case PAWN_5:
+				case PAWN_6:
+				case PAWN_7:
+					promo = pawnPiece.isWhite()
+							? new Rook(PieceType.ROOK_R, PieceType.Color.WHITE)
+							: new Rook(PieceType.ROOK_R, PieceType.Color.BLACK);
+
+					promo.pos = pawnPiece.pos;
+					piece[pawnPiece.pieceType.ordinal()] = promo;
+
+					break;
+				default:
+					break;
+				}
+			default:
+				System.err.println("Can only promote to QUEEN, BISHOP, "
+						+ "KNIGHT, or ROOK.");
+				break;
+			}
+		} else {
+			System.err.println("Cannot promote non-Pawn Piece instances.");
+		}
+	}
+
 	/**
 	 * Accessor to retrieve the Color of a Player's PieceSet
 	 * 
@@ -90,7 +216,7 @@ public class PieceSet {
 	public PieceType.Color getPieceSetColor() {
 		return color;
 	}
-	
+
 	/**
 	 * Accessor to retrieve a Piece using the file and rank of a Position
 	 * 
@@ -111,7 +237,7 @@ public class PieceSet {
 
 		return null;
 	}
-	
+
 	/**
 	 * Returns a string representation of the PieceSet (used for debugging)
 	 */
@@ -121,17 +247,17 @@ public class PieceSet {
 		str += "PIECESET LOG (" + color + ") -------------------\n";
 		str += "Symbol\tIdentifier\t\tPosition\n";
 		str += "----------------------------------------\n";
-		
+
 		for (int i = 0; i < piece.length; i++) {
 			str += piece[i].toString() + "\t";
 			str += piece[i].identifier + "\t";
 			str += piece[i].pos + "\t";
-			
+
 			str += "\n";
 		}
-		
+
 		str += "\n";
-	
+
 		return str;
 	}
 }
