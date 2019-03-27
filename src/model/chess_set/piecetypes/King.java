@@ -52,16 +52,32 @@ public class King extends Piece {
 	 * model.game.Position)
 	 */
 	@Override
-	protected boolean isMoveLegal(Cell[][] cell, Position pos) {
+	public boolean isMoveLegal(Cell[][] cell, Position pos) {
 		boolean result = false;
 
 		if (Math.abs(this.pos.getFile() - pos.getFile()) <= 1 && (Math.abs(this.pos.getRank() - pos.getRank()) <= 1)) {
-			result = true;
+			if(cell[pos.getFile()][pos.getRank()].getPiece() == null) {
+				result = true;
+			} else if(cell[pos.getFile()][pos.getRank()].getPiece() != null && !this.isWhite()) {
+				result = true;
+			} else {
+				result = false;
+			}
 		} else {
 			result = false;
 		}
-		
 		return result;
+	}
+	
+	public boolean hasValidMoves(Cell[][] cell, Position pos) {
+		return ((isMoveLegal(cell, new Position(this.pos.getFile() + 1, this.pos.getRank())) && isKingSafe(this, cell)) || 
+				(isMoveLegal(cell, new Position(this.pos.getFile() - 1, this.pos.getRank())) && isKingSafe(this, cell)) ||
+				(isMoveLegal(cell, new Position(this.pos.getFile(), this.pos.getRank() + 1)) && isKingSafe(this, cell)) || 
+				(isMoveLegal(cell, new Position(this.pos.getFile(), this.pos.getRank() - 1)) && isKingSafe(this, cell)) || 
+				(isMoveLegal(cell, new Position(this.pos.getFile() + 1, this.pos.getRank() - 1)) && isKingSafe(this, cell)) || 
+				(isMoveLegal(cell, new Position(this.pos.getFile() - 1, this.pos.getRank() - 1)) && isKingSafe(this, cell)) || 
+				(isMoveLegal(cell, new Position(this.pos.getFile() + 1, this.pos.getRank() + 1)) && isKingSafe(this, cell)) || 
+				(isMoveLegal(cell, new Position(this.pos.getFile() - 1, this.pos.getRank() + 1)) && isKingSafe(this, cell)));
 	}
 
 	@Override

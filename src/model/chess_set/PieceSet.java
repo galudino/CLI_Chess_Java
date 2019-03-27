@@ -81,6 +81,10 @@ public class PieceSet {
 	public Piece getPiece(PieceType pieceType) {
 		return piece[pieceType.ordinal()];
 	}
+	
+	public PieceSet getPieceSet() {
+		return this;
+	}
 
 	/**
 	 * Routine to promote a Pawn to a desired PieceType

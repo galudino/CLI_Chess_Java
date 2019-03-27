@@ -59,7 +59,7 @@ public class Rook extends Piece {
 	 * model.game.Position)
 	 */
 	@Override
-	protected boolean isMoveLegal(Cell[][] cell, Position pos) {
+	public boolean isMoveLegal(Cell[][] cell, Position pos) {
 		boolean result = true;
 
 		// This is to check if it is moving on one path aka not diagonal

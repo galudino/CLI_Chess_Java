@@ -210,9 +210,15 @@ public class Board {
 		Cell newPositionCell = getCell(newPosition);
 
 		boolean isLegalMove = piece.isMoveLegal(cell, newPosition);
-
-		// System.out.println(isLegalMove);
-
+		
+		King k = null;
+		
+		if(piece.isWhite()) {
+			k = (King) whiteSet.getPiece(PieceType.KING);
+		} else {
+			k = (King) blackSet.getPiece(PieceType.KING);
+		}
+		
 		if (isLegalMove) {
 			Piece other = newPositionCell.piece;
 			boolean pieceFoundAtNewPosition = other != null;
@@ -240,14 +246,6 @@ public class Board {
 
 			// Since the Piece moved from the old location to the new location,
 			// the Cell will no longer have a reference to that Piece.
-
-			King k = null;
-			
-			if(piece.isWhite()) {
-				k = (King) whiteSet.getPiece(PieceType.KING);
-			} else {
-				k = (King) blackSet.getPiece(PieceType.KING);
-			}
 			
 			/**
 			 * If a successful move is made,
@@ -255,7 +253,7 @@ public class Board {
 			 * to determine if piece is a promotable Pawn.
 			 */
 			if (result) {
-				if(isKingSafe(k)) {
+				
 					boolean promoteWhite = promoType != null &&
 							piece.isWhite() && newPosition.getRank() == 7;
 						
@@ -265,6 +263,8 @@ public class Board {
 					if (promoteWhite || promoteBlack) {
 						piece = pieceSet.promotePawn(piece, promoType);
 					}
+					
+
 					
 					// This statement nullifies any reference to a Piece
 					// for this Cell object. (Next line: piece will be reassigned
@@ -281,13 +281,13 @@ public class Board {
 					// piece.move(newPosition) // why use this? pos is protected.
 
 					// System.out.println(this);
-				} else {
-					result = false;
-					
 					//need to figure out how to prompt user to enter a valid legal move to make sure King is safe...
-				}
 			}
+			
 
+			
+			//System.out.println(k + "\nFILE: " + k.pos.getFile() + "\nRANK: " + k.pos.getRank());
+			//System.out.println(k.hasValidMoves(cell, k.pos));
 		
 			++moves;
 

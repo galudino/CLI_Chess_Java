@@ -40,7 +40,7 @@ public class Queen extends Piece {
 	 * model.game.Position)
 	 */
 	@Override
-	protected boolean isMoveLegal(Cell[][] cell, Position pos) {
+	public boolean isMoveLegal(Cell[][] cell, Position pos) {
 		boolean result = true;
 
 		if (Math.abs(this.pos.getRank() - pos.getRank()) == Math.abs(this.pos.getFile() - pos.getFile())) {

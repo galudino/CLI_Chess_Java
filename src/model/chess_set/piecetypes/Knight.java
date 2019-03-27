@@ -52,7 +52,7 @@ public class Knight extends Piece {
 	 * model.game.Position)
 	 */
 	@Override
-	protected boolean isMoveLegal(Cell[][] cell, Position pos) {
+	public boolean isMoveLegal(Cell[][] cell, Position pos) {
 		boolean result = false;
 		
 		if (Math.abs(pos.getFile() - this.pos.getFile()) == 2
