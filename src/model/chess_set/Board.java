@@ -256,126 +256,7 @@ public class Board {
 				if (promoteWhite || promoteBlack) {
 					pieceSet.promotePawn(piece, promoType);
 				}
-			}
-
-			/*
-			if (result) {
-				switch (piece.pieceType) {
-				case PAWN_0:
-				case PAWN_1:
-				case PAWN_2:
-				case PAWN_3:
-				case PAWN_4:
-				case PAWN_5:
-				case PAWN_6:
-				case PAWN_7:
-					if (result == true) {
-						Scanner input = new Scanner(System.in);
-						String inputAns;
-
-						//@formatter:off
-						if (piece.isWhite()) {
-
-							if (newPosition.getRank() == 7) {
-								
-								System.out.println(
-										"Pawn is now promotable, what would you like to promote it to?\nQ for Queen, B for bishop, N for knight, or R for Rook");
-								inputAns = input.next();
-							
-								if (inputAns.equalsIgnoreCase("Q")) {
-									Piece promo = new Queen(
-											PieceType.Color.WHITE);
-									promo.pos = piece.pos;
-									Piece p = pieceSet
-											.getPieceByPosition(piece.pos);
-									pieceSet.piece[p.pieceType
-											.ordinal()] = promo;
-									piece = promo;
-								} else if (inputAns.equalsIgnoreCase("B")) {
-									Piece promo = new Bishop(PieceType.BISHOP_R,
-											PieceType.Color.WHITE);
-									promo.pos = piece.pos;
-									Piece p = pieceSet
-											.getPieceByPosition(piece.pos);
-									pieceSet.piece[p.pieceType
-											.ordinal()] = promo;
-									piece = promo;
-								} else if (inputAns.equalsIgnoreCase("N")) {
-									Piece promo = new Knight(PieceType.KNIGHT_R,
-											PieceType.Color.WHITE);
-									promo.pos = piece.pos;
-									Piece p = pieceSet
-											.getPieceByPosition(piece.pos);
-									pieceSet.piece[p.pieceType
-											.ordinal()] = promo;
-									piece = promo;
-								} else if (inputAns.equalsIgnoreCase("R")) {
-									Piece promo = new Rook(PieceType.ROOK_R,
-											PieceType.Color.WHITE);
-									promo.pos = piece.pos;
-									Piece p = pieceSet
-											.getPieceByPosition(piece.pos);
-									pieceSet.piece[p.pieceType
-											.ordinal()] = promo;
-									piece = promo;
-								}
-							}
-						} else if (piece.isBlack()) {
-							if (newPosition.getRank() == 0) {
-								
-								System.out.println(
-										"Pawn is now promotable, what would you like to promote it to?\nQ for Queen, B for bishop, N for knight, or R for Rook");
-								inputAns = input.next();
-
-								if (inputAns.equalsIgnoreCase("Q")) {
-									Piece promo = new Queen(
-											PieceType.Color.BLACK);
-									promo.pos = piece.pos;
-									Piece p = pieceSet
-											.getPieceByPosition(piece.pos);
-									pieceSet.piece[p.pieceType
-											.ordinal()] = promo;
-									piece = promo;
-								} else if (inputAns.equalsIgnoreCase("B")) {
-									Piece promo = new Bishop(PieceType.BISHOP_R,
-											PieceType.Color.BLACK);
-									promo.pos = piece.pos;
-									Piece p = pieceSet
-											.getPieceByPosition(piece.pos);
-									pieceSet.piece[p.pieceType
-											.ordinal()] = promo;
-									piece = promo;
-								} else if (inputAns.equalsIgnoreCase("N")) {
-									Piece promo = new Knight(PieceType.KNIGHT_R,
-											PieceType.Color.BLACK);
-									promo.pos = piece.pos;
-									Piece p = pieceSet
-											.getPieceByPosition(piece.pos);
-									pieceSet.piece[p.pieceType
-											.ordinal()] = promo;
-									piece = promo;
-								} else if (inputAns.equalsIgnoreCase("R")) {
-									Piece promo = new Rook(PieceType.ROOK_R,
-											PieceType.Color.BLACK);
-									promo.pos = piece.pos;
-									Piece p = pieceSet
-											.getPieceByPosition(piece.pos);
-									pieceSet.piece[p.pieceType
-											.ordinal()] = promo;
-									piece = promo;
-								}
-								
-							}
-							
-							// start here
-							
-						}
-						//@formatter:on
-					}
-				default:
-					break;
-				}
-
+			
 				// This statement nullifies any reference to a Piece
 				// for this Cell object. (Next line: piece will be reassigned
 				// to the newPositionCell.piece field).
@@ -392,7 +273,7 @@ public class Board {
 
 				// System.out.println(this);
 			}
-			/*
+		
 
 			++moves;
 
@@ -424,26 +305,6 @@ public class Board {
 
 			final boolean capturingPawnOnRank5 = newestMove.startPos
 					.getRank() == 5;
-
-			/*
-			 * MovePair move = new MovePair(piece, newPosition);
-			 * moveList.add(move); //moveStack.push(move);
-			 * 
-			 * 
-			 * Piece lastMovePiece = moveList.get(moveList.size() - 2).piece;
-			 * Position lastMovePosition = moveList.get(moveList.size() -
-			 * 2).pos;
-			 * 
-			 * PieceType pieceType = lastMovePiece.pieceType;
-			 * 
-			 * switch (pieceType) { case PAWN_0: case PAWN_1: case PAWN_2: case
-			 * PAWN_3: case PAWN_4: case PAWN_5: case PAWN_6: case PAWN_7:
-			 * 
-			 * 
-			 * break; default:
-			 * 
-			 * break; }
-			 */
 
 		}
 
