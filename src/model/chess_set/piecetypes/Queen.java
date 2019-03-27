@@ -43,8 +43,7 @@ public class Queen extends Piece {
 	protected boolean isMoveLegal(Cell[][] cell, Position pos) {
 		boolean result = true;
 
-		if (Math.abs(this.pos.getRank() - pos.getRank()) == 
-				Math.abs(this.pos.getFile() - pos.getFile())) {
+		if (Math.abs(this.pos.getRank() - pos.getRank()) == Math.abs(this.pos.getFile() - pos.getFile())) {
 			int rowOffset, colOffset;
 
 			if (this.pos.getFile() < pos.getFile()) {
@@ -59,14 +58,12 @@ public class Queen extends Piece {
 				rowOffset = -1;
 			}
 
-			for (int x = this.pos.getRank() + rowOffset, 
-					y = this.pos.getFile() + colOffset; 
-					x != pos.getRank(); x += rowOffset) {
+			for (int x = this.pos.getFile() + colOffset, y = this.pos.getRank() + rowOffset; x != pos.getFile(); x += colOffset) {
 				if (cell[x][y].getPiece() != null) {
 					result = false;
 				}
-
-				y += colOffset;
+				
+				y += rowOffset;
 			}
 		} else {
 			// This is to check if it is moving on one path aka not diagonal
@@ -107,67 +104,7 @@ public class Queen extends Piece {
 				}
 			}
 		}
-
 		return result;
-
-		//@formatter:off
-		/*
-		boolean result = true;
-
-		final int deltaRank = Math.abs(this.pos.getRank() - pos.getRank());
-		final int deltaFile = Math.abs(this.pos.getFile() - pos.getFile());
-
-		if (deltaRank == deltaFile) {
-			int rowOffset = 0, colOffset = 0;
-
-			colOffset = (this.pos.getFile() < pos.getFile()) ? 1 : -1;
-			rowOffset = (this.pos.getRank() < pos.getRank()) ? 1 : -1;
-
-			for (int x = this.pos.getRank() + rowOffset, y = this.pos.getFile()
-					+ colOffset; x != pos.getRank(); x += rowOffset) {
-				Piece curr = cell[x][y].getPiece();
-				result = (curr != null) ? false : true;
-
-				y += colOffset;
-			}
-		} else {
-			final boolean differentRanks = pos.getRank() != this.pos.getRank();
-			final boolean differentFiles = pos.getFile() != this.pos.getFile();
-
-			result = (differentRanks && differentFiles) ? false : true;
-
-			int offset = 0;
-
-			if (differentFiles) {
-				offset = (this.pos.getFile() < pos.getFile()) ? 1 : -1;
-
-				for (int x = this.pos.getFile() + offset; 
-						x != pos.getFile(); x += offset) {
-					Piece curr = cell[x][this.pos.getRank()].getPiece();
-
-					if (curr != null) {
-						return false;
-					}
-				}
-			}
-
-			if (differentRanks) {
-				offset = (this.pos.getRank() < pos.getRank()) ? 1 : -1;
-
-				for (int x = this.pos.getRank() + offset; 
-						x != pos.getFile(); x += offset) {
-					Piece curr = cell[this.pos.getFile()][x].getPiece();
-					
-					if (curr != null) {
-						return false;
-					}
-				}
-			}
-		}
-
-		return result;
-		*/
-		//@formatter:on
 	}
 
 	@Override

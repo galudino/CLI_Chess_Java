@@ -335,13 +335,13 @@ public class Game {
 			/**
 			 * DIAGNOSTICS
 			 */
-			printMoveLog();
+			//printMoveLog();
 
-			if (whitesMove == false) {
-				white.printPieceSet();
-			} else {
-				black.printPieceSet();
-			}
+			//if (whitesMove == false) {
+			//	white.printPieceSet();
+			//} else {
+			//	black.printPieceSet();
+			//}
 		}
 
 		scan.close();

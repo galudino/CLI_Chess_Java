@@ -83,47 +83,15 @@ public class Bishop extends Piece {
 			rowOffset = -1;
 		}
 
-		for (int x = this.pos.getRank() + rowOffset, 
-				y = this.pos.getFile() + colOffset; 
-				x != pos.getRank(); x += rowOffset) {
-			if (cell[x][y].getPiece() != null)
+		for (int x = this.pos.getFile() + colOffset, y = this.pos.getRank() + rowOffset; x != pos.getFile(); x += colOffset) {
+			if (cell[x][y].getPiece() != null) {
 				result = false;
-
-			y += colOffset;
-		}
-
-		return result;
-		
-		//@formatter:off
-		/*
-		boolean result = true;
-		
-		final boolean sameRankAsOpponent = this.pos.getRank() == pos.getRank();
-		final boolean sameFileAsOpponent = this.pos.getFile() == pos.getFile();
-		
-		final int deltaRank = Math.abs(this.pos.getRank() - pos.getRank());
-		final int deltaFile = Math.abs(this.pos.getFile() - pos.getFile());
-		
-		result = sameRankAsOpponent || sameFileAsOpponent;
-		result = deltaRank != deltaFile;
-		
-		int rowOffset = 0, colOffset = 0;
-		
-		colOffset = (this.pos.getFile() < pos.getFile()) ? 1 : -1;
-		rowOffset = (this.pos.getRank() < pos.getRank()) ? 1 : -1;
-		
-		for (int x = this.pos.getRank() + rowOffset,
-				y = this.pos.getFile() + colOffset;
-				x != pos.getRank(); x += rowOffset) {
-			Piece curr = cell[x][y].getPiece();
+			}
 			
-			result = curr != null ? false : true;
-			y += colOffset;
+			y += rowOffset;
 		}
-		
+
 		return result;
-		*/
-		//@formatter:on
 	}
 
 	@Override

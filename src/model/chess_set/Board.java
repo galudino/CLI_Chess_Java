@@ -280,31 +280,6 @@ public class Board {
 					moves);
 			moveList.add(newestMove);
 
-			final int moveListLastIndex = moveList.size() - 1;
-
-			// Move lastMove = moveList.get(moveListLastIndex - 2);
-			// Move beforeLastMove = moveList.get(moveListLastIndex - 3);
-			// Move beforeBeforeLastMove = moveList.get(moveListLastIndex - 4);
-
-			// Conditions for enpassant (wikipedia)
-			// capturing pawn must be on rank 5
-			// captured pawn must be on an adjacent file
-			// and must have just moved two squares in a single move
-			// i.e. a double-step move
-			// capture can only be made on the move immediately after
-			// the opposing pawn makes the double-step move;
-			// otherwise the right to capture it via enpassant is lost.
-
-			// NOTE:
-			// file A-H
-			// is 0-7
-			//
-			// rank 1-8
-			// is 0-7
-
-			final boolean capturingPawnOnRank5 = newestMove.startPos
-					.getRank() == 5;
-
 		}
 
 		canCheck(piece);

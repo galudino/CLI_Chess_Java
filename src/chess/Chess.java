@@ -55,8 +55,8 @@ public class Chess {
 		game.blackPlayMove(6, 7, 7, 5);
 		*/
 		
-		game.startFromFile("dat/testfile.txt");
-		//game.start();
+		//game.startFromFile("dat/testfile.txt");
+		game.start();
 	}
 	
 }

@@ -106,8 +106,11 @@ public class Pawn extends Piece {
 							|| Math.abs(pos.getRank() - this.pos.getRank()) == 1)
 									&& (this.pos.getFile() == pos.getFile() && (cell[pos.getFile()][pos.getRank()].getPiece() == null))) {
 						result = true;
+						firstMove = false;
+					} else if(Math.abs(pos.getRank() - this.pos.getRank()) == 1 && Math.abs(pos.getFile() - this.pos.getFile()) == 1 && cell[pos.getFile()][pos.getRank()].getPiece() != null && cell[pos.getFile()][pos.getRank()].getPiece().isBlack()) {
+						result = true;
+						firstMove = false;
 					}
-					firstMove = false;
 				} else {
 					if (Math.abs(pos.getRank() - this.pos.getRank()) == 1
 							&& this.pos.getFile() == pos.getFile() && (cell[pos.getFile()][pos.getRank()].getPiece() == null)) {
@@ -141,8 +144,11 @@ public class Pawn extends Piece {
 				if (firstMove) {
 					if (Math.abs(pos.getRank() - this.pos.getRank()) == 2 || Math.abs(pos.getRank() - this.pos.getRank()) == 1 && (this.pos.getFile() == pos.getFile() && (cell[pos.getFile()][pos.getRank()].getPiece() == null))) {
 						result = true;
+						firstMove = false;
+					} else if(Math.abs(pos.getRank() - this.pos.getRank()) == 1 && Math.abs(pos.getFile() - this.pos.getFile()) == 1 && cell[pos.getFile()][pos.getRank()].getPiece() != null && cell[pos.getFile()][pos.getRank()].getPiece().isWhite()) {
+						result = true;
+						firstMove = false;
 					}
-					firstMove = false;
 				} else {
 					if (Math.abs(pos.getRank() - this.pos.getRank()) == 1
 							&& this.pos.getFile() == pos.getFile() && (cell[pos.getFile()][pos.getRank()].getPiece() == null)) {
