@@ -274,7 +274,6 @@ public class Board {
 				// System.out.println(this);
 			}
 		
-
 			++moves;
 
 			Move newestMove = new Move(piece, oldPositionCell.loc, piece.pos,

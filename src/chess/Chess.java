@@ -10,6 +10,8 @@
  */
 package chess;
 
+import java.io.IOException;
+
 import model.game.Game;
 
 /**
@@ -22,8 +24,9 @@ public class Chess {
 	
 	/**
 	 * @param args Command line arguments
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) {		
+	public static void main(String[] args) throws IOException {		
 		// Instantiate a "game"
 		Game game = new Game();
 		
@@ -52,7 +55,8 @@ public class Chess {
 		game.blackPlayMove(6, 7, 7, 5);
 		*/
 		
-		game.start();
+		game.startFromFile("dat/testfile.txt");
+		//game.start();
 	}
 	
 }

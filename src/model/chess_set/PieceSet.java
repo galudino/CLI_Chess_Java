@@ -78,7 +78,7 @@ public class PieceSet {
 	 * 
 	 * @return A Piece within the PieceSet
 	 */
-	Piece getPiece(PieceType pieceType) {
+	public Piece getPiece(PieceType pieceType) {
 		return piece[pieceType.ordinal()];
 	}
 

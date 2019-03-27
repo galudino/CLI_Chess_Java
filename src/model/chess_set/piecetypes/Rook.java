@@ -22,7 +22,7 @@ import model.game.Position;
 public class Rook extends Piece {
 
 	private boolean canCastle;
-
+	
 	/**
 	 * Parameterized constructor
 	 * 
@@ -61,7 +61,7 @@ public class Rook extends Piece {
 	@Override
 	protected boolean isMoveLegal(Cell[][] cell, Position pos) {
 		boolean result = true;
-	
+
 		// This is to check if it is moving on one path aka not diagonal
 		if (pos.getRank() != this.pos.getRank() && pos.getFile() != this.pos.getFile()) {
 			result = false;

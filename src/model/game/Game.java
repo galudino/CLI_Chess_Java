@@ -10,6 +10,7 @@
  */
 package model.game;
 
+import java.io.*;
 import java.util.Scanner;
 
 import model.PieceType;
@@ -94,7 +95,7 @@ public class Game {
 	 */
 	public int[] getFileRankArray(String input) {
 		final String fileRankRegex = "[a-h][1-8]";
-		final String pieceRegex = "[qQbBnNrR]";
+		//final String pieceRegex = "[qQbBnNrR]";
 
 		String fileRankStr = "";
 		String newFileNewRankStr = "";
@@ -113,14 +114,14 @@ public class Game {
 		newFileNewRankStr = parse.next(fileRankRegex).toLowerCase();
 
 		if (parse.hasNext()) {
-			promoStr = parse.next(pieceRegex);
+			promoStr = parse.next();
 			promoStr = promoStr.toUpperCase();
 		}
 
 		char chFile = fileRankStr.charAt(0);
 		char chNewFile = newFileNewRankStr.charAt(0);
 		char chPromo = promoStr != null ? promoStr.charAt(0) : '!';
-
+		
 		switch (chFile) {
 		case 'a':
 			file = 0;
@@ -344,6 +345,165 @@ public class Game {
 		}
 
 		scan.close();
+	}
+	
+	/**
+	 * Starts a game from a String inputFilePath to an existing file.
+	 * Precondition: File to inputFilePath must exist.
+	 * 
+	 * @param inputFilePath String representing the input file to be read
+	 * @throws IOException On nonexistent inputFilePath
+	 * @return true if game can continue, false otherwise
+	 */
+	public void startFromFile(String inputFilePath) throws IOException {
+		int[] fileRankArray = null;
+
+		final String whiteSpaceRegex = "[ \\\\t\\\\n\\\\x0b\\\\r\\\\f]";
+		final String fileRankRegex = "[a-h][1-8]";
+		final String validFileRankRegex = String.format("%s%s%s", fileRankRegex,
+				whiteSpaceRegex, fileRankRegex);
+
+		final String drawRegex = "draw\\?";
+		final String validFileRankWithDrawRegex = String.format("%s%s%s",
+				validFileRankRegex, whiteSpaceRegex, drawRegex);
+
+		final String pieceRegex = "[qQbBnNrR]";
+
+		final String validFileRankWithPromotion = String.format("%s%s%s",
+				validFileRankRegex, whiteSpaceRegex, pieceRegex);
+
+		boolean active = true;
+
+		boolean whitesMove = true;
+
+		boolean willDraw = false;
+		boolean willResign = false;
+
+		boolean didDraw = false;
+		boolean drawGranted = false;
+		boolean didResign = false;
+
+		boolean validMoveInput = false;
+		boolean validMoveInputWithDraw = false;
+		boolean validMoveInputWithPromotion = false;
+
+		File inputFile = new File(inputFilePath);
+		
+		if (inputFile.exists() == false) {
+			System.err.println("Error: " + inputFilePath + " does not exist.");
+			System.exit(0);
+		}
+		
+		FileReader fileReader = new FileReader(inputFile);
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		String input = "";
+
+		System.out.println(board);
+
+		while (active) {
+			//String prompt = "";
+			String output = "";
+
+			validMoveInput = false;
+			validMoveInputWithDraw = false;
+			validMoveInputWithPromotion = false;
+
+			drawGranted = false;
+			willResign = false;
+
+			do {
+				validMoveInput = false;
+
+				//prompt = whitesMove ? "White's " : "Black's ";
+
+				//System.out.print(prompt + "move: ");
+				input = bufferedReader.readLine();
+				System.out.println();
+				
+				if (input == null) {
+					start();
+					break;
+				}
+
+				validMoveInput = input.matches(validFileRankRegex);
+				validMoveInputWithDraw = input
+						.matches(validFileRankWithDrawRegex);
+				validMoveInputWithPromotion = input
+						.matches(validFileRankWithPromotion);
+
+				drawGranted = willDraw && input.equals("draw");
+				willResign = input.equals("resign");
+
+				if (validMoveInput) {
+					willDraw = false;
+					fileRankArray = getFileRankArray(input);
+				} else if (validMoveInputWithPromotion) {
+					willDraw = false;
+					fileRankArray = getFileRankArray(input);
+				} else if (validMoveInputWithDraw) {
+					willDraw = true;
+					fileRankArray = getFileRankArray(input);
+				} else if (drawGranted) {
+					didDraw = true;
+					output = "draw";
+				} else if (willResign) {
+					didResign = true;
+					output = whitesMove ? "Black wins" : "White wins";
+				} else {
+					validMoveInput = false;
+					output = "Invalid input, try again\n";
+				}
+
+				if (validMoveInput || validMoveInputWithPromotion
+						|| validMoveInputWithDraw) {
+					int file = -1;
+					int rank = -1;
+					int newFile = -1;
+					int newRank = -1;
+					int promo = -1;
+
+					file = fileRankArray[0];
+					rank = fileRankArray[1];
+					newFile = fileRankArray[2];
+					newRank = fileRankArray[3];
+					promo = fileRankArray[4];
+
+					if (whitesMove) {
+						validMoveInput = whitePlayMove(file, rank, newFile,
+								newRank, promo);
+					} else {
+						validMoveInput = blackPlayMove(file, rank, newFile,
+								newRank, promo);
+					}
+
+					output = validMoveInput ? "" : "Illegal move, try again";
+				}
+
+				System.out.println(output);
+
+				if (didDraw || didResign) {
+					System.exit(0);
+				}
+			} while (validMoveInput == false);
+
+			whitesMove = whitesMove ? false : true;
+
+			System.out.println(boardToString());
+
+			/**
+			 * DIAGNOSTICS
+			 */
+			printMoveLog();
+
+			if (whitesMove == false) {
+				white.printPieceSet();
+			} else {
+				black.printPieceSet();
+			}
+		}
+		
+		bufferedReader.close();
+		fileReader.close();
 	}
 
 	/**
