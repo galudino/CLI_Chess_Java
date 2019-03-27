@@ -88,9 +88,10 @@ public class PieceSet {
 	 * @param pawnPiece the Pawn Piece to promote
 	 * @param promoType the PieceType of the Piece to promote
 	 */
-	public void promotePawn(Piece pawnPiece, PieceType promoType) {
+	public Piece promotePawn(Piece pawnPiece, PieceType promoType) {
+		Piece promo = null;
+		
 		if (pawnPiece.isPawn() && promoType != null) {
-			Piece promo = null;
 
 			switch (promoType) {
 			case QUEEN:
@@ -206,6 +207,8 @@ public class PieceSet {
 		} else {
 			System.err.println("Cannot promote non-Pawn Piece instances.");
 		}
+		
+		return promo == null ? pawnPiece : promo;
 	}
 
 	/**
