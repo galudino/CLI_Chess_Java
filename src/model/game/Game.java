@@ -53,15 +53,15 @@ public class Game {
 	 * @param rank    y axis coordinate of a requested Piece (0-7 only)
 	 * @param newFile x axis coordinate of the desired move (0-7 only)
 	 * @param newRank y axis coordinate of the desired move (0-7 only)
-	 * @param promo	  integer that represents the piece to promote to (if != -1)
+	 * @param promo   integer that represents the piece to promote to (if != -1)
 	 * 
 	 * @return true if move executed successfully, false otherwise
 	 */
-	public boolean whitePlayMove(int file, int rank, 
-			int newFile, int newRank, int promo) {
+	public boolean whitePlayMove(int file, int rank, int newFile, int newRank,
+			int promo) {
 		whitePlay = new Position(file, rank);
 		whiteNewPosition = new Position(newFile, newRank);
-	
+
 		return white.playMove(board, whitePlay, whiteNewPosition, promo);
 	}
 
@@ -72,12 +72,12 @@ public class Game {
 	 * @param rank    y axis coordinate of a requested Piece (0-7 only)
 	 * @param newFile x axis coordinate of the desired move (0-7 only)
 	 * @param newRank y axis coordinate of the desired move (0-7 only)
-	 * @param promo	  integer that represents the piece to promote to (if != -1)
+	 * @param promo   integer that represents the piece to promote to (if != -1)
 	 * 
 	 * @return true if move executed successfully, false otherwise
 	 */
-	public boolean blackPlayMove(int file, int rank, 
-			int newFile, int newRank, int promo) {
+	public boolean blackPlayMove(int file, int rank, int newFile, int newRank,
+			int promo) {
 		blackPlay = new Position(file, rank);
 		blackNewPosition = new Position(newFile, newRank);
 
@@ -95,11 +95,11 @@ public class Game {
 	public int[] getFileRankArray(String input) {
 		final String fileRankRegex = "[a-h][1-8]";
 		final String pieceRegex = "[qQbBnNrR]";
-		
+
 		String fileRankStr = "";
 		String newFileNewRankStr = "";
 		String promoStr = null;
-		
+
 		int file = -1;
 		int rank = -1;
 		int newFile = -1;
@@ -116,11 +116,11 @@ public class Game {
 			promoStr = parse.next(pieceRegex);
 			promoStr = promoStr.toUpperCase();
 		}
-				
+
 		char chFile = fileRankStr.charAt(0);
 		char chNewFile = newFileNewRankStr.charAt(0);
 		char chPromo = promoStr != null ? promoStr.charAt(0) : '!';
-		
+
 		switch (chFile) {
 		case 'a':
 			file = 0;
@@ -174,7 +174,7 @@ public class Game {
 			newFile = 7;
 			break;
 		}
-		
+
 		switch (chPromo) {
 		case 'Q':
 			promo = PieceType.QUEEN.ordinal();
@@ -187,6 +187,9 @@ public class Game {
 			break;
 		case 'R':
 			promo = PieceType.ROOK_R.ordinal();
+			break;
+		default:
+			promo = PieceType.QUEEN.ordinal();
 			break;
 		}
 
@@ -216,21 +219,21 @@ public class Game {
 				validFileRankRegex, whiteSpaceRegex, drawRegex);
 
 		final String pieceRegex = "[qQbBnNrR]";
-		
-		final String validFileRankWithPromotion = String.format("%s%s%s", 
+
+		final String validFileRankWithPromotion = String.format("%s%s%s",
 				validFileRankRegex, whiteSpaceRegex, pieceRegex);
-		
+
 		boolean active = true;
-		
+
 		boolean whitesMove = true;
-		
+
 		boolean willDraw = false;
 		boolean willResign = false;
-		
+
 		boolean didDraw = false;
 		boolean drawGranted = false;
 		boolean didResign = false;
-		
+
 		boolean validMoveInput = false;
 		boolean validMoveInputWithDraw = false;
 		boolean validMoveInputWithPromotion = false;
@@ -247,7 +250,7 @@ public class Game {
 			validMoveInput = false;
 			validMoveInputWithDraw = false;
 			validMoveInputWithPromotion = false;
-			
+
 			drawGranted = false;
 			willResign = false;
 
@@ -259,16 +262,16 @@ public class Game {
 				System.out.print(prompt + "move: ");
 				input = scan.nextLine();
 				System.out.println();
-				
+
 				validMoveInput = input.matches(validFileRankRegex);
-				validMoveInputWithDraw = 
-						input.matches(validFileRankWithDrawRegex);
-				validMoveInputWithPromotion = 
-						input.matches(validFileRankWithPromotion);
-				
+				validMoveInputWithDraw = input
+						.matches(validFileRankWithDrawRegex);
+				validMoveInputWithPromotion = input
+						.matches(validFileRankWithPromotion);
+
 				drawGranted = willDraw && input.equals("draw");
 				willResign = input.equals("resign");
-				
+
 				if (validMoveInput) {
 					willDraw = false;
 					fileRankArray = getFileRankArray(input);
@@ -277,7 +280,7 @@ public class Game {
 					fileRankArray = getFileRankArray(input);
 				} else if (validMoveInputWithDraw) {
 					willDraw = true;
-					fileRankArray = getFileRankArray(input);	
+					fileRankArray = getFileRankArray(input);
 				} else if (drawGranted) {
 					didDraw = true;
 					output = "draw";
@@ -288,26 +291,27 @@ public class Game {
 					validMoveInput = false;
 					output = "Invalid input, try again\n";
 				}
-				
-				if (validMoveInput || 
-						validMoveInputWithPromotion || 
-						validMoveInputWithDraw) {
+
+				if (validMoveInput || validMoveInputWithPromotion
+						|| validMoveInputWithDraw) {
 					int file = -1;
 					int rank = -1;
 					int newFile = -1;
 					int newRank = -1;
 					int promo = -1;
-					
+
 					file = fileRankArray[0];
 					rank = fileRankArray[1];
 					newFile = fileRankArray[2];
 					newRank = fileRankArray[3];
 					promo = fileRankArray[4];
-					
+
 					if (whitesMove) {
-						validMoveInput = whitePlayMove(file, rank, newFile, newRank, promo);
+						validMoveInput = whitePlayMove(file, rank, newFile,
+								newRank, promo);
 					} else {
-						validMoveInput = blackPlayMove(file, rank, newFile, newRank, promo);
+						validMoveInput = blackPlayMove(file, rank, newFile,
+								newRank, promo);
 					}
 
 					output = validMoveInput ? "" : "Illegal move, try again";
@@ -321,14 +325,14 @@ public class Game {
 			} while (validMoveInput == false);
 
 			whitesMove = whitesMove ? false : true;
-						
+
 			System.out.println(boardToString());
-			
+
 			/**
 			 * DIAGNOSTICS
 			 */
 			printMoveLog();
-			
+
 			if (whitesMove == false) {
 				white.printPieceSet();
 			} else {
@@ -338,7 +342,6 @@ public class Game {
 
 		scan.close();
 	}
-	
 
 	/**
 	 * Accessor to retrieve the Position of the white Player's most recent Piece
