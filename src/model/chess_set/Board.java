@@ -126,8 +126,8 @@ public class Board {
 		}
 
 		public String toString() {
-			return localTime.toString() + "\t" + moveNumber + "\t" 
-					+ piece + "\t" + startPos + "\t" + endPos;
+			return localTime.toString() + "\t" + moveNumber + "\t" + piece
+					+ "\t" + startPos + "\t" + endPos;
 		}
 	}
 
@@ -198,11 +198,12 @@ public class Board {
 	 * 
 	 * @param piece       accessed by a Player for a move
 	 * @param newPosition the new Position desired by the Player for a Piece
+	 * @param promoType   the PieceType to promote param piece to (if eligible)
 	 * 
 	 * @return true if successful, false otherwise
 	 */
 	public boolean movePiece(Piece piece, PieceSet pieceSet,
-			Position newPosition) {
+			Position newPosition, PieceType promoType) {
 		boolean result = false;
 
 		Cell oldPositionCell = getCell(piece.pos);
@@ -240,6 +241,24 @@ public class Board {
 			// Since the Piece moved from the old location to the new location,
 			// the Cell will no longer have a reference to that Piece.
 
+			/**
+			 * If a successful move is made,
+			 * piece will be evaluated by pieceSet
+			 * to determine if piece is a promotable Pawn.
+			 */
+			if (result) {
+				boolean promoteWhite = promoType != null &&
+						piece.isWhite() && newPosition.getRank() == 7;
+				
+				boolean promoteBlack = promoType != null &&
+						piece.isBlack() && newPosition.getRank() == 0;
+				
+				if (promoteWhite || promoteBlack) {
+					pieceSet.promotePawn(piece, promoType);
+				}
+			}
+
+			/*
 			if (result) {
 				switch (piece.pieceType) {
 				case PAWN_0:
@@ -254,13 +273,15 @@ public class Board {
 						Scanner input = new Scanner(System.in);
 						String inputAns;
 
+						//@formatter:off
 						if (piece.isWhite()) {
 
 							if (newPosition.getRank() == 7) {
+								
 								System.out.println(
 										"Pawn is now promotable, what would you like to promote it to?\nQ for Queen, B for bishop, N for knight, or R for Rook");
 								inputAns = input.next();
-
+							
 								if (inputAns.equalsIgnoreCase("Q")) {
 									Piece promo = new Queen(
 											PieceType.Color.WHITE);
@@ -301,6 +322,7 @@ public class Board {
 							}
 						} else if (piece.isBlack()) {
 							if (newPosition.getRank() == 0) {
+								
 								System.out.println(
 										"Pawn is now promotable, what would you like to promote it to?\nQ for Queen, B for bishop, N for knight, or R for Rook");
 								inputAns = input.next();
@@ -342,15 +364,14 @@ public class Board {
 											.ordinal()] = promo;
 									piece = promo;
 								}
+								
 							}
+							
+							// start here
+							
 						}
-
-						// input.close();
+						//@formatter:on
 					}
-
-					// input.close();
-
-					break;
 				default:
 					break;
 				}
@@ -371,8 +392,10 @@ public class Board {
 
 				// System.out.println(this);
 			}
+			/*
 
 			++moves;
+
 			Move newestMove = new Move(piece, oldPositionCell.loc, piece.pos,
 					moves);
 			moveList.add(newestMove);
@@ -423,6 +446,7 @@ public class Board {
 			 */
 
 		}
+
 		canCheck(piece);
 		return result;
 	}
