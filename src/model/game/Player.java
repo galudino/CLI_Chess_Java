@@ -66,11 +66,12 @@ class Player {
 	 * @param board the current Board instance used during a match
 	 * @param piecePosition the Position of a chosen Piece
 	 * @param newPosition the Position desired by the Player for a chosen Piece
+     * @param promo	  integer that represents the piece to promote to (if != -1)
 	 * 
 	 * @return true if successful, false otherwise
 	 */
 	boolean playMove(Board board, Position piecePosition, 
-			Position newPosition) {
+			Position newPosition, int promo) {
 		boolean result = false;
 		
 		boolean requestDiffersFromNewPosition = 
@@ -78,14 +79,32 @@ class Player {
 		
 		if (requestDiffersFromNewPosition) {
 			Piece pieceRequested = pieceSet.getPieceByPosition(piecePosition);
-
+			
 			if (pieceRequested == null) {
 				String error = String.format(
 						"ERROR: No %s piece at position %s exists.", 
 						color, piecePosition);
 				System.err.println(error);
 			} else {
-				result = board.movePiece(pieceRequested, pieceSet, newPosition);
+				PieceType promoType = null;
+				
+				switch (promo) {
+				case 1:
+					promoType = PieceType.QUEEN;
+					break;
+				case 3:
+					promoType = PieceType.BISHOP_R;
+					break;
+				case 5:
+					promoType = PieceType.KNIGHT_R;
+					break;
+				case 7:
+					promoType = PieceType.ROOK_R;
+					break;					
+				}
+				
+				result = board.movePiece(pieceRequested, pieceSet, 
+						newPosition, promoType);
 
 				/*
 				 *  Not necessary, because pieceRequested
