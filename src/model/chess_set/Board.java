@@ -241,38 +241,53 @@ public class Board {
 			// Since the Piece moved from the old location to the new location,
 			// the Cell will no longer have a reference to that Piece.
 
+			King k = null;
+			
+			if(piece.isWhite()) {
+				k = (King) whiteSet.getPiece(PieceType.KING);
+			} else {
+				k = (King) blackSet.getPiece(PieceType.KING);
+			}
+			
 			/**
 			 * If a successful move is made,
 			 * piece will be evaluated by pieceSet
 			 * to determine if piece is a promotable Pawn.
 			 */
 			if (result) {
-				boolean promoteWhite = promoType != null &&
-						piece.isWhite() && newPosition.getRank() == 7;
-				
-				boolean promoteBlack = promoType != null &&
-						piece.isBlack() && newPosition.getRank() == 0;
-				
-				if (promoteWhite || promoteBlack) {
-					piece = pieceSet.promotePawn(piece, promoType);
+				if(isKingSafe(k)) {
+					boolean promoteWhite = promoType != null &&
+							piece.isWhite() && newPosition.getRank() == 7;
+						
+					boolean promoteBlack = promoType != null &&
+							piece.isBlack() && newPosition.getRank() == 0;
+						
+					if (promoteWhite || promoteBlack) {
+						piece = pieceSet.promotePawn(piece, promoType);
+					}
+					
+					// This statement nullifies any reference to a Piece
+					// for this Cell object. (Next line: piece will be reassigned
+					// to the newPositionCell.piece field).
+					oldPositionCell.piece = null;
+
+					// This statement affects what Pieces print
+					// at which cells when board.toString() is called.
+					newPositionCell.piece = piece;
+
+					// This statement affects the internal position
+					// data within a Piece object.
+					piece.pos = newPosition;
+					// piece.move(newPosition) // why use this? pos is protected.
+
+					// System.out.println(this);
+				} else {
+					result = false;
+					
+					//need to figure out how to prompt user to enter a valid legal move to make sure King is safe...
 				}
-			
-				// This statement nullifies any reference to a Piece
-				// for this Cell object. (Next line: piece will be reassigned
-				// to the newPositionCell.piece field).
-				oldPositionCell.piece = null;
-
-				// This statement affects what Pieces print
-				// at which cells when board.toString() is called.
-				newPositionCell.piece = piece;
-
-				// This statement affects the internal position
-				// data within a Piece object.
-				piece.pos = newPosition;
-				// piece.move(newPosition) // why use this? pos is protected.
-
-				// System.out.println(this);
 			}
+
 		
 			++moves;
 
@@ -327,6 +342,42 @@ public class Board {
 			result = true;
 		}
 
+		return result;
+	}
+	
+	public boolean isKingSafe(King k) {
+		boolean result = true;
+		PieceSet opponent = null;
+		
+		if(k.isWhite())
+			opponent = getBlackSet();
+		else
+			opponent = getWhiteSet();
+		
+		Piece BISH_L = opponent.getPiece(PieceType.BISHOP_L);
+		Piece BISH_R = opponent.getPiece(PieceType.BISHOP_L);
+		Piece KNIGHT_L = opponent.getPiece(PieceType.KNIGHT_L);
+		Piece KNIGHT_R = opponent.getPiece(PieceType.KNIGHT_R);
+		Piece ROOK_R = opponent.getPiece(PieceType.ROOK_R);
+		Piece ROOK_L = opponent.getPiece(PieceType.ROOK_L);
+		Piece PAWN_0 = opponent.getPiece(PieceType.PAWN_0);
+		Piece PAWN_1 = opponent.getPiece(PieceType.PAWN_1);
+		Piece PAWN_2 = opponent.getPiece(PieceType.PAWN_2);
+		Piece PAWN_3 = opponent.getPiece(PieceType.PAWN_3);
+		Piece PAWN_4 = opponent.getPiece(PieceType.PAWN_4);
+		Piece PAWN_5 = opponent.getPiece(PieceType.PAWN_5);
+		Piece PAWN_6 = opponent.getPiece(PieceType.PAWN_6);
+		Piece PAWN_7 = opponent.getPiece(PieceType.PAWN_7);
+		Piece QUEEN = opponent.getPiece(PieceType.QUEEN);
+		
+		if(ROOK_R.isMoveLegal(cell, k.pos) || ROOK_L.isMoveLegal(cell, k.pos) || QUEEN.isMoveLegal(cell, k.pos)
+				|| PAWN_0.isMoveLegal(cell, k.pos) || PAWN_1.isMoveLegal(cell, k.pos) || PAWN_2.isMoveLegal(cell, k.pos)
+				|| PAWN_3.isMoveLegal(cell, k.pos) || PAWN_4.isMoveLegal(cell, k.pos) || PAWN_5.isMoveLegal(cell, k.pos)
+				|| PAWN_6.isMoveLegal(cell, k.pos) || PAWN_7.isMoveLegal(cell, k.pos) || BISH_L.isMoveLegal(cell, k.pos)
+				|| BISH_R.isMoveLegal(cell, k.pos) || KNIGHT_L.isMoveLegal(cell, k.pos) || KNIGHT_R.isMoveLegal(cell, k.pos)) {	
+			result = false;
+		}
+		
 		return result;
 	}
 
