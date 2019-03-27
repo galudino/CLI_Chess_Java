@@ -11,6 +11,7 @@
 package model.chess_set.piecetypes;
 
 import model.PieceType;
+import model.chess_set.Board;
 import model.chess_set.Board.Cell;
 import model.chess_set.Piece;
 import model.game.Position;
@@ -67,17 +68,6 @@ public class King extends Piece {
 			result = false;
 		}
 		return result;
-	}
-	
-	public boolean hasValidMoves(Cell[][] cell, Position pos) {
-		return ((isMoveLegal(cell, new Position(this.pos.getFile() + 1, this.pos.getRank())) && isKingSafe(this, cell)) || 
-				(isMoveLegal(cell, new Position(this.pos.getFile() - 1, this.pos.getRank())) && isKingSafe(this, cell)) ||
-				(isMoveLegal(cell, new Position(this.pos.getFile(), this.pos.getRank() + 1)) && isKingSafe(this, cell)) || 
-				(isMoveLegal(cell, new Position(this.pos.getFile(), this.pos.getRank() - 1)) && isKingSafe(this, cell)) || 
-				(isMoveLegal(cell, new Position(this.pos.getFile() + 1, this.pos.getRank() - 1)) && isKingSafe(this, cell)) || 
-				(isMoveLegal(cell, new Position(this.pos.getFile() - 1, this.pos.getRank() - 1)) && isKingSafe(this, cell)) || 
-				(isMoveLegal(cell, new Position(this.pos.getFile() + 1, this.pos.getRank() + 1)) && isKingSafe(this, cell)) || 
-				(isMoveLegal(cell, new Position(this.pos.getFile() - 1, this.pos.getRank() + 1)) && isKingSafe(this, cell)));
 	}
 
 	@Override

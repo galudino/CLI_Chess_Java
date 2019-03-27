@@ -101,42 +101,6 @@ public abstract class Piece {
 		return isPieceTypePawn && this instanceof Pawn;
 	}
 	
-	public boolean isKingSafe(King k, Cell[][] cell) {
-		boolean result = true;
-		PieceSet opponent = null;
-		
-		if(k.isWhite())
-			opponent = opponent.getPieceSet();
-
-		System.out.println(opponent);
-		
-		Piece BISH_L = opponent.getPiece(PieceType.BISHOP_L);
-		Piece BISH_R = opponent.getPiece(PieceType.BISHOP_L);
-		Piece KNIGHT_L = opponent.getPiece(PieceType.KNIGHT_L);
-		Piece KNIGHT_R = opponent.getPiece(PieceType.KNIGHT_R);
-		Piece ROOK_R = opponent.getPiece(PieceType.ROOK_R);
-		Piece ROOK_L = opponent.getPiece(PieceType.ROOK_L);
-		Piece PAWN_0 = opponent.getPiece(PieceType.PAWN_0);
-		Piece PAWN_1 = opponent.getPiece(PieceType.PAWN_1);
-		Piece PAWN_2 = opponent.getPiece(PieceType.PAWN_2);
-		Piece PAWN_3 = opponent.getPiece(PieceType.PAWN_3);
-		Piece PAWN_4 = opponent.getPiece(PieceType.PAWN_4);
-		Piece PAWN_5 = opponent.getPiece(PieceType.PAWN_5);
-		Piece PAWN_6 = opponent.getPiece(PieceType.PAWN_6);
-		Piece PAWN_7 = opponent.getPiece(PieceType.PAWN_7);
-		Piece QUEEN = opponent.getPiece(PieceType.QUEEN);
-		
-		if(ROOK_R.isMoveLegal(cell, k.pos) || ROOK_L.isMoveLegal(cell, k.pos) || QUEEN.isMoveLegal(cell, k.pos)
-				|| PAWN_0.isMoveLegal(cell, k.pos) || PAWN_1.isMoveLegal(cell, k.pos) || PAWN_2.isMoveLegal(cell, k.pos)
-				|| PAWN_3.isMoveLegal(cell, k.pos) || PAWN_4.isMoveLegal(cell, k.pos) || PAWN_5.isMoveLegal(cell, k.pos)
-				|| PAWN_6.isMoveLegal(cell, k.pos) || PAWN_7.isMoveLegal(cell, k.pos) || BISH_L.isMoveLegal(cell, k.pos)
-				|| BISH_R.isMoveLegal(cell, k.pos) || KNIGHT_L.isMoveLegal(cell, k.pos) || KNIGHT_R.isMoveLegal(cell, k.pos)) {	
-			result = false;
-		}
-		
-		return result;
-	}
-	
 	/**
 	 * Determine a Piece's PieceType
 	 * 

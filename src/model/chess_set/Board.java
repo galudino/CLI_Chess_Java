@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import model.PieceType;
+import model.chess_set.Board.Cell;
 import model.chess_set.piecetypes.*;
 import model.game.Position;
 
@@ -264,20 +265,42 @@ public class Board {
 						piece = pieceSet.promotePawn(piece, promoType);
 					}
 					
+					boolean kingSafe = isKingSafe(k, k.pos);
 
+                    if (kingSafe) {
+                        // This statement nullifies any reference to a Piece
+                        // for this Cell object. (Next line: piece will be reassigned
+                        // to the newPositionCell.piece field).
+                        oldPositionCell.piece = null;
+
+                        // This statement affects what Pieces print
+                        // at which cells when board.toString() is called.
+                        newPositionCell.piece = piece;
+
+                        // This statement affects the internal position
+                        // data within a Piece object.
+                        piece.pos = newPosition;
+                        // piece.move(newPosition) // why use this? pos is protected.
+
+                        // System.out.println(this);
+                        //need to figure out how to prompt user to enter a valid legal move to make sure King is safe...
+                    } else {
+                    	System.out.println(hasValidMoves(k));
+                        return false;
+                    }
 					
 					// This statement nullifies any reference to a Piece
 					// for this Cell object. (Next line: piece will be reassigned
 					// to the newPositionCell.piece field).
-					oldPositionCell.piece = null;
+					//oldPositionCell.piece = null;
 
 					// This statement affects what Pieces print
 					// at which cells when board.toString() is called.
-					newPositionCell.piece = piece;
+					//newPositionCell.piece = piece;
 
 					// This statement affects the internal position
 					// data within a Piece object.
-					piece.pos = newPosition;
+					//piece.pos = newPosition;
 					// piece.move(newPosition) // why use this? pos is protected.
 
 					// System.out.println(this);
@@ -345,7 +368,7 @@ public class Board {
 		return result;
 	}
 	
-	public boolean isKingSafe(King k) {
+	public boolean isKingSafe(King k, Position p) {
 		boolean result = true;
 		PieceSet opponent = null;
 		
@@ -370,15 +393,26 @@ public class Board {
 		Piece PAWN_7 = opponent.getPiece(PieceType.PAWN_7);
 		Piece QUEEN = opponent.getPiece(PieceType.QUEEN);
 		
-		if(ROOK_R.isMoveLegal(cell, k.pos) || ROOK_L.isMoveLegal(cell, k.pos) || QUEEN.isMoveLegal(cell, k.pos)
-				|| PAWN_0.isMoveLegal(cell, k.pos) || PAWN_1.isMoveLegal(cell, k.pos) || PAWN_2.isMoveLegal(cell, k.pos)
-				|| PAWN_3.isMoveLegal(cell, k.pos) || PAWN_4.isMoveLegal(cell, k.pos) || PAWN_5.isMoveLegal(cell, k.pos)
-				|| PAWN_6.isMoveLegal(cell, k.pos) || PAWN_7.isMoveLegal(cell, k.pos) || BISH_L.isMoveLegal(cell, k.pos)
-				|| BISH_R.isMoveLegal(cell, k.pos) || KNIGHT_L.isMoveLegal(cell, k.pos) || KNIGHT_R.isMoveLegal(cell, k.pos)) {	
+		if(ROOK_R.isMoveLegal(cell, p) || ROOK_L.isMoveLegal(cell, p) || QUEEN.isMoveLegal(cell, p)
+				|| PAWN_0.isMoveLegal(cell, p) || PAWN_1.isMoveLegal(cell, p) || PAWN_2.isMoveLegal(cell, p)
+				|| PAWN_3.isMoveLegal(cell, p) || PAWN_4.isMoveLegal(cell, p) || PAWN_5.isMoveLegal(cell, p)
+				|| PAWN_6.isMoveLegal(cell, p) || PAWN_7.isMoveLegal(cell, p) || BISH_L.isMoveLegal(cell, p)
+				|| BISH_R.isMoveLegal(cell, p) || KNIGHT_L.isMoveLegal(cell, p) || KNIGHT_R.isMoveLegal(cell, p)) {	
 			result = false;
 		}
 		
 		return result;
+	}
+	
+	public boolean hasValidMoves(King k) {
+		return ((k.isMoveLegal(cell, new Position(k.pos.getFile() + 1, k.pos.getRank())) && isKingSafe(k, new Position(k.pos.getFile() + 1, k.pos.getRank())) || 
+				(k.isMoveLegal(cell, new Position(k.pos.getFile() - 1, k.pos.getRank())) && isKingSafe(k, new Position(k.pos.getFile() - 1, k.pos.getRank())) ||
+				(k.isMoveLegal(cell, new Position(k.pos.getFile(), k.pos.getRank() + 1)) && isKingSafe(k, new Position(k.pos.getFile(), k.pos.getRank() + 1))) || 
+				(k.isMoveLegal(cell, new Position(k.pos.getFile(), k.pos.getRank() - 1)) && isKingSafe(k, new Position(k.pos.getFile(), k.pos.getRank() - 1))) || 
+				(k.isMoveLegal(cell, new Position(k.pos.getFile() + 1, k.pos.getRank() - 1)) && isKingSafe(k, new Position(k.pos.getFile() + 1, k.pos.getRank() - 1))) || 
+				(k.isMoveLegal(cell, new Position(k.pos.getFile() - 1, k.pos.getRank() - 1)) && isKingSafe(k, new Position(k.pos.getFile() - 1, k.pos.getRank() - 1))) || 
+				(k.isMoveLegal(cell, new Position(k.pos.getFile() + 1, k.pos.getRank() + 1)) && isKingSafe(k, new Position(k.pos.getFile() + 1, k.pos.getRank() + 1))) || 
+				(k.isMoveLegal(cell, new Position(k.pos.getFile() - 1, k.pos.getRank() + 1)) && isKingSafe(k, new Position(k.pos.getFile() - 1, k.pos.getRank() + 1))))));
 	}
 
 	/**
