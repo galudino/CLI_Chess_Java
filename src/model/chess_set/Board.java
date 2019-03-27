@@ -254,7 +254,7 @@ public class Board {
 						piece.isBlack() && newPosition.getRank() == 0;
 				
 				if (promoteWhite || promoteBlack) {
-					pieceSet.promotePawn(piece, promoType);
+					piece = pieceSet.promotePawn(piece, promoType);
 				}
 			
 				// This statement nullifies any reference to a Piece
