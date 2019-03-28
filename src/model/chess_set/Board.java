@@ -219,44 +219,21 @@ public class Board {
 		boolean isLegalMove = piece.isMoveLegal(cell, newPosition);
 
 		King k = null;
-		King k2 = null;
 
 		if (piece.isBlack()) {
 			k = (King) whiteSet.getPiece(PieceType.KING);
-			k2 = (King) blackSet.getPiece(PieceType.KING);
 		} else {
 			k = (King) blackSet.getPiece(PieceType.KING);
-			k2 = (King) whiteSet.getPiece(PieceType.KING);
 		}
-
-		if (isLegalMove) {
-			boolean found = false;
-			// if the king is checked,
-			// see if newPosition is within the valid move set for the king
-			if (kingChecked) {		
-				
-				boolean kingHasValidMoves = hasValidMoves(k);
-				
-				if(kingHasValidMoves) {
-					for (int i = 0; i < kingMoves.length; i++) {	
-						System.out.println("KING MOVES POS: " + kingMoves[i]);
-						
-						if (newPosition.equals(kingMoves[i])) {
-							found = true;
-							break;
-						}
-						
-		                if (found == false) {
-		                    return false;
-		                }
-					}
-				}
+		
+		if(kingChecked) {
+			if(piece.isKing()) {
+				System.out.println("You need to move this piece.");
 			} else {
-				// if the king is not checked, just make this flag true
-				found = true;
+				result = false;
 			}
-
-			if (found) {
+		} else {
+			if (isLegalMove) {
 				Piece other = newPositionCell.piece;
 				boolean pieceFoundAtNewPosition = other != null;
 
@@ -385,7 +362,7 @@ public class Board {
 
 			if(canCheck(piece)) {
 				if(hasValidMoves(k)) {
-					System.out.println("Not checkmated");					
+					kingChecked = true;				
 				} else {
 					String output = "";
 					System.out.println("Checkmate");
