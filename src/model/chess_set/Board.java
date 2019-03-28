@@ -225,154 +225,161 @@ public class Board {
 		} else {
 			k = (King) blackSet.getPiece(PieceType.KING);
 		}
-		
-		if(kingChecked) {
-			if(piece.isKing()) {
-				System.out.println("You need to move this piece.");
+
+		if (kingChecked) {
+			if (piece.isKing()) {
+				for (int i = 0; i < kingMoves.length; i++) {
+					if (newPosition.equals(kingMoves[i]) && isKingSafe(k, kingMoves[i])) {
+						kingChecked = false;
+						isLegalMove = true;
+						result = true;
+						break;
+					} else {
+						isLegalMove = false;
+						result = false;
+					}
+				}
 			} else {
+				isLegalMove = false;
 				result = false;
 			}
-		} else {
-			if (isLegalMove) {
-				Piece other = newPositionCell.piece;
-				boolean pieceFoundAtNewPosition = other != null;
+		}
 
-				if (pieceFoundAtNewPosition) {
-					boolean allyPieceFound = piece.matchesColor(other);
+		if (isLegalMove) {
+			Piece other = newPositionCell.piece;
+			boolean pieceFoundAtNewPosition = other != null;
 
-					if (allyPieceFound) {
-						// This prevents a Piece of the same color "taking"
-						// another piece.
-						result = false;
-					} else {
-						// At this point, a "piece" is taken.
-						newPositionCell.piece = null;
+			if (pieceFoundAtNewPosition) {
+				boolean allyPieceFound = piece.matchesColor(other);
 
-						// result = true means we will allow our requested
-						// piece to move to the cell with newPosition.
-						result = true;
-					}
+				if (allyPieceFound) {
+					// This prevents a Piece of the same color "taking"
+					// another piece.
+					result = false;
 				} else {
+					// At this point, a "piece" is taken.
+					newPositionCell.piece = null;
+
 					// result = true means we will allow our requested
 					// piece to move to the cell with newPosition.
 					result = true;
 				}
+			} else {
+				// result = true means we will allow our requested
+				// piece to move to the cell with newPosition.
+				result = true;
+			}
 
-				// Since the Piece moved from the old location to the new
-				// location,
-				// the Cell will no longer have a reference to that Piece.
+			// Since the Piece moved from the old location to the new
+			// location,
+			// the Cell will no longer have a reference to that Piece.
 
-				/**
-				 * If a successful move is made, piece will be evaluated by
-				 * pieceSet to determine if piece is a promotable Pawn.
-				 */
-				if (result) {
+			/**
+			 * If a successful move is made, piece will be evaluated by pieceSet
+			 * to determine if piece is a promotable Pawn.
+			 */
+			if (result) {
 
-					boolean promoteWhite = promoType != null && piece.isWhite()
-							&& newPosition.getRank() == 7;
+				boolean promoteWhite = promoType != null && piece.isWhite()
+						&& newPosition.getRank() == 7;
 
-					boolean promoteBlack = promoType != null && piece.isBlack()
-							&& newPosition.getRank() == 0;
+				boolean promoteBlack = promoType != null && piece.isBlack()
+						&& newPosition.getRank() == 0;
 
-					if (promoteWhite || promoteBlack) {
-						piece = pieceSet.promotePawn(piece, promoType);
-					}
+				if (promoteWhite || promoteBlack) {
+					piece = pieceSet.promotePawn(piece, promoType);
+				}
 
-					kingSafe = isKingSafe(k, k.pos);
+				kingSafe = isKingSafe(k, k.pos);
 
-					if (kingSafe) {
-						// This statement nullifies any reference to a Piece
-						// for this Cell object. (Next line: piece will be
-						// reassigned
-						// to the newPositionCell.piece field).
-						oldPositionCell.piece = null;
-
-						// This statement affects what Pieces print
-						// at which cells when board.toString() is called.
-						newPositionCell.piece = piece;
-
-						// This statement affects the internal position
-						// data within a Piece object.
-						piece.pos = newPosition;
-						// piece.move(newPosition) // why use this? pos is
-						// protected.
-
-						// System.out.println(this);
-						// need to figure out how to prompt user to enter a
-						// valid legal move to make sure King is safe...
-					} else {
-
-						/*System.out.println("KING IS NOT SAFE???");
-						
-						boolean kingHasValidMoves = hasValidMoves(k);
-						
-						if (kingHasValidMoves) {
-							kingChecked = true;
-							
-							for(int i = 0; i < kingMoves.length; i++) {
-								if (newPosition.equals(kingMoves[i])) {
-									found = true;
-									break;
-								}
-							}
-							
-						} else {
-							String output = "";
-							System.out.println("Checkmate");
-							output = k.isWhite() ? "Black " : "White ";
-							System.out.println(output + " wins");
-							System.exit(0);
-						}*/
-
-						return false;
-					}
-
+				if (kingSafe) {
 					// This statement nullifies any reference to a Piece
 					// for this Cell object. (Next line: piece will be
 					// reassigned
 					// to the newPositionCell.piece field).
-					// oldPositionCell.piece = null;
+					oldPositionCell.piece = null;
 
 					// This statement affects what Pieces print
 					// at which cells when board.toString() is called.
-					// newPositionCell.piece = piece;
+					newPositionCell.piece = piece;
 
 					// This statement affects the internal position
 					// data within a Piece object.
-					// piece.pos = newPosition;
+					piece.pos = newPosition;
 					// piece.move(newPosition) // why use this? pos is
 					// protected.
 
 					// System.out.println(this);
-					// need to figure out how to prompt user to enter a valid
-					// legal move to make sure King is safe...
-				}
-
-				// System.out.println(k + "\nFILE: " + k.pos.getFile() +
-				// "\nRANK: " + k.pos.getRank());
-				// System.out.println(k.hasValidMoves(cell, k.pos));
-
-				++moves;
-
-				Move newestMove = new Move(piece, oldPositionCell.loc,
-						piece.pos, moves);
-				moveList.add(newestMove);
-
-			}
-
-			if(canCheck(piece)) {
-				if(hasValidMoves(k)) {
-					kingChecked = true;				
+					// need to figure out how to prompt user to enter a
+					// valid legal move to make sure King is safe...
 				} else {
-					String output = "";
-					System.out.println("Checkmate");
-					output = k.isWhite() ? "Black" : "White";
-					System.out.println(output + " wins");
-					System.exit(0);
+
+					/*
+					 * System.out.println("KING IS NOT SAFE???");
+					 * 
+					 * boolean kingHasValidMoves = hasValidMoves(k);
+					 * 
+					 * if (kingHasValidMoves) { kingChecked = true;
+					 * 
+					 * for(int i = 0; i < kingMoves.length; i++) { if
+					 * (newPosition.equals(kingMoves[i])) { found = true; break;
+					 * } }
+					 * 
+					 * } else { String output = "";
+					 * System.out.println("Checkmate"); output = k.isWhite() ?
+					 * "Black " : "White "; System.out.println(output +
+					 * " wins"); System.exit(0); }
+					 */
+
+					return false;
 				}
-				System.out.println("Check");
+
+				// This statement nullifies any reference to a Piece
+				// for this Cell object. (Next line: piece will be
+				// reassigned
+				// to the newPositionCell.piece field).
+				// oldPositionCell.piece = null;
+
+				// This statement affects what Pieces print
+				// at which cells when board.toString() is called.
+				// newPositionCell.piece = piece;
+
+				// This statement affects the internal position
+				// data within a Piece object.
+				// piece.pos = newPosition;
+				// piece.move(newPosition) // why use this? pos is
+				// protected.
+
+				// System.out.println(this);
+				// need to figure out how to prompt user to enter a valid
+				// legal move to make sure King is safe...
 			}
+
+			// System.out.println(k + "\nFILE: " + k.pos.getFile() +
+			// "\nRANK: " + k.pos.getRank());
+			// System.out.println(k.hasValidMoves(cell, k.pos));
+
+			++moves;
+
+			Move newestMove = new Move(piece, oldPositionCell.loc, piece.pos,
+					moves);
+			moveList.add(newestMove);
+
 		}
+
+		if (canCheck(piece)) {
+			if (hasValidMoves(k)) {
+				kingChecked = true;
+			} else {
+				String output = "";
+				System.out.println("Checkmate");
+				output = k.isWhite() ? "Black" : "White";
+				System.out.println(output + " wins");
+				System.exit(0);
+			}
+			System.out.println("Check");
+		}
+
 		return result;
 	}
 
