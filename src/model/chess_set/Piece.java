@@ -102,6 +102,20 @@ public abstract class Piece {
 	}
 	
 	/**
+	 * Determines if a Piece p is a KING, or not
+	 * 
+	 * @param p Piece to assess for type (pawn or not)
+	 * @return true if p is a type PieceType.KING, false otherwise
+	 */
+	public boolean isKing() {
+		PieceType pt = pieceType;
+		
+		boolean isPieceTypeKing = pt.equals(PieceType.KING);
+		
+		return isPieceTypeKing && this instanceof King;
+	}
+	
+	/**
 	 * Determine a Piece's PieceType
 	 * 
 	 * @return a Piece's PieceType
