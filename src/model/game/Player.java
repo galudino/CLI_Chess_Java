@@ -20,6 +20,7 @@ import model.chess_set.PieceSet;
  * 
  * @version Mar 5, 2019
  * @author gemuelealudino
+ * @author patricknogaj
  */
 class Player {
 

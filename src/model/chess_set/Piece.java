@@ -21,6 +21,7 @@ import model.game.Position;
  * 
  * @version Mar 3, 2019
  * @author gemuelealudino
+ * @author patricknogaj
  */
 public abstract class Piece {
 	

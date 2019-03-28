@@ -18,6 +18,7 @@ import model.game.Position;
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
+ * @author patricknogaj
  */
 public class Pawn extends Piece {
 
@@ -85,10 +86,6 @@ public class Pawn extends Piece {
 		}
 	}
 	
-	public Pawn(PieceType.Color color) {
-		super(color);
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 

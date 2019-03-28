@@ -11,6 +11,7 @@
 /**
  * @version Mar 5, 2019
  * @author gemuelealudino
+ * @author patricknogaj
  *
  */
 package model.chess_set.piecetypes;

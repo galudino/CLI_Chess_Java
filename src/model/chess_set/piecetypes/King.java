@@ -19,6 +19,7 @@ import model.game.Position;
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
+ * @author patricknogaj
  */
 public class King extends Piece {
 
@@ -59,7 +60,9 @@ public class King extends Piece {
 		if (Math.abs(this.pos.getFile() - pos.getFile()) <= 1 && (Math.abs(this.pos.getRank() - pos.getRank()) <= 1)) {
 			if(cell[pos.getFile()][pos.getRank()].getPiece() == null) {
 				result = true;
-			} else if(cell[pos.getFile()][pos.getRank()].getPiece() != null && !this.isWhite()) {
+			} else if(cell[pos.getFile()][pos.getRank()].getPiece() != null && this.matchesColor(cell[pos.getFile()][pos.getRank()].getPiece())) {
+				result = false;
+			} else if(cell[pos.getFile()][pos.getRank()].getPiece() != null && !this.matchesColor(cell[pos.getFile()][pos.getRank()].getPiece())) {
 				result = true;
 			} else {
 				result = false;

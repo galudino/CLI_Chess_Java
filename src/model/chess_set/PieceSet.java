@@ -17,6 +17,7 @@ import model.game.Position;
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
+ * @author patricknogaj
  *
  */
 public class PieceSet {
@@ -82,6 +83,10 @@ public class PieceSet {
 		return piece[pieceType.ordinal()];
 	}
 	
+	/**
+	 * Accessor to retrieve pieceSet
+	 * @return A PieceSet object
+	 */
 	public PieceSet getPieceSet() {
 		return this;
 	}
@@ -91,6 +96,7 @@ public class PieceSet {
 	 * 
 	 * @param pawnPiece the Pawn Piece to promote
 	 * @param promoType the PieceType of the Piece to promote
+	 * @return returns a Pice that was promoted
 	 */
 	public Piece promotePawn(Piece pawnPiece, PieceType promoType) {
 		Piece promo = null;

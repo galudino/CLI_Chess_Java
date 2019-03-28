@@ -19,6 +19,7 @@ import model.game.Game;
  * 
  * @version Mar 3, 2019
  * @author gemuelealudino
+ * @author patricknogaj
  */
 public class Chess {
 	

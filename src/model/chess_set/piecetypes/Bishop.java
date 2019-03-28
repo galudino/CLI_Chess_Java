@@ -18,6 +18,7 @@ import model.game.Position;
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
+ * @author patricknogaj
  */
 public class Bishop extends Piece {
 
@@ -44,11 +45,7 @@ public class Bishop extends Piece {
 					: " (left)";
 		}
 	}
-
-	public Bishop(PieceType.Color color) {
-		super(color);
-	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 

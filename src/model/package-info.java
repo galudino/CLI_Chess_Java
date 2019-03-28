@@ -11,6 +11,6 @@
 /**
  * @version Mar 3, 2019
  * @author gemuelealudino
- *
+ * @author patricknogaj
  */
 package model;

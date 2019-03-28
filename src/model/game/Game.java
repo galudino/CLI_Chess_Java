@@ -21,7 +21,9 @@ import model.chess_set.Board;
  * 
  * @version Mar 5, 2019
  * @author gemuelealudino
+ * @author patricknogaj
  */
+
 public class Game {
 
 	private Board board;

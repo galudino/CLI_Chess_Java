@@ -13,6 +13,7 @@ package model;
 /**
  * @version Mar 5, 2019
  * @author gemuelealudino
+ * @author patricknogaj
  */
 public enum PieceType {
 	KING, QUEEN, BISHOP_L, BISHOP_R, KNIGHT_L, KNIGHT_R, ROOK_L, ROOK_R,

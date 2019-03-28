@@ -20,6 +20,7 @@ import java.util.function.*;
  * 
  * @version Mar 3, 2019
  * @author gemuelealudino
+ * @author patricknogaj
  */
 public final class Utility {
 	

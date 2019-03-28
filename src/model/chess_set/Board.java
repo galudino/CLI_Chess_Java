@@ -24,7 +24,9 @@ import model.game.Position;
  * 
  * @version Mar 9, 2019
  * @author gemuelealudino
+ * @author patricknogaj
  */
+
 public class Board {
 
 	/**
@@ -225,10 +227,15 @@ public class Board {
 		} else {
 			k = (King) blackSet.getPiece(PieceType.KING);
 		}
+		
+		boolean kingSafe = isKingSafe(k, k.pos);
 
 		if (kingChecked) {
 			if (piece.isKing()) {
 				for (int i = 0; i < kingMoves.length; i++) {
+					
+					//System.out.println(kingMoves[i] + " " + isKingSafe(k, kingMoves[i]));
+					
 					if (newPosition.equals(kingMoves[i]) && isKingSafe(k, kingMoves[i])) {
 						kingChecked = false;
 						isLegalMove = true;
@@ -289,8 +296,6 @@ public class Board {
 				if (promoteWhite || promoteBlack) {
 					piece = pieceSet.promotePawn(piece, promoType);
 				}
-
-				kingSafe = isKingSafe(k, k.pos);
 
 				if (kingSafe) {
 					// This statement nullifies any reference to a Piece
@@ -403,6 +408,11 @@ public class Board {
 		System.out.println();
 	}
 
+	/**
+	 * This checks to see if the King on opposing side is checked
+	 * @param piece - takes the current piece
+	 * @return true if opponent King is checked || false is not.
+	 */
 	public boolean canCheck(Piece piece) {
 		boolean result = false;
 
@@ -427,6 +437,12 @@ public class Board {
 		return result;
 	}
 	
+	/**
+	 * This checks to see if the King is safe.
+	 * @param k - king object
+	 * @param p - position object
+	 * @return true if any piece on opponent can move to the King's position
+	 */
 	public boolean isKingSafe(King k, Position p) {
 		boolean result = true;
 		PieceSet opponent = null;
@@ -437,7 +453,7 @@ public class Board {
 			opponent = getWhiteSet();
 		
 		Piece BISH_L = opponent.getPiece(PieceType.BISHOP_L);
-		Piece BISH_R = opponent.getPiece(PieceType.BISHOP_L);
+		Piece BISH_R = opponent.getPiece(PieceType.BISHOP_R);
 		Piece KNIGHT_L = opponent.getPiece(PieceType.KNIGHT_L);
 		Piece KNIGHT_R = opponent.getPiece(PieceType.KNIGHT_R);
 		Piece ROOK_R = opponent.getPiece(PieceType.ROOK_R);
@@ -452,17 +468,22 @@ public class Board {
 		Piece PAWN_7 = opponent.getPiece(PieceType.PAWN_7);
 		Piece QUEEN = opponent.getPiece(PieceType.QUEEN);
 		
-		if(ROOK_R.isMoveLegal(cell, p) || ROOK_L.isMoveLegal(cell, p) || QUEEN.isMoveLegal(cell, p)
-				|| PAWN_0.isMoveLegal(cell, p) || PAWN_1.isMoveLegal(cell, p) || PAWN_2.isMoveLegal(cell, p)
-				|| PAWN_3.isMoveLegal(cell, p) || PAWN_4.isMoveLegal(cell, p) || PAWN_5.isMoveLegal(cell, p)
-				|| PAWN_6.isMoveLegal(cell, p) || PAWN_7.isMoveLegal(cell, p) || BISH_L.isMoveLegal(cell, p)
-				|| BISH_R.isMoveLegal(cell, p) || KNIGHT_L.isMoveLegal(cell, p) || KNIGHT_R.isMoveLegal(cell, p)) {	
+		if(ROOK_R.isMoveLegal(cell, p) || ROOK_L.isMoveLegal(cell, p) || BISH_L.isMoveLegal(cell, p)
+				|| BISH_R.isMoveLegal(cell, p) || PAWN_0.isMoveLegal(cell, p) || PAWN_1.isMoveLegal(cell, p) 
+				|| PAWN_2.isMoveLegal(cell, p) || PAWN_3.isMoveLegal(cell, p) || PAWN_4.isMoveLegal(cell, p) 
+				|| PAWN_5.isMoveLegal(cell, p) || PAWN_6.isMoveLegal(cell, p) || PAWN_7.isMoveLegal(cell, p) 
+				|| QUEEN.isMoveLegal(cell, p)  || KNIGHT_L.isMoveLegal(cell, p) || KNIGHT_R.isMoveLegal(cell, p)) {	
 			result = false;
 		}
 		
 		return result;
 	}
 	
+	/**
+	 * Checks to see the valid moves a King can make to decide if he will be checked or checkmated.
+	 * @param k - king object
+	 * @return true if King is able to move somewhere without being in risk of check
+	 */
 	public boolean hasValidMoves(King k) {
 		// caching away possible valid moves for a king
 		kingMoves[0] = new Position(k.pos.getFile() + 1, k.pos.getRank());
@@ -493,6 +514,7 @@ public class Board {
 						|| (k.isMoveLegal(cell, kingMoves[7])
 								&& isKingSafe(k, kingMoves[7])))));
 	}
+	
 	/**
 	 * Returns a string representation of the Board's state
 	 */
