@@ -20,10 +20,10 @@ import model.game.Position;
  * @author gemuelealudino
  * @author patricknogaj
  */
-public class Rook extends Piece {
+public final class Rook extends Piece {
 
 	private boolean canCastle;
-	
+
 	/**
 	 * Parameterized constructor
 	 * 
@@ -33,7 +33,7 @@ public class Rook extends Piece {
 	public Rook(PieceType pieceType, PieceType.Color color) {
 		super(color);
 		canCastle = true;
-		
+
 		this.pieceType = pieceType.equals(PieceType.ROOK_R)
 				|| pieceType.equals(PieceType.ROOK_L) ? pieceType : null;
 
@@ -48,7 +48,7 @@ public class Rook extends Piece {
 					: "   (left)";
 		}
 	}
-	
+
 	public boolean canCastle() {
 		return canCastle;
 	}
@@ -64,36 +64,39 @@ public class Rook extends Piece {
 		boolean result = true;
 
 		// This is to check if it is moving on one path aka not diagonal
-		if (pos.getRank() != this.pos.getRank() && pos.getFile() != this.pos.getFile()) {
+		if (pos.getRank() != this.posRef.getRank()
+				&& pos.getFile() != this.posRef.getFile()) {
 			result = false;
 		}
 
 		// Utilized to check if next piece will be null
 		int offset;
 
-		if (pos.getFile() != this.pos.getFile()) {
-			if (this.pos.getFile() < pos.getFile()) {
+		if (pos.getFile() != this.posRef.getFile()) {
+			if (this.posRef.getFile() < pos.getFile()) {
 				offset = 1;
 			} else {
 				offset = -1;
 			}
 
-			for (int x = this.pos.getFile() + offset; x != pos.getFile(); x += offset) {
-				if (cell[x][this.pos.getRank()].getPiece() != null) {
+			for (int x = this.posRef.getFile() + offset; x != pos
+					.getFile(); x += offset) {
+				if (cell[x][this.posRef.getRank()].getPiece() != null) {
 					return false;
 				}
 			}
 		}
 
-		if (pos.getRank() != this.pos.getRank()) {
-			if (this.pos.getRank() < pos.getRank()) {
+		if (pos.getRank() != this.posRef.getRank()) {
+			if (this.posRef.getRank() < pos.getRank()) {
 				offset = 1;
 			} else {
 				offset = -1;
 			}
 
-			for (int x = this.pos.getRank() + offset; x != pos.getRank(); x += offset) {
-				if (cell[this.pos.getFile()][x].getPiece() != null) {
+			for (int x = this.posRef.getRank() + offset; x != pos
+					.getRank(); x += offset) {
+				if (cell[this.posRef.getFile()][x].getPiece() != null) {
 					return false;
 				}
 			}

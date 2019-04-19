@@ -20,7 +20,7 @@ import model.game.Position;
  * @author gemuelealudino
  * @author patricknogaj
  */
-public class Bishop extends Piece {
+public final class Bishop extends Piece {
 
 	/**
 	 * Parameterized constructor
@@ -45,7 +45,7 @@ public class Bishop extends Piece {
 					: " (left)";
 		}
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -56,35 +56,36 @@ public class Bishop extends Piece {
 	public boolean isMoveLegal(Cell[][] cell, Position pos) {
 		boolean result = true;
 
-		if (this.pos.getRank() == pos.getRank()
-				|| this.pos.getFile() == pos.getFile()) {
+		if (this.posRef.getRank() == pos.getRank()
+				|| this.posRef.getFile() == pos.getFile()) {
 			result = false;
 		}
 
-		if (Math.abs(this.pos.getRank() - pos.getRank()) 
-				!= Math.abs(this.pos.getFile() - pos.getFile())) {
+		if (Math.abs(this.posRef.getRank() - pos.getRank()) != Math
+				.abs(this.posRef.getFile() - pos.getFile())) {
 			result = false;
 		}
 
 		int rowOffset, colOffset;
 
-		if (this.pos.getFile() < pos.getFile()) {
+		if (this.posRef.getFile() < pos.getFile()) {
 			colOffset = 1;
 		} else {
 			colOffset = -1;
 		}
 
-		if (this.pos.getRank() < pos.getRank()) {
+		if (this.posRef.getRank() < pos.getRank()) {
 			rowOffset = 1;
 		} else {
 			rowOffset = -1;
 		}
 
-		for (int x = this.pos.getFile() + colOffset, y = this.pos.getRank() + rowOffset; x != pos.getFile(); x += colOffset) {
+		for (int x = this.posRef.getFile() + colOffset, y = this.posRef.getRank()
+				+ rowOffset; x != pos.getFile(); x += colOffset) {
 			if (cell[x][y].getPiece() != null) {
 				result = false;
 			}
-			
+
 			y += rowOffset;
 		}
 

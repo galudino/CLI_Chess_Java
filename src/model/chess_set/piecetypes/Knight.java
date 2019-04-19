@@ -20,7 +20,7 @@ import model.game.Position;
  * @author gemuelealudino
  * @author patricknogaj
  */
-public class Knight extends Piece {
+public final class Knight extends Piece {
 
 	/**
 	 * Parameterized constructor
@@ -55,19 +55,19 @@ public class Knight extends Piece {
 	@Override
 	public boolean isMoveLegal(Cell[][] cell, Position pos) {
 		boolean result = false;
-		
-		if (Math.abs(pos.getFile() - this.pos.getFile()) == 2
-				&& Math.abs(pos.getRank() - this.pos.getRank()) == 1) {
+
+		if (Math.abs(pos.getFile() - this.posRef.getFile()) == 2
+				&& Math.abs(pos.getRank() - this.posRef.getRank()) == 1) {
 			result = true;
 		}
 
-		if (Math.abs(pos.getFile() - this.pos.getFile()) == 1
-				&& Math.abs(pos.getRank() - this.pos.getRank()) == 2) {
+		if (Math.abs(pos.getFile() - this.posRef.getFile()) == 1
+				&& Math.abs(pos.getRank() - this.posRef.getRank()) == 2) {
 			result = true;
 		}
 
 		return result;
-		
+
 		//@formatter:off
 		/*
 		boolean result = false;

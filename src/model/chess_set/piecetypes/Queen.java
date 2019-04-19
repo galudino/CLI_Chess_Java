@@ -20,7 +20,7 @@ import model.game.Position;
  * @author gemuelealudino
  * @author patricknogaj
  */
-public class Queen extends Piece {
+public final class Queen extends Piece {
 
 	/**
 	 * Parameterized constructor
@@ -44,62 +44,64 @@ public class Queen extends Piece {
 	public boolean isMoveLegal(Cell[][] cell, Position pos) {
 		boolean result = true;
 
-		if (Math.abs(this.pos.getRank() - pos.getRank()) == Math.abs(this.pos.getFile() - pos.getFile())) {
+		if (Math.abs(this.posRef.getRank() - pos.getRank()) == Math
+				.abs(this.posRef.getFile() - pos.getFile())) {
 			int rowOffset, colOffset;
 
-			if (this.pos.getFile() < pos.getFile()) {
+			if (this.posRef.getFile() < pos.getFile()) {
 				colOffset = 1;
 			} else {
 				colOffset = -1;
 			}
 
-			if (this.pos.getRank() < pos.getRank()) {
+			if (this.posRef.getRank() < pos.getRank()) {
 				rowOffset = 1;
 			} else {
 				rowOffset = -1;
 			}
 
-			for (int x = this.pos.getFile() + colOffset, y = this.pos.getRank() + rowOffset; x != pos.getFile(); x += colOffset) {
+			for (int x = this.posRef.getFile() + colOffset, y = this.posRef.getRank()
+					+ rowOffset; x != pos.getFile(); x += colOffset) {
 				if (cell[x][y].getPiece() != null) {
 					result = false;
 				}
-				
+
 				y += rowOffset;
 			}
 		} else {
 			// This is to check if it is moving on one path aka not diagonal
-			if (pos.getRank() != this.pos.getRank()
-					&& pos.getFile() != this.pos.getFile()) {
+			if (pos.getRank() != this.posRef.getRank()
+					&& pos.getFile() != this.posRef.getFile()) {
 				result = false;
 			}
 
 			int offset;
 
-			if (pos.getFile() != this.pos.getFile()) {
-				if (this.pos.getFile() < pos.getFile()) {
+			if (pos.getFile() != this.posRef.getFile()) {
+				if (this.posRef.getFile() < pos.getFile()) {
 					offset = 1;
 				} else {
 					offset = -1;
 				}
 
-				for (int x = this.pos.getFile() + offset; 
-						x != pos.getFile(); x += offset) {
-					if (cell[x][this.pos.getRank()].getPiece() != null) {
+				for (int x = this.posRef.getFile() + offset; x != pos
+						.getFile(); x += offset) {
+					if (cell[x][this.posRef.getRank()].getPiece() != null) {
 						return false;
 					}
 				}
 			}
 
-			if (pos.getRank() != this.pos.getRank()) {
-				if (this.pos.getRank() < pos.getRank()) {
+			if (pos.getRank() != this.posRef.getRank()) {
+				if (this.posRef.getRank() < pos.getRank()) {
 					offset = 1;
 				} else {
 					offset = -1;
 				}
 
-				for (int x = this.pos.getRank() + offset; 
-						x != pos.getRank(); x += offset) {
-					if (cell[this.pos.getFile()][x].getPiece() != null) {
+				for (int x = this.posRef.getRank() + offset; x != pos
+						.getRank(); x += offset) {
+					if (cell[this.posRef.getFile()][x].getPiece() != null) {
 						return false;
 					}
 				}

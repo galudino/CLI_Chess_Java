@@ -20,11 +20,11 @@ import model.game.Position;
  * @author gemuelealudino
  * @author patricknogaj
  */
-public class Pawn extends Piece {
+public final class Pawn extends Piece {
 
 	private boolean firstMove = true;
 	private boolean checkEnpassant = false;
-	
+
 	/**
 	 * Parameterized constructor
 	 * 
@@ -85,7 +85,7 @@ public class Pawn extends Piece {
 			break;
 		}
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -95,81 +95,157 @@ public class Pawn extends Piece {
 	@Override
 	public boolean isMoveLegal(Cell[][] cell, Position pos) {
 		boolean result = false;
-		
+
 		if (this.isWhite()) {
-			if (this.pos.getRank() < pos.getRank()) {
+			if (this.posRef.getRank() < pos.getRank()) {
 				if (firstMove) {
-					if ((Math.abs(pos.getRank() - this.pos.getRank()) == 2
-							|| Math.abs(pos.getRank() - this.pos.getRank()) == 1)
-									&& (this.pos.getFile() == pos.getFile() && (cell[pos.getFile()][pos.getRank()].getPiece() == null))) {
+					if ((Math.abs(pos.getRank() - this.posRef.getRank()) == 2
+							|| Math.abs(
+									pos.getRank() - this.posRef.getRank()) == 1)
+							&& (this.posRef.getFile() == pos.getFile()
+									&& (cell[pos.getFile()][pos.getRank()]
+											.getPiece() == null))) {
 						result = true;
 						firstMove = false;
-					} else if(Math.abs(pos.getRank() - this.pos.getRank()) == 1 && Math.abs(pos.getFile() - this.pos.getFile()) == 1 && cell[pos.getFile()][pos.getRank()].getPiece() != null && cell[pos.getFile()][pos.getRank()].getPiece().isBlack()) {
+					} else if (Math.abs(pos.getRank() - this.posRef.getRank()) == 1
+							&& Math.abs(pos.getFile() - this.posRef.getFile()) == 1
+							&& cell[pos.getFile()][pos.getRank()]
+									.getPiece() != null
+							&& cell[pos.getFile()][pos.getRank()].getPiece()
+									.isBlack()) {
 						result = true;
 						firstMove = false;
 					}
 				} else {
-					if (Math.abs(pos.getRank() - this.pos.getRank()) == 1
-							&& this.pos.getFile() == pos.getFile() && (cell[pos.getFile()][pos.getRank()].getPiece() == null)) {
+					if (Math.abs(pos.getRank() - this.posRef.getRank()) == 1
+							&& this.posRef.getFile() == pos.getFile()
+							&& (cell[pos.getFile()][pos.getRank()]
+									.getPiece() == null)) {
 						result = true;
-					} else if (Math.abs(pos.getRank() - this.pos.getRank()) == 1 && Math.abs(pos.getFile() - this.pos.getFile()) == 1 && cell[pos.getFile()][pos.getRank()].getPiece() != null) {
-						if (cell[pos.getFile()][pos.getRank()].getPiece().isBlack())
+					} else if (Math.abs(pos.getRank() - this.posRef.getRank()) == 1
+							&& Math.abs(pos.getFile() - this.posRef.getFile()) == 1
+							&& cell[pos.getFile()][pos.getRank()]
+									.getPiece() != null) {
+						if (cell[pos.getFile()][pos.getRank()].getPiece()
+								.isBlack())
 							result = true;
-					} else if (Math.abs(pos.getRank() - this.pos.getRank()) == 1 && Math.abs(pos.getFile() - this.pos.getFile()) == 1 && cell[pos.getFile()][pos.getRank()].getPiece() == null) {
+					} else if (Math.abs(pos.getRank() - this.posRef.getRank()) == 1
+							&& Math.abs(pos.getFile() - this.posRef.getFile()) == 1
+							&& cell[pos.getFile()][pos.getRank()]
+									.getPiece() == null) {
 						checkEnpassant = true;
-						if(checkEnpassant) {
-							if(cell[pos.getFile()][pos.getRank()].getLastMove().getLastPiece().isPawn() == this.isPawn()) {
-								if(this.pos.getRank() == cell[pos.getFile()][pos.getRank()].getLastMove().getEndPosition().getRank()) {
-									Position pieceEndPos = cell[pos.getFile()][pos.getRank()].getLastMove().getEndPosition();
-									Position pieceStartPos = cell[pos.getFile()][pos.getRank()].getLastMove().getStartPosition();
-									if(this.pos.getRank() == 4 && pieceEndPos.getRank() == 4) {										
-										if(Math.abs(pieceStartPos.getRank() - pieceEndPos.getRank()) == 2) {
-											cell[pieceEndPos.getFile()][pieceEndPos.getRank()].setPieceNull(pieceEndPos.getFile(), pieceEndPos.getRank());
+						if (checkEnpassant) {
+							if (cell[pos.getFile()][pos.getRank()].getLastMove()
+									.getLastPiece().isPawn() == this.isPawn()) {
+								if (this.posRef
+										.getRank() == cell[pos.getFile()][pos
+												.getRank()].getLastMove()
+														.getEndPosition()
+														.getRank()) {
+									Position pieceEndPos = cell[pos
+											.getFile()][pos.getRank()]
+													.getLastMove()
+													.getEndPosition();
+									Position pieceStartPos = cell[pos
+											.getFile()][pos.getRank()]
+													.getLastMove()
+													.getStartPosition();
+									if (this.posRef.getRank() == 4
+											&& pieceEndPos.getRank() == 4) {
+										if (Math.abs(pieceStartPos.getRank()
+												- pieceEndPos.getRank()) == 2) {
+											cell[pieceEndPos
+													.getFile()][pieceEndPos
+															.getRank()]
+																	.setPieceNull(
+																			pieceEndPos
+																					.getFile(),
+																			pieceEndPos
+																					.getRank());
 											result = true;
 										}
 									}
 								} else {
 									result = false;
 								}
-							} 
+							}
 						}
 					}
 				}
 			}
 		} else if (this.isBlack()) {
-			if (pos.getRank() < this.pos.getRank()) {
+			if (pos.getRank() < this.posRef.getRank()) {
 				if (firstMove) {
-					if (Math.abs(pos.getRank() - this.pos.getRank()) == 2 || Math.abs(pos.getRank() - this.pos.getRank()) == 1 && (this.pos.getFile() == pos.getFile() && (cell[pos.getFile()][pos.getRank()].getPiece() == null))) {
+					if (Math.abs(pos.getRank() - this.posRef.getRank()) == 2
+							|| Math.abs(pos.getRank() - this.posRef.getRank()) == 1
+									&& (this.posRef.getFile() == pos.getFile()
+											&& (cell[pos.getFile()][pos
+													.getRank()]
+															.getPiece() == null))) {
 						result = true;
 						firstMove = false;
-					} else if(Math.abs(pos.getRank() - this.pos.getRank()) == 1 && Math.abs(pos.getFile() - this.pos.getFile()) == 1 && cell[pos.getFile()][pos.getRank()].getPiece() != null && cell[pos.getFile()][pos.getRank()].getPiece().isWhite()) {
+					} else if (Math.abs(pos.getRank() - this.posRef.getRank()) == 1
+							&& Math.abs(pos.getFile() - this.posRef.getFile()) == 1
+							&& cell[pos.getFile()][pos.getRank()]
+									.getPiece() != null
+							&& cell[pos.getFile()][pos.getRank()].getPiece()
+									.isWhite()) {
 						result = true;
 						firstMove = false;
 					}
 				} else {
-					if (Math.abs(pos.getRank() - this.pos.getRank()) == 1
-							&& this.pos.getFile() == pos.getFile() && (cell[pos.getFile()][pos.getRank()].getPiece() == null)) {
+					if (Math.abs(pos.getRank() - this.posRef.getRank()) == 1
+							&& this.posRef.getFile() == pos.getFile()
+							&& (cell[pos.getFile()][pos.getRank()]
+									.getPiece() == null)) {
 						result = true;
-					} else if (Math.abs(pos.getRank() - this.pos.getRank()) == 1 && Math.abs(pos.getFile() - this.pos.getFile()) == 1 && cell[pos.getFile()][pos.getRank()].getPiece() != null) {
-						if (cell[pos.getFile()][pos.getRank()].getPiece().isWhite())
+					} else if (Math.abs(pos.getRank() - this.posRef.getRank()) == 1
+							&& Math.abs(pos.getFile() - this.posRef.getFile()) == 1
+							&& cell[pos.getFile()][pos.getRank()]
+									.getPiece() != null) {
+						if (cell[pos.getFile()][pos.getRank()].getPiece()
+								.isWhite())
 							result = true;
-					} else if (Math.abs(pos.getRank() - this.pos.getRank()) == 1 && Math.abs(pos.getFile() - this.pos.getFile()) == 1 && cell[pos.getFile()][pos.getRank()].getPiece() == null) {
+					} else if (Math.abs(pos.getRank() - this.posRef.getRank()) == 1
+							&& Math.abs(pos.getFile() - this.posRef.getFile()) == 1
+							&& cell[pos.getFile()][pos.getRank()]
+									.getPiece() == null) {
 						checkEnpassant = true;
-						if(checkEnpassant) {
-							if(cell[pos.getFile()][pos.getRank()].getLastMove().getLastPiece().isPawn() == this.isPawn()) {
-								if(this.pos.getRank() == cell[pos.getFile()][pos.getRank()].getLastMove().getEndPosition().getRank()) {
-									Position pieceEndPos = cell[pos.getFile()][pos.getRank()].getLastMove().getEndPosition();
-									Position pieceStartPos = cell[pos.getFile()][pos.getRank()].getLastMove().getStartPosition();
-									if(this.pos.getRank() == 3 && pieceEndPos.getRank() == 3) {										
-										if(Math.abs(pieceStartPos.getRank() - pieceEndPos.getRank()) == 2) {
-											cell[pieceEndPos.getFile()][pieceEndPos.getRank()].setPieceNull(pieceEndPos.getFile(), pieceEndPos.getRank());
+						if (checkEnpassant) {
+							if (cell[pos.getFile()][pos.getRank()].getLastMove()
+									.getLastPiece().isPawn() == this.isPawn()) {
+								if (this.posRef
+										.getRank() == cell[pos.getFile()][pos
+												.getRank()].getLastMove()
+														.getEndPosition()
+														.getRank()) {
+									Position pieceEndPos = cell[pos
+											.getFile()][pos.getRank()]
+													.getLastMove()
+													.getEndPosition();
+									Position pieceStartPos = cell[pos
+											.getFile()][pos.getRank()]
+													.getLastMove()
+													.getStartPosition();
+									if (this.posRef.getRank() == 3
+											&& pieceEndPos.getRank() == 3) {
+										if (Math.abs(pieceStartPos.getRank()
+												- pieceEndPos.getRank()) == 2) {
+											cell[pieceEndPos
+													.getFile()][pieceEndPos
+															.getRank()]
+																	.setPieceNull(
+																			pieceEndPos
+																					.getFile(),
+																			pieceEndPos
+																					.getRank());
 											result = true;
 										}
 									}
 								} else {
 									result = false;
 								}
-							} 
+							}
 						}
 					}
 				}

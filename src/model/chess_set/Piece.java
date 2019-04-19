@@ -18,18 +18,19 @@ import model.game.Position;
 
 /**
  * Basis for a Piece within a PieceSet for a Player within a Game. (Chess)
+ * Instances of subclasses of Piece are owned by PieceSet.
  * 
  * @version Mar 3, 2019
  * @author gemuelealudino
  * @author patricknogaj
  */
 public abstract class Piece {
-	
+
 	private PieceType.Color color;
 	protected PieceType pieceType;
-	protected Piece piece;
+	protected Piece pieceRef;				// what does this ref to?
 	protected String identifier;
-	protected Position pos;
+	protected Position posRef;				// ref to Position object in a Cell
 
 	/**
 	 * Parameterized constructor
@@ -38,10 +39,10 @@ public abstract class Piece {
 	 */
 	protected Piece(PieceType.Color color) {
 		this.color = color;
-		pos = null;
+		posRef = null;
 		identifier = color.equals(PieceType.Color.WHITE) ? "White " : "Black ";
 	}
-		
+
 	/**
 	 * Compare colors between Pieces for a match
 	 * 
@@ -66,7 +67,7 @@ public abstract class Piece {
 	public String toString() {
 		return color == PieceType.Color.WHITE ? "w" : "b";
 	}
-	
+
 	/**
 	 * Determine if a Piece is white
 	 * 
@@ -75,7 +76,7 @@ public abstract class Piece {
 	public boolean isWhite() {
 		return color.equals(PieceType.Color.WHITE);
 	}
-	
+
 	/**
 	 * Determine if a Piece is black
 	 * 
@@ -84,7 +85,7 @@ public abstract class Piece {
 	public boolean isBlack() {
 		return color.equals(PieceType.Color.BLACK);
 	}
-	
+
 	/**
 	 * Determines if a Piece p is a Pawn, or not
 	 * 
@@ -93,15 +94,16 @@ public abstract class Piece {
 	 */
 	public boolean isPawn() {
 		PieceType pt = pieceType;
-		
-		boolean isPieceTypePawn = pt.equals(PieceType.PAWN_0) || pt.equals(PieceType.PAWN_1)
-				|| pt.equals(PieceType.PAWN_2) || pt.equals(PieceType.PAWN_3)
-				|| pt.equals(PieceType.PAWN_4) || pt.equals(PieceType.PAWN_5)
-				|| pt.equals(PieceType.PAWN_6) || pt.equals(PieceType.PAWN_7);
-		
+
+		boolean isPieceTypePawn = pt.equals(PieceType.PAWN_0)
+				|| pt.equals(PieceType.PAWN_1) || pt.equals(PieceType.PAWN_2)
+				|| pt.equals(PieceType.PAWN_3) || pt.equals(PieceType.PAWN_4)
+				|| pt.equals(PieceType.PAWN_5) || pt.equals(PieceType.PAWN_6)
+				|| pt.equals(PieceType.PAWN_7);
+
 		return isPieceTypePawn && this instanceof Pawn;
 	}
-	
+
 	/**
 	 * Determines if a Piece p is a KING, or not
 	 * 
@@ -110,12 +112,12 @@ public abstract class Piece {
 	 */
 	public boolean isKing() {
 		PieceType pt = pieceType;
-		
+
 		boolean isPieceTypeKing = pt.equals(PieceType.KING);
-		
+
 		return isPieceTypeKing && this instanceof King;
 	}
-	
+
 	/**
 	 * Determine a Piece's PieceType
 	 * 
@@ -124,19 +126,24 @@ public abstract class Piece {
 	protected PieceType getPieceType() {
 		return pieceType;
 	}
-	
+
+	/**
+	 * TODO documentation for protected Piece getPiece()
+	 * 
+	 * @return a Piece object
+	 */
 	protected Piece getPiece() {
-		return piece;
+		return pieceRef;
 	}
-	
+
 	/**
 	 * Determine if a move is legal given a Position pos
 	 * 
 	 * @param cell current state of the Board
-	 * @param pos Represents the new Position for a piece after a move
+	 * @param pos  Represents the new Position for a piece after a move
 	 * 
 	 * @return true if successful, false otherwise
 	 */
 	public abstract boolean isMoveLegal(Cell[][] cell, Position pos);
-	
+
 }

@@ -24,6 +24,9 @@ import java.util.function.*;
  */
 public final class Utility {
 	
+	/**
+	 * Private constructor to prevent subclassing
+	 */
 	private Utility() { }
 	
 	/**
@@ -32,6 +35,7 @@ public final class Utility {
 	 * 
 	 * @param list	The list to traverse
 	 * @param p		Functional interface with a test method
+	 * 
 	 * @return		A new ArrayList; a filtered list
 	 */
 	public static <T> List<T> filterList(List<T> list, Predicate<T> p) {
@@ -51,6 +55,7 @@ public final class Utility {
 	 * 
 	 * @param list	The list to traverse
 	 * @param f		Functional interface with an apply method
+	 * 
 	 * @return		A new ArrayList of type R, a filtered list type T
 	 */
 	public static <T, R> List<R> mapList(List<T> list, Function<T, R> f) {
@@ -73,5 +78,15 @@ public final class Utility {
 		for (T t : list) {
 			cons.accept(t);
 		}
+	}
+	
+	/**
+	 * Used for debug messages
+	 * 
+	 * @param classname name of the calling class
+	 * @param message debug message
+	 */
+	public static void log(String classname, String message) {
+		System.out.printf("[%s] %s", classname, message);
 	}
 }

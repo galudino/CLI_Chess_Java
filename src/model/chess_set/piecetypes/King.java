@@ -11,7 +11,6 @@
 package model.chess_set.piecetypes;
 
 import model.PieceType;
-import model.chess_set.Board;
 import model.chess_set.Board.Cell;
 import model.chess_set.Piece;
 import model.game.Position;
@@ -21,7 +20,7 @@ import model.game.Position;
  * @author gemuelealudino
  * @author patricknogaj
  */
-public class King extends Piece {
+public final class King extends Piece {
 
 	private boolean castled;
 
@@ -37,7 +36,7 @@ public class King extends Piece {
 
 		identifier += "King      ";
 	}
-	
+
 	/**
 	 * Determines if an instance of King is castled, or not
 	 * 
@@ -57,12 +56,17 @@ public class King extends Piece {
 	public boolean isMoveLegal(Cell[][] cell, Position pos) {
 		boolean result = false;
 
-		if (Math.abs(this.pos.getFile() - pos.getFile()) <= 1 && (Math.abs(this.pos.getRank() - pos.getRank()) <= 1)) {
-			if(cell[pos.getFile()][pos.getRank()].getPiece() == null) {
+		if (Math.abs(this.posRef.getFile() - pos.getFile()) <= 1
+				&& (Math.abs(this.posRef.getRank() - pos.getRank()) <= 1)) {
+			if (cell[pos.getFile()][pos.getRank()].getPiece() == null) {
 				result = true;
-			} else if(cell[pos.getFile()][pos.getRank()].getPiece() != null && this.matchesColor(cell[pos.getFile()][pos.getRank()].getPiece())) {
+			} else if (cell[pos.getFile()][pos.getRank()].getPiece() != null
+					&& this.matchesColor(
+							cell[pos.getFile()][pos.getRank()].getPiece())) {
 				result = false;
-			} else if(cell[pos.getFile()][pos.getRank()].getPiece() != null && !this.matchesColor(cell[pos.getFile()][pos.getRank()].getPiece())) {
+			} else if (cell[pos.getFile()][pos.getRank()].getPiece() != null
+					&& !this.matchesColor(
+							cell[pos.getFile()][pos.getRank()].getPiece())) {
 				result = true;
 			} else {
 				result = false;

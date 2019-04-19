@@ -10,24 +10,24 @@
  */
 package model.chess_set;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.List;
 
 import model.PieceType;
-import model.chess_set.Board.Cell;
-import model.chess_set.piecetypes.*;
+import model.chess_set.piecetypes.King;
+import model.chess_set.piecetypes.Pawn;
+import model.game.Move;
 import model.game.Position;
 
 /**
- * Represents a Chess board for a Chess game
+ * Represents a Chess board for a Chess game. Instances of Board are owned by
+ * Game.
  * 
  * @version Mar 9, 2019
  * @author gemuelealudino
  * @author patricknogaj
  */
-
-public class Board {
+public final class Board {
 
 	/**
 	 * Represents a 'square' within a Chess board
@@ -35,9 +35,9 @@ public class Board {
 	 * @version Mar 3, 2019
 	 * @author gemuelealudino
 	 */
-	public class Cell {
+	public final class Cell {
 		private Position loc;
-		private Piece piece;
+		private Piece pieceRef;
 
 		/**
 		 * Parameterized constructor
@@ -47,7 +47,7 @@ public class Board {
 		 */
 		public Cell(int file, int rank) {
 			loc = new Position(file, rank);
-			piece = null;
+			pieceRef = null;
 		}
 
 		/**
@@ -56,11 +56,16 @@ public class Board {
 		 * @return the Piece occupying a Cell within the Board
 		 */
 		public Piece getPiece() {
-			return piece;
+			return pieceRef;
 		}
 
+		/**
+		 * Mutator method to assign a Piece to a Cell
+		 * 
+		 * @param piece the Piece to assign to a Cell
+		 */
 		public void setPiece(Piece piece) {
-			this.piece = piece;
+			this.pieceRef = piece;
 		}
 
 		/**
@@ -72,13 +77,24 @@ public class Board {
 			return loc;
 		}
 
+		/**
+		 * Accessor method to retrieve the last Move executed during gameplay
+		 * 
+		 * @return the most recent Move that was logged by Board
+		 */
 		public Move getLastMove() {
 			return moveList.get(moveList.size() - 1);
 		}
 
+		/**
+		 * Mutator method to set a Piece at a particular Cell null
+		 * 
+		 * @param file the file to retrieve
+		 * @param rank the rank to retrieve
+		 */
 		public void setPieceNull(int file, int rank) {
 			loc = new Position(file, rank);
-			piece = null;
+			pieceRef = null;
 		}
 
 		/**
@@ -87,50 +103,7 @@ public class Board {
 		 */
 		@Override
 		public String toString() {
-			return piece == null ? "--" : piece.toString();
-		}
-	}
-
-	/**
-	 * Represents a move within a Chess game, for logging purposes
-	 * 
-	 * @version Mar 24, 2019
-	 * @author gemuelealudino
-	 */
-	public class Move {
-		Piece piece;
-
-		Position startPos;
-		Position endPos;
-
-		LocalTime localTime;
-
-		int moveNumber;
-
-		Move(Piece piece, Position startPos, Position endPos, int moveNumber) {
-			this.piece = piece;
-			this.startPos = startPos;
-			this.endPos = endPos;
-
-			this.moveNumber = moveNumber;
-			localTime = LocalTime.now();
-		}
-
-		public Piece getLastPiece() {
-			return piece;
-		}
-
-		public Position getStartPosition() {
-			return startPos;
-		}
-
-		public Position getEndPosition() {
-			return endPos;
-		}
-
-		public String toString() {
-			return localTime.toString() + "\t" + moveNumber + "\t" + piece
-					+ "\t" + startPos + "\t" + endPos;
+			return pieceRef == null ? "--" : pieceRef.toString();
 		}
 	}
 
@@ -138,12 +111,12 @@ public class Board {
 
 	private Cell[][] cell;
 
-	private ArrayList<Move> moveList;
-	private int moves;
+	private List<Move> moveList;
+	private int moveCounter;
 
 	private PieceSet whiteSet;
 	private PieceSet blackSet;
-	
+
 	private Position[] kingMoves;
 	private boolean kingChecked;
 	private boolean kingSafe;
@@ -167,8 +140,9 @@ public class Board {
 		assignBlackPieces();
 
 		moveList = new ArrayList<Move>();
-		
-		kingMoves = new Position[8];
+
+		kingMoves = new Position[MAX_LENGTH_WIDTH];
+		kingSafe = true;
 	}
 
 	/**
@@ -196,7 +170,7 @@ public class Board {
 	 * 
 	 * @return the Cell with the given file and rank of a Position
 	 */
-	public Cell getCell(Position pos) {
+	Cell getCell(Position pos) {
 		return cell[pos.getFile()][pos.getRank()];
 	}
 
@@ -213,33 +187,37 @@ public class Board {
 	 */
 	public boolean movePiece(Piece piece, PieceSet pieceSet,
 			Position newPosition, PieceType promoType) {
+		
 		boolean result = false;
 
-		Cell oldPositionCell = getCell(piece.pos);
+		Cell oldPositionCell = getCell(piece.posRef);
 		Cell newPositionCell = getCell(newPosition);
 
 		boolean isLegalMove = piece.isMoveLegal(cell, newPosition);
 
-		King k = null;
+		King king = null;
 
 		if (piece.isBlack()) {
-			k = (King) whiteSet.getPiece(PieceType.KING);
+			king = (King) whiteSet.getPieceByType(PieceType.KING);
 		} else {
-			k = (King) blackSet.getPiece(PieceType.KING);
+			king = (King) blackSet.getPieceByType(PieceType.KING);
 		}
-		
-		boolean kingSafe = isKingSafe(k, k.pos);
+
+		kingSafe = isKingSafe(king, king.posRef);
 
 		if (kingChecked) {
 			if (piece.isKing()) {
 				for (int i = 0; i < kingMoves.length; i++) {
-					
-					//System.out.println(kingMoves[i] + " " + isKingSafe(k, kingMoves[i]));
-					
-					if (newPosition.equals(kingMoves[i]) && isKingSafe(k, kingMoves[i])) {
+
+					// System.out.println(kingMoves[i] + " " + isKingSafe(k,
+					// kingMoves[i]));
+
+					if (newPosition.equals(kingMoves[i])
+							&& isKingSafe(king, kingMoves[i])) {
 						kingChecked = false;
 						isLegalMove = true;
 						result = true;
+						
 						break;
 					} else {
 						isLegalMove = false;
@@ -253,7 +231,7 @@ public class Board {
 		}
 
 		if (isLegalMove) {
-			Piece other = newPositionCell.piece;
+			Piece other = newPositionCell.pieceRef;
 			boolean pieceFoundAtNewPosition = other != null;
 
 			if (pieceFoundAtNewPosition) {
@@ -265,7 +243,7 @@ public class Board {
 					result = false;
 				} else {
 					// At this point, a "piece" is taken.
-					newPositionCell.piece = null;
+					newPositionCell.pieceRef = null;
 
 					// result = true means we will allow our requested
 					// piece to move to the cell with newPosition.
@@ -286,31 +264,38 @@ public class Board {
 			 * to determine if piece is a promotable Pawn.
 			 */
 			if (result) {
-
-				boolean promoteWhite = promoType != null && piece.isWhite()
+				boolean promoteWhite = promoType != null 
+						&& piece.isWhite() 
+						&& piece.isPawn()
 						&& newPosition.getRank() == 7;
 
-				boolean promoteBlack = promoType != null && piece.isBlack()
+				boolean promoteBlack = promoType != null 
+						&& piece.isBlack()
+						&& piece.isPawn()
 						&& newPosition.getRank() == 0;
 
 				if (promoteWhite || promoteBlack) {
-					piece = pieceSet.promotePawn(piece, promoType);
+					PieceType.Color color = promoteWhite ? 
+							PieceType.Color.WHITE : PieceType.Color.BLACK;
+					
+					piece = pieceSet.promotePawn((Pawn)piece, promoType, color);
 				}
+				
 
 				if (kingSafe) {
 					// This statement nullifies any reference to a Piece
 					// for this Cell object. (Next line: piece will be
 					// reassigned
 					// to the newPositionCell.piece field).
-					oldPositionCell.piece = null;
+					oldPositionCell.pieceRef = null;
 
 					// This statement affects what Pieces print
 					// at which cells when board.toString() is called.
-					newPositionCell.piece = piece;
+					newPositionCell.pieceRef = piece;
 
 					// This statement affects the internal position
 					// data within a Piece object.
-					piece.pos = newPosition;
+					piece.posRef = newPosition;
 					// piece.move(newPosition) // why use this? pos is
 					// protected.
 
@@ -364,30 +349,26 @@ public class Board {
 			// "\nRANK: " + k.pos.getRank());
 			// System.out.println(k.hasValidMoves(cell, k.pos));
 
-			++moves;
+			++moveCounter;
 
-			Move newestMove = new Move(piece, oldPositionCell.loc, piece.pos,
-					moves);
+			Move newestMove = new Move(piece, oldPositionCell.loc, piece.posRef,
+					moveCounter);
 			moveList.add(newestMove);
-
 		}
 
 		if (canCheck(piece)) {
-			if (hasValidMoves(k)) {
+			if (hasValidMoves(king)) {
 				kingChecked = true;
 			} else {
-				String output = "";
-				System.out.println("Checkmate");
-				output = k.isWhite() ? "Black" : "White";
-				System.out.println(output + " wins");
-				System.exit(0);
+				checkmate(king);
 			}
+			
 			System.out.println("Check");
 		}
 
 		return result;
 	}
-
+	
 	/**
 	 * Prints the log of moves as per the moveList field (ArrayList)
 	 */
@@ -410,21 +391,23 @@ public class Board {
 
 	/**
 	 * This checks to see if the King on opposing side is checked
+	 * 
 	 * @param piece - takes the current piece
+	 * 
 	 * @return true if opponent King is checked || false is not.
 	 */
-	public boolean canCheck(Piece piece) {
+	private boolean canCheck(Piece piece) {
 		boolean result = false;
 
 		Position oppositeKing = null;
 		Piece oppositeK = null;
 
 		if (piece.isWhite()) {
-			oppositeK = getBlackSet().getPiece(PieceType.KING);
-			oppositeKing = oppositeK.pos;
+			oppositeK = getBlackSet().getPieceByType(PieceType.KING);
+			oppositeKing = oppositeK.posRef;
 		} else if (piece.isBlack()) {
-			oppositeK = getWhiteSet().getPiece(PieceType.KING);
-			oppositeKing = oppositeK.pos;
+			oppositeK = getWhiteSet().getPieceByType(PieceType.KING);
+			oppositeKing = oppositeK.posRef;
 		}
 
 		boolean isMoveLegal = piece.isMoveLegal(cell, oppositeKing);
@@ -436,64 +419,70 @@ public class Board {
 
 		return result;
 	}
-	
+
 	/**
 	 * This checks to see if the King is safe.
+	 * 
 	 * @param k - king object
 	 * @param p - position object
+	 * 
 	 * @return true if any piece on opponent can move to the King's position
 	 */
-	public boolean isKingSafe(King k, Position p) {
+	private boolean isKingSafe(King k, Position p) {
 		boolean result = true;
+		
 		PieceSet opponent = null;
-		
-		if(k.isWhite())
-			opponent = getBlackSet();
-		else
-			opponent = getWhiteSet();
-		
-		Piece BISH_L = opponent.getPiece(PieceType.BISHOP_L);
-		Piece BISH_R = opponent.getPiece(PieceType.BISHOP_R);
-		Piece KNIGHT_L = opponent.getPiece(PieceType.KNIGHT_L);
-		Piece KNIGHT_R = opponent.getPiece(PieceType.KNIGHT_R);
-		Piece ROOK_R = opponent.getPiece(PieceType.ROOK_R);
-		Piece ROOK_L = opponent.getPiece(PieceType.ROOK_L);
-		Piece PAWN_0 = opponent.getPiece(PieceType.PAWN_0);
-		Piece PAWN_1 = opponent.getPiece(PieceType.PAWN_1);
-		Piece PAWN_2 = opponent.getPiece(PieceType.PAWN_2);
-		Piece PAWN_3 = opponent.getPiece(PieceType.PAWN_3);
-		Piece PAWN_4 = opponent.getPiece(PieceType.PAWN_4);
-		Piece PAWN_5 = opponent.getPiece(PieceType.PAWN_5);
-		Piece PAWN_6 = opponent.getPiece(PieceType.PAWN_6);
-		Piece PAWN_7 = opponent.getPiece(PieceType.PAWN_7);
-		Piece QUEEN = opponent.getPiece(PieceType.QUEEN);
-		
-		if(ROOK_R.isMoveLegal(cell, p) || ROOK_L.isMoveLegal(cell, p) || BISH_L.isMoveLegal(cell, p)
-				|| BISH_R.isMoveLegal(cell, p) || PAWN_0.isMoveLegal(cell, p) || PAWN_1.isMoveLegal(cell, p) 
-				|| PAWN_2.isMoveLegal(cell, p) || PAWN_3.isMoveLegal(cell, p) || PAWN_4.isMoveLegal(cell, p) 
-				|| PAWN_5.isMoveLegal(cell, p) || PAWN_6.isMoveLegal(cell, p) || PAWN_7.isMoveLegal(cell, p) 
-				|| QUEEN.isMoveLegal(cell, p)  || KNIGHT_L.isMoveLegal(cell, p) || KNIGHT_R.isMoveLegal(cell, p)) {	
+		opponent = k.isWhite() ? getBlackSet() : getWhiteSet();
+
+		Piece BISH_L = opponent.getPieceByType(PieceType.BISHOP_L);
+		Piece BISH_R = opponent.getPieceByType(PieceType.BISHOP_R);
+		Piece KNIGHT_L = opponent.getPieceByType(PieceType.KNIGHT_L);
+		Piece KNIGHT_R = opponent.getPieceByType(PieceType.KNIGHT_R);
+		Piece ROOK_R = opponent.getPieceByType(PieceType.ROOK_R);
+		Piece ROOK_L = opponent.getPieceByType(PieceType.ROOK_L);
+		Piece PAWN_0 = opponent.getPieceByType(PieceType.PAWN_0);
+		Piece PAWN_1 = opponent.getPieceByType(PieceType.PAWN_1);
+		Piece PAWN_2 = opponent.getPieceByType(PieceType.PAWN_2);
+		Piece PAWN_3 = opponent.getPieceByType(PieceType.PAWN_3);
+		Piece PAWN_4 = opponent.getPieceByType(PieceType.PAWN_4);
+		Piece PAWN_5 = opponent.getPieceByType(PieceType.PAWN_5);
+		Piece PAWN_6 = opponent.getPieceByType(PieceType.PAWN_6);
+		Piece PAWN_7 = opponent.getPieceByType(PieceType.PAWN_7);
+		Piece QUEEN = opponent.getPieceByType(PieceType.QUEEN);
+
+		if (ROOK_R.isMoveLegal(cell, p) || ROOK_L.isMoveLegal(cell, p)
+				|| BISH_L.isMoveLegal(cell, p) || BISH_R.isMoveLegal(cell, p)
+				|| PAWN_0.isMoveLegal(cell, p) || PAWN_1.isMoveLegal(cell, p)
+				|| PAWN_2.isMoveLegal(cell, p) || PAWN_3.isMoveLegal(cell, p)
+				|| PAWN_4.isMoveLegal(cell, p) || PAWN_5.isMoveLegal(cell, p)
+				|| PAWN_6.isMoveLegal(cell, p) || PAWN_7.isMoveLegal(cell, p)
+				|| QUEEN.isMoveLegal(cell, p) || KNIGHT_L.isMoveLegal(cell, p)
+				|| KNIGHT_R.isMoveLegal(cell, p)) {
 			result = false;
 		}
-		
+
 		return result;
 	}
-	
+
 	/**
-	 * Checks to see the valid moves a King can make to decide if he will be checked or checkmated.
+	 * Checks to see the valid moves a King can make to decide if he will be
+	 * checked or checkmated.
+	 * 
 	 * @param k - king object
-	 * @return true if King is able to move somewhere without being in risk of check
+	 * 
+	 * @return true if King is able to move somewhere without being in risk of
+	 *         check
 	 */
-	public boolean hasValidMoves(King k) {
+	private boolean hasValidMoves(King k) {
 		// caching away possible valid moves for a king
-		kingMoves[0] = new Position(k.pos.getFile() + 1, k.pos.getRank());
-		kingMoves[1] = new Position(k.pos.getFile() - 1, k.pos.getRank());
-		kingMoves[2] = new Position(k.pos.getFile(), k.pos.getRank() + 1);
-		kingMoves[3] = new Position(k.pos.getFile(), k.pos.getRank() - 1);
-		kingMoves[4] = new Position(k.pos.getFile() + 1, k.pos.getRank() - 1);
-		kingMoves[5] = new Position(k.pos.getFile() - 1, k.pos.getRank() - 1);
-		kingMoves[6] = new Position(k.pos.getFile() + 1, k.pos.getRank() + 1);
-		kingMoves[7] = new Position(k.pos.getFile() - 1, k.pos.getRank() + 1);
+		kingMoves[0] = new Position(k.posRef.getFile() + 1, k.posRef.getRank());
+		kingMoves[1] = new Position(k.posRef.getFile() - 1, k.posRef.getRank());
+		kingMoves[2] = new Position(k.posRef.getFile(), k.posRef.getRank() + 1);
+		kingMoves[3] = new Position(k.posRef.getFile(), k.posRef.getRank() - 1);
+		kingMoves[4] = new Position(k.posRef.getFile() + 1, k.posRef.getRank() - 1);
+		kingMoves[5] = new Position(k.posRef.getFile() - 1, k.posRef.getRank() - 1);
+		kingMoves[6] = new Position(k.posRef.getFile() + 1, k.posRef.getRank() + 1);
+		kingMoves[7] = new Position(k.posRef.getFile() - 1, k.posRef.getRank() + 1);
 
 		// if all proposed moves are legal and king is safe with said moves,
 		// the king has valid moves
@@ -516,6 +505,162 @@ public class Board {
 	}
 	
 	/**
+	 * Executes upon checkmate, and game ends
+	 * 
+	 * @param king king that was checked
+	 */
+	private void checkmate(King king) {
+		String output = "Checkmate";
+		
+		System.out.println(output);
+		
+		output = king.isWhite() ? "Black" : "White";
+		
+		System.out.println(output + " wins");
+		System.exit(0);
+	}
+
+	/**
+	 * Used during Board instantiation: initialize all Piece and Cell instances
+	 * to their default starting positions prior to beginning a Chess match
+	 */
+	private void assignWhitePieces() {
+		Piece king = whiteSet.getPieceByType(PieceType.KING);
+		king.posRef = cell[4][0].loc;
+		cell[4][0].pieceRef = king;
+
+		Piece queen = whiteSet.getPieceByType(PieceType.QUEEN);
+		queen.posRef = cell[3][0].loc;
+		cell[3][0].pieceRef = queen;
+
+		Piece bishop_r = whiteSet.getPieceByType(PieceType.BISHOP_R);
+		bishop_r.posRef = cell[5][0].loc;
+		cell[5][0].pieceRef = bishop_r;
+
+		Piece bishop_l = whiteSet.getPieceByType(PieceType.BISHOP_L);
+		bishop_l.posRef = cell[2][0].loc;
+		cell[2][0].pieceRef = bishop_l;
+
+		Piece knight_r = whiteSet.getPieceByType(PieceType.KNIGHT_R);
+		knight_r.posRef = cell[6][0].loc;
+		cell[6][0].pieceRef = knight_r;
+
+		Piece knight_l = whiteSet.getPieceByType(PieceType.KNIGHT_L);
+		knight_l.posRef = cell[1][0].loc;
+		cell[1][0].pieceRef = knight_r;
+
+		Piece rook_r = whiteSet.getPieceByType(PieceType.ROOK_R);
+		rook_r.posRef = cell[7][0].loc;
+		cell[7][0].pieceRef = rook_r;
+
+		Piece rook_l = whiteSet.getPieceByType(PieceType.ROOK_L);
+		rook_l.posRef = cell[0][0].loc;
+		cell[0][0].pieceRef = rook_l;
+
+		Piece pawn_0 = whiteSet.getPieceByType(PieceType.PAWN_0);
+		pawn_0.posRef = cell[0][1].loc;
+		cell[0][1].pieceRef = pawn_0;
+
+		Piece pawn_1 = whiteSet.getPieceByType(PieceType.PAWN_1);
+		pawn_1.posRef = cell[1][1].loc;
+		cell[1][1].pieceRef = pawn_1;
+
+		Piece pawn_2 = whiteSet.getPieceByType(PieceType.PAWN_2);
+		pawn_2.posRef = cell[2][1].loc;
+		cell[2][1].pieceRef = pawn_2;
+
+		Piece pawn_3 = whiteSet.getPieceByType(PieceType.PAWN_3);
+		pawn_3.posRef = cell[3][1].loc;
+		cell[3][1].pieceRef = pawn_3;
+
+		Piece pawn_4 = whiteSet.getPieceByType(PieceType.PAWN_4);
+		pawn_4.posRef = cell[4][1].loc;
+		cell[4][1].pieceRef = pawn_4;
+
+		Piece pawn_5 = whiteSet.getPieceByType(PieceType.PAWN_5);
+		pawn_5.posRef = cell[5][1].loc;
+		cell[5][1].pieceRef = pawn_5;
+
+		Piece pawn_6 = whiteSet.getPieceByType(PieceType.PAWN_6);
+		pawn_6.posRef = cell[6][1].loc;
+		cell[6][1].pieceRef = pawn_6;
+
+		Piece pawn_7 = whiteSet.getPieceByType(PieceType.PAWN_7);
+		pawn_7.posRef = cell[7][1].loc;
+		cell[7][1].pieceRef = pawn_7;
+	}
+
+	/**
+	 * Used during Board instantiation: initialize all Piece and Cell instances
+	 * to their default starting positions prior to beginning a Chess match
+	 */
+	private void assignBlackPieces() {
+		Piece king = blackSet.getPieceByType(PieceType.KING);
+		king.posRef = cell[4][7].loc;
+		cell[4][7].pieceRef = king;
+
+		Piece queen = blackSet.getPieceByType(PieceType.QUEEN);
+		queen.posRef = cell[3][7].loc;
+		cell[3][7].pieceRef = queen;
+
+		Piece bishop_r = blackSet.getPieceByType(PieceType.BISHOP_R);
+		bishop_r.posRef = cell[5][7].loc;
+		cell[5][7].pieceRef = bishop_r;
+
+		Piece bishop_l = blackSet.getPieceByType(PieceType.BISHOP_L);
+		bishop_l.posRef = cell[2][7].loc;
+		cell[2][7].pieceRef = bishop_l;
+
+		Piece knight_r = blackSet.getPieceByType(PieceType.KNIGHT_R);
+		knight_r.posRef = cell[6][7].loc;
+		cell[6][7].pieceRef = knight_r;
+
+		Piece knight_l = blackSet.getPieceByType(PieceType.KNIGHT_L);
+		knight_l.posRef = cell[1][7].loc;
+		cell[1][7].pieceRef = knight_r;
+
+		Piece rook_r = blackSet.getPieceByType(PieceType.ROOK_R);
+		rook_r.posRef = cell[7][7].loc;
+		cell[7][7].pieceRef = rook_r;
+
+		Piece rook_l = blackSet.getPieceByType(PieceType.ROOK_L);
+		rook_l.posRef = cell[0][7].loc;
+		cell[0][7].pieceRef = rook_l;
+
+		Piece pawn_0 = blackSet.getPieceByType(PieceType.PAWN_0);
+		pawn_0.posRef = cell[0][6].loc;
+		cell[0][6].pieceRef = pawn_0;
+
+		Piece pawn_1 = blackSet.getPieceByType(PieceType.PAWN_1);
+		pawn_1.posRef = cell[1][6].loc;
+		cell[1][6].pieceRef = pawn_1;
+
+		Piece pawn_2 = blackSet.getPieceByType(PieceType.PAWN_2);
+		pawn_2.posRef = cell[2][6].loc;
+		cell[2][6].pieceRef = pawn_2;
+
+		Piece pawn_3 = blackSet.getPieceByType(PieceType.PAWN_3);
+		pawn_3.posRef = cell[3][6].loc;
+		cell[3][6].pieceRef = pawn_3;
+
+		Piece pawn_4 = blackSet.getPieceByType(PieceType.PAWN_4);
+		pawn_4.posRef = cell[4][6].loc;
+		cell[4][6].pieceRef = pawn_4;
+
+		Piece pawn_5 = blackSet.getPieceByType(PieceType.PAWN_5);
+		pawn_5.posRef = cell[5][6].loc;
+		cell[5][6].pieceRef = pawn_5;
+
+		Piece pawn_6 = blackSet.getPieceByType(PieceType.PAWN_6);
+		pawn_6.posRef = cell[6][6].loc;
+		cell[6][6].pieceRef = pawn_6;
+
+		Piece pawn_7 = blackSet.getPieceByType(PieceType.PAWN_7);
+		pawn_7.posRef = cell[7][6].loc;
+		cell[7][6].pieceRef = pawn_7;
+	}
+	
+	/**
 	 * Returns a string representation of the Board's state
 	 */
 	@Override
@@ -525,7 +670,7 @@ public class Board {
 		for (int rank = cell.length - 1; rank >= 0; rank--) {
 			for (int file = 0; file < cell[rank].length; file++) {
 				// FOR RELEASE: Print piece at cell
-				if (cell[file][rank].piece == null) {
+				if (cell[file][rank].pieceRef == null) {
 					if (rank % 2 != 0) {
 						if (file % 2 != 0) {
 							str += "##";
@@ -568,145 +713,5 @@ public class Board {
 		// str += String.format(" 0 1 2 3 4 5 6 7\n");
 
 		return str;
-	}
-
-	/**
-	 * Used during Board instantiation: initialize all Piece and Cell instances
-	 * to their default starting positions prior to beginning a Chess match
-	 */
-	private void assignWhitePieces() {
-		Piece king = whiteSet.getPiece(PieceType.KING);
-		king.pos = cell[4][0].loc;
-		cell[4][0].piece = king;
-
-		Piece queen = whiteSet.getPiece(PieceType.QUEEN);
-		queen.pos = cell[3][0].loc;
-		cell[3][0].piece = queen;
-
-		Piece bishop_r = whiteSet.getPiece(PieceType.BISHOP_R);
-		bishop_r.pos = cell[5][0].loc;
-		cell[5][0].piece = bishop_r;
-
-		Piece bishop_l = whiteSet.getPiece(PieceType.BISHOP_L);
-		bishop_l.pos = cell[2][0].loc;
-		cell[2][0].piece = bishop_l;
-
-		Piece knight_r = whiteSet.getPiece(PieceType.KNIGHT_R);
-		knight_r.pos = cell[6][0].loc;
-		cell[6][0].piece = knight_r;
-
-		Piece knight_l = whiteSet.getPiece(PieceType.KNIGHT_L);
-		knight_l.pos = cell[1][0].loc;
-		cell[1][0].piece = knight_r;
-
-		Piece rook_r = whiteSet.getPiece(PieceType.ROOK_R);
-		rook_r.pos = cell[7][0].loc;
-		cell[7][0].piece = rook_r;
-
-		Piece rook_l = whiteSet.getPiece(PieceType.ROOK_L);
-		rook_l.pos = cell[0][0].loc;
-		cell[0][0].piece = rook_l;
-
-		Piece pawn_0 = whiteSet.getPiece(PieceType.PAWN_0);
-		pawn_0.pos = cell[0][1].loc;
-		cell[0][1].piece = pawn_0;
-
-		Piece pawn_1 = whiteSet.getPiece(PieceType.PAWN_1);
-		pawn_1.pos = cell[1][1].loc;
-		cell[1][1].piece = pawn_1;
-
-		Piece pawn_2 = whiteSet.getPiece(PieceType.PAWN_2);
-		pawn_2.pos = cell[2][1].loc;
-		cell[2][1].piece = pawn_2;
-
-		Piece pawn_3 = whiteSet.getPiece(PieceType.PAWN_3);
-		pawn_3.pos = cell[3][1].loc;
-		cell[3][1].piece = pawn_3;
-
-		Piece pawn_4 = whiteSet.getPiece(PieceType.PAWN_4);
-		pawn_4.pos = cell[4][1].loc;
-		cell[4][1].piece = pawn_4;
-
-		Piece pawn_5 = whiteSet.getPiece(PieceType.PAWN_5);
-		pawn_5.pos = cell[5][1].loc;
-		cell[5][1].piece = pawn_5;
-
-		Piece pawn_6 = whiteSet.getPiece(PieceType.PAWN_6);
-		pawn_6.pos = cell[6][1].loc;
-		cell[6][1].piece = pawn_6;
-
-		Piece pawn_7 = whiteSet.getPiece(PieceType.PAWN_7);
-		pawn_7.pos = cell[7][1].loc;
-		cell[7][1].piece = pawn_7;
-	}
-
-	/**
-	 * Used during Board instantiation: initialize all Piece and Cell instances
-	 * to their default starting positions prior to beginning a Chess match
-	 */
-	private void assignBlackPieces() {
-		Piece king = blackSet.getPiece(PieceType.KING);
-		king.pos = cell[4][7].loc;
-		cell[4][7].piece = king;
-
-		Piece queen = blackSet.getPiece(PieceType.QUEEN);
-		queen.pos = cell[3][7].loc;
-		cell[3][7].piece = queen;
-
-		Piece bishop_r = blackSet.getPiece(PieceType.BISHOP_R);
-		bishop_r.pos = cell[5][7].loc;
-		cell[5][7].piece = bishop_r;
-
-		Piece bishop_l = blackSet.getPiece(PieceType.BISHOP_L);
-		bishop_l.pos = cell[2][7].loc;
-		cell[2][7].piece = bishop_l;
-
-		Piece knight_r = blackSet.getPiece(PieceType.KNIGHT_R);
-		knight_r.pos = cell[6][7].loc;
-		cell[6][7].piece = knight_r;
-
-		Piece knight_l = blackSet.getPiece(PieceType.KNIGHT_L);
-		knight_l.pos = cell[1][7].loc;
-		cell[1][7].piece = knight_r;
-
-		Piece rook_r = blackSet.getPiece(PieceType.ROOK_R);
-		rook_r.pos = cell[7][7].loc;
-		cell[7][7].piece = rook_r;
-
-		Piece rook_l = blackSet.getPiece(PieceType.ROOK_L);
-		rook_l.pos = cell[0][7].loc;
-		cell[0][7].piece = rook_l;
-
-		Piece pawn_0 = blackSet.getPiece(PieceType.PAWN_0);
-		pawn_0.pos = cell[0][6].loc;
-		cell[0][6].piece = pawn_0;
-
-		Piece pawn_1 = blackSet.getPiece(PieceType.PAWN_1);
-		pawn_1.pos = cell[1][6].loc;
-		cell[1][6].piece = pawn_1;
-
-		Piece pawn_2 = blackSet.getPiece(PieceType.PAWN_2);
-		pawn_2.pos = cell[2][6].loc;
-		cell[2][6].piece = pawn_2;
-
-		Piece pawn_3 = blackSet.getPiece(PieceType.PAWN_3);
-		pawn_3.pos = cell[3][6].loc;
-		cell[3][6].piece = pawn_3;
-
-		Piece pawn_4 = blackSet.getPiece(PieceType.PAWN_4);
-		pawn_4.pos = cell[4][6].loc;
-		cell[4][6].piece = pawn_4;
-
-		Piece pawn_5 = blackSet.getPiece(PieceType.PAWN_5);
-		pawn_5.pos = cell[5][6].loc;
-		cell[5][6].piece = pawn_5;
-
-		Piece pawn_6 = blackSet.getPiece(PieceType.PAWN_6);
-		pawn_6.pos = cell[6][6].loc;
-		cell[6][6].piece = pawn_6;
-
-		Piece pawn_7 = blackSet.getPiece(PieceType.PAWN_7);
-		pawn_7.pos = cell[7][6].loc;
-		cell[7][6].piece = pawn_7;
 	}
 }

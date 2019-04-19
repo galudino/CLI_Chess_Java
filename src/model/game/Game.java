@@ -17,14 +17,14 @@ import model.PieceType;
 import model.chess_set.Board;
 
 /**
- * Represents the state of a Chess game and all of its components
+ * Represents the state of a Chess game and all of its components.
+ * Instances of Game are to be created within the client program.
  * 
  * @version Mar 5, 2019
  * @author gemuelealudino
  * @author patricknogaj
  */
-
-public class Game {
+public final class Game {
 
 	private Board board;
 
@@ -42,11 +42,14 @@ public class Game {
 	public Game() {
 		board = new Board();
 
-		white = new Player(PieceType.Color.WHITE);
-		black = new Player(PieceType.Color.BLACK);
+		//white = new Player(PieceType.Color.WHITE);
+		//black = new Player(PieceType.Color.BLACK);
+		
+		white = new Player(PieceType.Color.WHITE, board);
+		black = new Player(PieceType.Color.BLACK, board);
 
-		white.assignPieceSet(board);
-		black.assignPieceSet(board);
+		//white.assignPieceSet(board);
+		//black.assignPieceSet(board);
 	}
 
 	/**
@@ -60,12 +63,13 @@ public class Game {
 	 * 
 	 * @return true if move executed successfully, false otherwise
 	 */
-	public boolean whitePlayMove(int file, int rank, int newFile, int newRank,
+	private boolean whitePlayMove(int file, int rank, int newFile, int newRank,
 			int promo) {
 		whitePlay = new Position(file, rank);
 		whiteNewPosition = new Position(newFile, newRank);
 
-		return white.playMove(board, whitePlay, whiteNewPosition, promo);
+		//return white.playMove(board, whitePlay, whiteNewPosition, promo);
+		return white.playMove(whitePlay, whiteNewPosition, promo);
 	}
 
 	/**
@@ -79,12 +83,13 @@ public class Game {
 	 * 
 	 * @return true if move executed successfully, false otherwise
 	 */
-	public boolean blackPlayMove(int file, int rank, int newFile, int newRank,
+	private boolean blackPlayMove(int file, int rank, int newFile, int newRank,
 			int promo) {
 		blackPlay = new Position(file, rank);
 		blackNewPosition = new Position(newFile, newRank);
 
-		return black.playMove(board, blackPlay, blackNewPosition, promo);
+		//return black.playMove(board, blackPlay, blackNewPosition, promo);
+		return black.playMove(blackPlay, blackNewPosition, promo);
 	}
 
 	/**
@@ -95,7 +100,7 @@ public class Game {
 	 * @return an integer array representing a Piece's current position and the
 	 *         desired position to move to
 	 */
-	public int[] getFileRankArray(String input) {
+	private int[] getFileRankArray(String input) {
 		final String fileRankRegex = "[a-h][1-8]";
 		//final String pieceRegex = "[qQbBnNrR]";
 
@@ -486,6 +491,7 @@ public class Game {
 				if (didDraw || didResign) {
 					System.exit(0);
 				}
+				
 			} while (validMoveInput == false);
 
 			whitesMove = whitesMove ? false : true;
@@ -506,46 +512,6 @@ public class Game {
 		
 		bufferedReader.close();
 		fileReader.close();
-	}
-
-	/**
-	 * Accessor to retrieve the Position of the white Player's most recent Piece
-	 * request
-	 * 
-	 * @return a Position object
-	 */
-	Position getWhitePlayPosition() {
-		return whitePlay;
-	}
-
-	/**
-	 * Accessor to retrieve the Position of the white Player's most recent move
-	 * destination
-	 * 
-	 * @return a Position object
-	 */
-	Position getWhiteNewPosition() {
-		return whiteNewPosition;
-	}
-
-	/**
-	 * Accessor to retrieve the Position of the black Player's most recent Piece
-	 * request
-	 * 
-	 * @return a Position object
-	 */
-	Position getBlackPlayPosition() {
-		return blackPlay;
-	}
-
-	/**
-	 * Accessor to retrieve the Position of the black Player's most recent move
-	 * destination
-	 * 
-	 * @return a Position object
-	 */
-	Position getBlackNewPosition() {
-		return blackNewPosition;
 	}
 
 	/**
