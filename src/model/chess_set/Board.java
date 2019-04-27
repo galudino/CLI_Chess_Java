@@ -142,7 +142,15 @@ public final class Board {
 	 * @return whiteSet for the white player, blackSet for the black player
 	 */
 	public PieceSet getPieceSet(Player player) {
-		return player.isWhite() ? whiteSet : blackSet;
+		PieceSet result = null;
+		
+		if (player.isWhite()) {
+			result = whiteSet;
+		} else if (player.isBlack()) {
+			result = blackSet;
+		}
+		
+		return result;
 	}
 
 	/**

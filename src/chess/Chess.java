@@ -54,6 +54,8 @@ public class Chess {
 		 * 
 		 * game.whitePlayMove(5, 2, 6, 3); game.blackPlayMove(6, 7, 7, 5);
 		 */
+		
+		//game.printMoveLog();
 
 		//game.startFromFile("dat/testfile.txt");
 		game.start();
