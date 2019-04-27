@@ -11,12 +11,12 @@
 package model.chess_set.piecetypes;
 
 import model.PieceType;
-import model.chess_set.Board.Cell;
+import model.chess_set.Board;
 import model.chess_set.Piece;
 import model.game.Position;
 
 /**
- * @version Mar 3, 2019
+ * @version Apr 27, 2019
  * @author gemuelealudino
  * @author patricknogaj
  */
@@ -45,28 +45,31 @@ public final class King extends Piece {
 	public boolean isCastled() {
 		return castled;
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see model.chess_set.Piece#isMoveLegal(model.chess_set.Board.Cell[][],
+	
+	/* (non-Javadoc)
+	 * @see model.chess_set.Piece#isMoveLegal(model.chess_set.Board, 
 	 * model.game.Position)
 	 */
 	@Override
-	public boolean isMoveLegal(Cell[][] cell, Position pos) {
+	public boolean isMoveLegal(Board board, Position posRef) {
 		boolean result = false;
-
-		if (Math.abs(this.posRef.getFile() - pos.getFile()) <= 1
-				&& (Math.abs(this.posRef.getRank() - pos.getRank()) <= 1)) {
-			if (cell[pos.getFile()][pos.getRank()].getPiece() == null) {
+		
+		int deltaFile = Math.abs(this.posRef.getFile() - posRef.getFile());
+		int deltaRank = Math.abs(this.posRef.getRank() - posRef.getRank());
+		
+		if (deltaFile <= 1 && deltaRank <= 1) {
+			Piece pieceAtCell = board.getCell(posRef).getPiece();
+			
+			boolean matchesColor = 
+					pieceAtCell != null ? 
+							this.matchesColor(pieceAtCell) : false;
+			boolean oppositeColor = matchesColor == true ? false : true;
+			
+			if (pieceAtCell == null) {
 				result = true;
-			} else if (cell[pos.getFile()][pos.getRank()].getPiece() != null
-					&& this.matchesColor(
-							cell[pos.getFile()][pos.getRank()].getPiece())) {
+			} else if (pieceAtCell != null && matchesColor) {
 				result = false;
-			} else if (cell[pos.getFile()][pos.getRank()].getPiece() != null
-					&& !this.matchesColor(
-							cell[pos.getFile()][pos.getRank()].getPiece())) {
+			} else if (pieceAtCell != null && oppositeColor) {
 				result = true;
 			} else {
 				result = false;
@@ -74,9 +77,10 @@ public final class King extends Piece {
 		} else {
 			result = false;
 		}
+				
 		return result;
 	}
-
+	
 	@Override
 	public String toString() {
 		return super.toString() + "K";
