@@ -15,7 +15,7 @@ package model.game;
  * are owned by Cell, and referred to by subclasses of Piece. Temporary Position
  * objects may be created during the execution and logging of Moves.
  * 
- * @version Mar 3, 2019
+ * @version Apr 27, 2019
  * @author gemuelealudino
  * @author patricknogaj
  */
@@ -23,11 +23,6 @@ public final class Position implements Comparable<Position> {
 
 	private int file;
 	private int rank;
-
-	Position() {
-		file = -1;
-		rank = -1;
-	}
 
 	/**
 	 * Parameterized constructor
