@@ -12,11 +12,11 @@ package model.chess_set.piecetypes;
 
 import model.PieceType;
 import model.chess_set.Piece;
-import model.chess_set.Board;
+import model.chess_set.Board.Cell;
 import model.game.Position;
 
 /**
- * @version Apr 27, 2019
+ * @version Mar 3, 2019
  * @author gemuelealudino
  * @author patricknogaj
  */
@@ -45,45 +45,47 @@ public final class Bishop extends Piece {
 					: " (left)";
 		}
 	}
-	
-	/* (non-Javadoc)
-	 * @see model.chess_set.Piece#isMoveLegal(model.chess_set.Board, 
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see model.chess_set.Piece#isMoveLegal(model.chess_set.Board.Cell[][],
 	 * model.game.Position)
 	 */
 	@Override
-	public boolean isMoveLegal(Board board, Position pos) {
+	public boolean isMoveLegal(Cell[][] cell, Position pos) {
 		boolean result = true;
-		
-		int thisPosRefFile = this.posRef.getFile();
-		int thisPosRefRank = this.posRef.getRank();
-		
-		int posRefFile = posRef.getFile();
-		int posRefRank = posRef.getRank();
-		
-		int deltaFile = Math.abs(thisPosRefFile - posRefFile);
-		int deltaRank = Math.abs(thisPosRefRank - posRefRank);
-		
-		result = 
-				thisPosRefRank == posRefRank 
-				|| thisPosRefFile == posRefFile ?
-				false : result;
-		
-		result = deltaRank != deltaFile ? false : result;
-		
-		int rowOffset;
-		int colOffset;
-		
-		colOffset = thisPosRefFile < posRefFile ? 1 : -1;
-		rowOffset = thisPosRefRank < posRefRank ? 1 : -1;
-		
-		for (int x = thisPosRefFile + colOffset, y = thisPosRefRank + rowOffset; 
-				x != posRefFile; 
-				x += colOffset) {
-			Piece pieceAtCell = 
-					board.getCell(board.getPosition(x, y)).getPiece();
-			
-			result = pieceAtCell != null ? false : result;
-			
+
+		if (this.posRef.getRank() == pos.getRank()
+				|| this.posRef.getFile() == pos.getFile()) {
+			result = false;
+		}
+
+		if (Math.abs(this.posRef.getRank() - pos.getRank()) != Math
+				.abs(this.posRef.getFile() - pos.getFile())) {
+			result = false;
+		}
+
+		int rowOffset, colOffset;
+
+		if (this.posRef.getFile() < pos.getFile()) {
+			colOffset = 1;
+		} else {
+			colOffset = -1;
+		}
+
+		if (this.posRef.getRank() < pos.getRank()) {
+			rowOffset = 1;
+		} else {
+			rowOffset = -1;
+		}
+
+		for (int x = this.posRef.getFile() + colOffset, y = this.posRef.getRank()
+				+ rowOffset; x != pos.getFile(); x += colOffset) {
+			if (cell[x][y].getPiece() != null) {
+				result = false;
+			}
+
 			y += rowOffset;
 		}
 

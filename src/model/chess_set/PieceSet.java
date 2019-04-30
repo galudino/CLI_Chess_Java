@@ -10,8 +10,6 @@
  */
 package model.chess_set;
 
-import java.util.Iterator;
-
 import model.PieceType;
 import model.chess_set.piecetypes.*;
 import model.game.Position;
@@ -20,16 +18,16 @@ import model.game.Position;
  * Represents a complete 'set' of Pieces for the chess Board. Two instances of
  * PieceSet are owned by Board and referred to by two Players.
  * 
- * @version Apr 27, 2019
+ * @version Mar 3, 2019
  * @author gemuelealudino
  * @author patricknogaj
  */
-public final class PieceSet implements Iterable<Piece> {
+public final class PieceSet {
 
 	private final int PIECE_COUNT = 16;
 
 	private PieceType.Color color;
-	private Piece[] pieceArray; // all instances of Piece reside here
+	private Piece[] pieceArray;		// all instances of Piece reside here
 
 	/**
 	 * Parameterized constructor
@@ -75,7 +73,7 @@ public final class PieceSet implements Iterable<Piece> {
 		pieceArray[PieceType.PAWN_6.ordinal()] = pawn_6;
 		pieceArray[PieceType.PAWN_7.ordinal()] = pawn_7;
 	}
-
+	
 	/**
 	 * Accessor to retrieve the Color of a Player's PieceSet
 	 * 
@@ -92,10 +90,14 @@ public final class PieceSet implements Iterable<Piece> {
 	 * 
 	 * @return if found, the desired Piece, otherwise null
 	 */
-	public Piece getPieceByPosition(Position pos) {		
-		for (Piece piece : this) {
-			if (piece.posRef.equals(pos)) {
-				return piece;
+	public Piece getPieceByPosition(Position pos) {
+		// Perhaps we should consider storing the Pieces
+		// in a Dictionary (map) -- instead of this linear traversal
+		// using an array. This would be easy to fix and it would
+		// not affect outside classes.
+		for (int i = 0; i < pieceArray.length; i++) {
+			if (pieceArray[i].posRef.equals(pos)) {
+				return pieceArray[i];
 			}
 		}
 
@@ -112,33 +114,26 @@ public final class PieceSet implements Iterable<Piece> {
 	Piece getPieceByType(PieceType pieceType) {
 		return pieceArray[pieceType.ordinal()];
 	}
-
+	
 	/**
-	 * Promotes a Pawn to a Queen, Bishop, Knight, or Rook. Precondition: @see
-	 * Board.java, line 276 promoType must be QUEEN, BISHOP_R/L, KNIGHT_R/L, or
-	 * ROOK_R/L.
+	 * Promotes a Pawn to a Queen, Bishop, Knight, or Rook.
+	 * Precondition: @see Board.java, line 276
+	 * promoType must be QUEEN, BISHOP_R/L, KNIGHT_R/L, or ROOK_R/L.
 	 * 
 	 * @param pawnPiece the Pawn to promote
 	 * @param promoType Queen, Bishop, Knight, or Rook
-	 * @param color     White, or Black
+	 * @param color White, or Black
 	 * 
 	 * @return a promoted Pawn -- a new Queen, Bishop, Knight, or Rook
 	 */
-	Piece promotePawn(Pawn pawnPiece, PieceType promoType,
-			PieceType.Color color) {
+	Piece promotePawn(Pawn pawnPiece, PieceType promoType, PieceType.Color color) {
 		Piece promo = null;
 		
-		/**
-		 * If the pawnPiece to be promoted is queen-side (L),
-		 * it will be promoted to a piece from queen-side (L) --
-		 * and the same goes for a pawnPiece from king-side (R).
-		 */
-		
-		PieceType pt = null;
-
 		switch (promoType) {
 		case QUEEN:
-			promo = new Queen(color);		
+			promo = new Queen(color);
+			promo.posRef = pawnPiece.posRef;
+			pieceArray[pawnPiece.pieceType.ordinal()] = promo;
 			break;
 		case BISHOP_R:
 			switch (pawnPiece.pieceType) {
@@ -146,19 +141,24 @@ public final class PieceSet implements Iterable<Piece> {
 			case PAWN_1:
 			case PAWN_2:
 			case PAWN_3:
-				pt = PieceType.BISHOP_L;
+				promo = new Bishop(PieceType.BISHOP_L, color);
+				promo.posRef = pawnPiece.posRef;
+				pieceArray[pawnPiece.pieceType.ordinal()] = promo;
+				
 				break;
 			case PAWN_4:
 			case PAWN_5:
 			case PAWN_6:
 			case PAWN_7:
-				pt = PieceType.BISHOP_R;
+				promo = new Bishop(PieceType.BISHOP_R, color);
+				promo.posRef = pawnPiece.posRef;
+				pieceArray[pawnPiece.pieceType.ordinal()] = promo;
+
 				break;
 			default:
 				break;
 			}
 
-			promo = new Bishop(pt, color);
 			break;
 		case KNIGHT_R:
 			switch (pawnPiece.pieceType) {
@@ -166,52 +166,169 @@ public final class PieceSet implements Iterable<Piece> {
 			case PAWN_1:
 			case PAWN_2:
 			case PAWN_3:
-				pt = PieceType.KNIGHT_L;
+				promo = new Knight(PieceType.KNIGHT_L, color);
+				promo.posRef = pawnPiece.posRef;
+				pieceArray[pawnPiece.pieceType.ordinal()] = promo;
+
 				break;
 			case PAWN_4:
 			case PAWN_5:
 			case PAWN_6:
 			case PAWN_7:
-				pt = PieceType.KNIGHT_R;
+				promo = new Knight(PieceType.KNIGHT_R, color);
+				promo.posRef = pawnPiece.posRef;
+				pieceArray[pawnPiece.pieceType.ordinal()] = promo;
+
 				break;
 			default:
 				break;
 			}
-			
-			promo = new Knight(pt, color);
-			break;
 		case ROOK_R:
 			switch (pawnPiece.pieceType) {
 			case PAWN_0:
 			case PAWN_1:
 			case PAWN_2:
 			case PAWN_3:
-				pt = PieceType.ROOK_L;
+				promo = new Rook(PieceType.ROOK_L, color);
+				promo.posRef = pawnPiece.posRef;
+				pieceArray[pawnPiece.pieceType.ordinal()] = promo;
+
 				break;
 			case PAWN_4:
 			case PAWN_5:
 			case PAWN_6:
 			case PAWN_7:
-				pt = PieceType.ROOK_R;
+				promo = new Rook(PieceType.ROOK_R, color);
+				promo.posRef = pawnPiece.posRef;
+				pieceArray[pawnPiece.pieceType.ordinal()] = promo;
+
 				break;
 			default:
 				break;
 			}
-			
-			promo = new Rook(pt, color);
-			break;
 		default:
 			System.err.println(
 					"Can only promote to QUEEN, BISHOP, " + "KNIGHT, or ROOK.");
 			break;
 		}
 		
-		if (promo != null) {
-			promo.makeAlive();				// bring the new Piece to life
-			promo.posRef = pawnPiece.posRef;// assign the Pawn's Position
-						
-			// assign the promo Piece to the pieceArray within the PieceSet
+		return promo == null ? pawnPiece : promo;
+	}
+
+	/**
+	 * @deprecated
+	 * Routine to promote a Pawn to a desired PieceType
+	 * 
+	 * @param pawnPiece the Pawn Piece to promote
+	 * @param promoType the PieceType of the Piece to promote
+	 * 
+	 * @return returns a Piece that was promoted
+	 */
+	Piece promotePawn(Pawn pawnPiece, PieceType promoType) {
+		Piece promo = null;
+
+		switch (promoType) {
+		case QUEEN:
+			promo = pawnPiece.isWhite() ? new Queen(PieceType.Color.WHITE)
+					: new Queen(PieceType.Color.BLACK);
+
+			promo.posRef = pawnPiece.posRef;
 			pieceArray[pawnPiece.pieceType.ordinal()] = promo;
+
+			break;
+		case BISHOP_R:
+			switch (pawnPiece.pieceType) {
+			case PAWN_0:
+			case PAWN_1:
+			case PAWN_2:
+			case PAWN_3:
+				promo = pawnPiece.isWhite()
+						? new Bishop(PieceType.BISHOP_L, PieceType.Color.WHITE)
+						: new Bishop(PieceType.BISHOP_L, PieceType.Color.BLACK);
+
+				promo.posRef = pawnPiece.posRef;
+				pieceArray[pawnPiece.pieceType.ordinal()] = promo;
+
+				break;
+			case PAWN_4:
+			case PAWN_5:
+			case PAWN_6:
+			case PAWN_7:
+				promo = pawnPiece.isWhite()
+						? new Bishop(PieceType.BISHOP_R, PieceType.Color.WHITE)
+						: new Bishop(PieceType.BISHOP_R, PieceType.Color.BLACK);
+
+				promo.posRef = pawnPiece.posRef;
+				pieceArray[pawnPiece.pieceType.ordinal()] = promo;
+
+				break;
+			default:
+				break;
+			}
+
+			break;
+		case KNIGHT_R:
+			switch (pawnPiece.pieceType) {
+			case PAWN_0:
+			case PAWN_1:
+			case PAWN_2:
+			case PAWN_3:
+				promo = pawnPiece.isWhite()
+						? new Knight(PieceType.KNIGHT_L, PieceType.Color.WHITE)
+						: new Knight(PieceType.KNIGHT_L, PieceType.Color.BLACK);
+
+				promo.posRef = pawnPiece.posRef;
+				pieceArray[pawnPiece.pieceType.ordinal()] = promo;
+
+				break;
+			case PAWN_4:
+			case PAWN_5:
+			case PAWN_6:
+			case PAWN_7:
+				promo = pawnPiece.isWhite()
+						? new Knight(PieceType.KNIGHT_R, PieceType.Color.WHITE)
+						: new Knight(PieceType.KNIGHT_R, PieceType.Color.BLACK);
+
+				promo.posRef = pawnPiece.posRef;
+				pieceArray[pawnPiece.pieceType.ordinal()] = promo;
+
+				break;
+			default:
+				break;
+			}
+		case ROOK_R:
+			switch (pawnPiece.pieceType) {
+			case PAWN_0:
+			case PAWN_1:
+			case PAWN_2:
+			case PAWN_3:
+				promo = pawnPiece.isWhite()
+						? new Rook(PieceType.ROOK_L, PieceType.Color.WHITE)
+						: new Rook(PieceType.ROOK_L, PieceType.Color.BLACK);
+
+				promo.posRef = pawnPiece.posRef;
+				pieceArray[pawnPiece.pieceType.ordinal()] = promo;
+
+				break;
+			case PAWN_4:
+			case PAWN_5:
+			case PAWN_6:
+			case PAWN_7:
+				promo = pawnPiece.isWhite()
+						? new Rook(PieceType.ROOK_R, PieceType.Color.WHITE)
+						: new Rook(PieceType.ROOK_R, PieceType.Color.BLACK);
+
+				promo.posRef = pawnPiece.posRef;
+				pieceArray[pawnPiece.pieceType.ordinal()] = promo;
+
+				break;
+			default:
+				break;
+			}
+		default:
+			System.err.println(
+					"Can only promote to QUEEN, BISHOP, " + "KNIGHT, or ROOK.");
+			break;
 		}
 
 		return promo == null ? pawnPiece : promo;
@@ -223,67 +340,18 @@ public final class PieceSet implements Iterable<Piece> {
 	@Override
 	public String toString() {
 		String str = "";
-		str += "PIECESET LOG (" + color + ") --------------------------------\n";
-		str += "Symbol\tIdentifier\t\tPosition\tAlive\n";
-		str += "-----------------------------------------------------\n";
+		str += "PIECESET LOG (" + color + ") -------------------\n";
+		str += "Symbol\tIdentifier\t\tPosition\n";
+		str += "----------------------------------------\n";
 
-		Iterator<String> iter = pieceSetLogIterator(); 
-				
-		while (iter.hasNext()) {
-			str += iter.next();
+		for (int i = 0; i < pieceArray.length; i++) {
+			str += pieceArray[i].toString() + "\t";
+			str += pieceArray[i].identifier + "\t";
+			str += pieceArray[i].posRef + "\t";
+
+			str += "\n";
 		}
-		
+
 		return str;
-	}
-	
-	/**
-	 * Returns an iterator that assists in producing the string representation
-	 * of the PieceSet
-	 * 
-	 * @return an iterator representing the fields of the pieceSet
-	 */
-	private Iterator<String> pieceSetLogIterator() {
-		return new Iterator<String>() {
-			private int i = 0;
-
-			@Override
-			public boolean hasNext() {
-				return i < PIECE_COUNT;
-			}
-
-			@Override
-			public String next() {
-				if (i < PIECE_COUNT) {
-					return String.format("%s\t" + "%s\t" + "%s\t\t" + "%s\n",
-							pieceArray[i].toString(), pieceArray[i].identifier,
-							pieceArray[i].posRef, pieceArray[i++].alive);
-				} else {
-					return null;
-				}
-			}
-		};
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Iterable#iterator()
-	 */
-	@Override
-	public Iterator<Piece> iterator() {
-		return new Iterator<Piece>() {
-			private int i = 0;
-
-			@Override
-			public boolean hasNext() {
-				return i < PIECE_COUNT;
-			}
-
-			@Override
-			public Piece next() {
-				return i < PIECE_COUNT ? pieceArray[i++] : null;
-			}
-
-		};
 	}
 }

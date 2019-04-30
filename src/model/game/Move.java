@@ -18,22 +18,18 @@ import model.chess_set.Piece;
  * Represents a move within a Chess game, for logging purposes. Instances of
  * Move are created within Board and stored in a List<Move> within Board.
  * 
- * @version Apr 27, 2019
+ * @version Mar 24, 2019
  * @author gemuelealudino
  */
 public class Move {
-	
-	private Piece pieceRef;			// ref to Piece from Player's PieceSet
+	Piece piece;
 
-	private Position startPosRef;	// ref to a Cell's Position field
-	private Position endPosRef;		// ref to a Cell's Position field
-	
-	private boolean alive;
+	Position startPos;
+	Position endPos;
 
-	private LocalTime localTime;
+	LocalTime localTime;
 
-	private int moveNumber;			// Board initializes 
-									// its moveCounter field to 1.
+	int moveNumber;
 
 	/**
 	 * Parameterized constructor
@@ -42,13 +38,11 @@ public class Move {
 	 * @param startPos   the starting Position of piece
 	 * @param endPos     the ending Position of piece
 	 * @param moveNumber the sequential move number within the game
-	 * @param alive		 status after a move is completed
 	 */
-	public Move(Piece piece, Position startPos, Position endPos, 
-			int moveNumber, boolean alive) {
-		this.pieceRef = piece;
-		this.startPosRef = startPos;
-		this.endPosRef = endPos;
+	public Move(Piece piece, Position startPos, Position endPos, int moveNumber) {
+		this.piece = piece;
+		this.startPos = startPos;
+		this.endPos = endPos;
 
 		this.moveNumber = moveNumber;
 		localTime = LocalTime.now();
@@ -60,7 +54,7 @@ public class Move {
 	 * @return the Piece corresponding to a Move
 	 */
 	public Piece getLastPiece() {
-		return pieceRef;
+		return piece;
 	}
 
 	/**
@@ -69,7 +63,7 @@ public class Move {
 	 * @return the Position object associated with a Move
 	 */
 	public Position getStartPosition() {
-		return startPosRef;
+		return startPos;
 	}
 
 	/**
@@ -78,13 +72,13 @@ public class Move {
 	 * @return the Position object associated with a Move
 	 */
 	public Position getEndPosition() {
-		return endPosRef;
+		return endPos;
 	}
 
 	@Override
 	public String toString() {
-		return localTime.toString() + "\t" + moveNumber + "\t" + pieceRef
-				+ "\t" + startPosRef + "\t" + endPosRef + "\t" + alive;
+		return localTime.toString() + "\t" + moveNumber + "\t" + piece
+				+ "\t" + startPos + "\t" + endPos;
 	}
 }
 

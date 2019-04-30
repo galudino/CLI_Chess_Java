@@ -19,57 +19,76 @@ import model.chess_set.PieceSet;
  * Represents a participant in a Chess game.
  * Two instances of Player are owned by Game.
  * 
- * @version Apr 27, 2019
+ * @version Mar 5, 2019
  * @author gemuelealudino
  * @author patricknogaj
  */
-public final class Player {
+final class Player {
 
 	private PieceType.Color color;
 	private PieceSet pieceSetRef;	// ref to Game's Board's PieceSet
 								 	
 
 	private Board boardRef;			// ref to Game's Board
-		
+	
 	/**
+	 * @deprecated
 	 * Parameterized constructor
 	 * 
 	 * @param color the Color associated with a Player's PieceSet
-	 * @param boardRef the boardRef which refers to Game's Board
 	 */
-	Player(PieceType.Color color, Board boardRef) {
+	Player(PieceType.Color color) {
 		this.color = color;
-		this.boardRef = boardRef;
+		pieceSetRef = null;
+	}
+	
+	Player(PieceType.Color color, Board board) {
+		this.color = color;
+		this.boardRef = board;
 		
 		assignPieceSet();
 	}
-	
+
 	/**
-	 * Determines if a Player has white pieces, or not
+	 * @deprecated
+	 * Assigns a PieceSet to a Player given a Board
 	 * 
-	 * @return true, if Player has white pieces, false otherwise
-	 */
-	public boolean isWhite() {
-		return color.equals(PieceType.Color.WHITE);
-	}
-	
-	/**
-	 * Determines if a Player has black pieces, or not
-	 * 
-	 * @return true, if Player has black pieces, false otherwise
-	 */
-	public boolean isBlack() {
-		return color.equals(PieceType.Color.BLACK);
-	}
-	
-	/**
-	 * Assigns a PieceSet to a Player, using their boardRef field
+	 * @param board the current Board instance used during a match
 	 * 
 	 * @return true if successful, false otherwise
 	 */
+	boolean assignPieceSet(Board board) {
+		boolean result = false;
+
+		if (pieceSetRef == null) {
+			PieceSet whiteSet = board.getWhiteSet();
+			PieceSet blackSet = board.getBlackSet();
+
+			boolean playerIsWhite = color.equals(whiteSet.getPieceSetColor());
+
+			pieceSetRef = playerIsWhite ? whiteSet : blackSet;
+
+			result = true;
+		}
+
+		return result;
+	}
+	
 	private boolean assignPieceSet() {
-		pieceSetRef = pieceSetRef == null ? boardRef.getPieceSet(this) : null;
-		return pieceSetRef == null ? false : true;
+		boolean result = false;
+		
+		if (pieceSetRef == null) {
+			PieceSet whiteSet = boardRef.getWhiteSet();
+			PieceSet blackSet = boardRef.getBlackSet();
+			
+			boolean playerIsWhite = color.equals(whiteSet.getPieceSetColor());
+			
+			pieceSetRef = playerIsWhite ? whiteSet : blackSet;
+			
+			result = true;
+		}
+		
+		return result;
 	}
 	
 	/**
@@ -116,13 +135,69 @@ public final class Player {
 					break;
 				}
 
-				result = boardRef.movePiece(pieceRequested, pieceSetRef, newPosition, promoType);
+				result = boardRef.movePiece(pieceRequested, pieceSetRef, newPosition,
+						promoType);
 			}
 		}
 
 		return result;
 	}
 	
+
+	/**
+	 * @deprecated
+	 * Player makes a request to play a move
+	 * 
+	 * @param board         the current Board instance used during a match
+	 * @param piecePosition the Position of a chosen Piece
+	 * @param newPosition   the Position desired by the Player for a chosen
+	 *                      Piece
+	 * @param promo         integer that represents the piece to promote to (if
+	 *                      != -1)
+	 * 
+	 * @return true if successful, false otherwise
+	 */
+	boolean playMove(Board board, Position piecePosition, Position newPosition,
+			int promo) {
+		boolean result = false;
+
+		boolean requestDiffersFromNewPosition = (piecePosition
+				.equals(newPosition) == false);
+
+		if (requestDiffersFromNewPosition) {
+			Piece pieceRequested = pieceSetRef.getPieceByPosition(piecePosition);
+
+			if (pieceRequested == null) {
+				String error = String.format(
+						"ERROR: No %s piece at position %s exists.", color,
+						piecePosition);
+				System.err.println(error);
+			} else {
+				PieceType promoType = null;
+
+				switch (promo) {
+				case 1:
+					promoType = PieceType.QUEEN;
+					break;
+				case 3:
+					promoType = PieceType.BISHOP_R;
+					break;
+				case 5:
+					promoType = PieceType.KNIGHT_R;
+					break;
+				case 7:
+					promoType = PieceType.ROOK_R;
+					break;
+				}
+
+				result = board.movePiece(pieceRequested, pieceSetRef, newPosition,
+						promoType);
+			}
+		}
+
+		return result;
+	}
+
 	/**
 	 * Prints the Player's pieceSet
 	 */

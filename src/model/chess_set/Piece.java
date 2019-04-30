@@ -11,6 +11,7 @@
 package model.chess_set;
 
 import model.PieceType;
+import model.chess_set.Board.Cell;
 import model.chess_set.piecetypes.King;
 import model.chess_set.piecetypes.Pawn;
 import model.game.Position;
@@ -19,7 +20,7 @@ import model.game.Position;
  * Basis for a Piece within a PieceSet for a Player within a Game. (Chess)
  * Instances of subclasses of Piece are owned by PieceSet.
  * 
- * @version Apr 27, 2019
+ * @version Mar 3, 2019
  * @author gemuelealudino
  * @author patricknogaj
  */
@@ -27,11 +28,9 @@ public abstract class Piece {
 
 	private PieceType.Color color;
 	protected PieceType pieceType;
-	protected Piece pieceRef; // what does this ref to?
-	protected Position posRef; // ref to Position object in a Cell
+	protected Piece pieceRef;				// what does this ref to?
 	protected String identifier;
-	
-	boolean alive;
+	protected Position posRef;				// ref to Position object in a Cell
 
 	/**
 	 * Parameterized constructor
@@ -42,35 +41,6 @@ public abstract class Piece {
 		this.color = color;
 		posRef = null;
 		identifier = color.equals(PieceType.Color.WHITE) ? "White " : "Black ";
-		
-		alive = false;
-	}
-	
-	/**
-	 * Makes a piece "alive" and returns the result of the alive field
-	 * 
-	 * @return value of the alive field
-	 */
-	public boolean makeAlive() {
-		return alive == false ? alive = true : alive;
-	}
-	
-	/**
-	 * If a Piece is alive, it is made dead -- otherwise if dead, it remains so.
-	 * 
-	 * @return value of the alive field
-	 */
-	public boolean makeDead() {
-		return alive == true ? alive = false : alive;
-	}
-		
-	/**
-	 * Determines if a Piece is active (on the Board), or not
-	 * 
-	 * @return true if alive, false otherwise
-	 */
-	public boolean isAlive() {
-		return alive;
 	}
 
 	/**
@@ -81,11 +51,7 @@ public abstract class Piece {
 	 * @return true if color matches, false otherwise
 	 */
 	protected boolean matchesColor(Piece other) {
-		if (other != null) {
-			return color.equals(other.color);
-		} else {
-			return false;
-		}
+		return color.equals(other.color);
 	}
 
 	/**
@@ -142,11 +108,14 @@ public abstract class Piece {
 	 * Determines if a Piece p is a KING, or not
 	 * 
 	 * @param p Piece to assess for type (pawn or not)
-	 * 
 	 * @return true if p is a type PieceType.KING, false otherwise
 	 */
 	public boolean isKing() {
-		return pieceType.equals(PieceType.KING) && this instanceof King;
+		PieceType pt = pieceType;
+
+		boolean isPieceTypeKing = pt.equals(PieceType.KING);
+
+		return isPieceTypeKing && this instanceof King;
 	}
 
 	/**
@@ -168,13 +137,13 @@ public abstract class Piece {
 	}
 
 	/**
-	 * Determine if a move is legal given a Position posRef
+	 * Determine if a move is legal given a Position pos
 	 * 
-	 * @param board  board, containing the array of Cell[]
-	 * @param posRef represents the new Position for a piece after a move
+	 * @param cell current state of the Board
+	 * @param pos  Represents the new Position for a piece after a move
 	 * 
 	 * @return true if successful, false otherwise
 	 */
-	public abstract boolean isMoveLegal(Board board, Position posRef);
+	public abstract boolean isMoveLegal(Cell[][] cell, Position pos);
 
 }

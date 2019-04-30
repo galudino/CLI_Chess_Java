@@ -12,20 +12,19 @@ package model.chess_set.piecetypes;
 
 import model.PieceType;
 import model.chess_set.Piece;
-import model.chess_set.Board;
-import model.game.Move;
+import model.chess_set.Board.Cell;
 import model.game.Position;
 
 /**
- * @version Apr 27, 2019
+ * @version Mar 3, 2019
  * @author gemuelealudino
  * @author patricknogaj
  */
 public final class Pawn extends Piece {
 
-	private boolean firstMove;
-	private boolean checkEnpassant;
-	
+	private boolean firstMove = true;
+	private boolean checkEnpassant = false;
+
 	/**
 	 * Parameterized constructor
 	 * 
@@ -34,10 +33,7 @@ public final class Pawn extends Piece {
 	 */
 	public Pawn(PieceType pieceType, PieceType.Color color) {
 		super(color);
-		
-		firstMove = true;
-		checkEnpassant = false;
-		
+
 		switch (pieceType) {
 		case PAWN_0:
 		case PAWN_1:
@@ -93,118 +89,174 @@ public final class Pawn extends Piece {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see model.chess_set.Piece#isMoveLegal(model.chess_set.Board,
+	 * @see model.chess_set.Piece#isMoveLegal(model.chess_set.Board.Cell[][],
 	 * model.game.Position)
 	 */
 	@Override
-	public boolean isMoveLegal(Board board, Position posRef) {
+	public boolean isMoveLegal(Cell[][] cell, Position pos) {
 		boolean result = false;
-		
-		int thisPosRefFile = this.posRef.getFile();
-		int thisPosRefRank = this.posRef.getRank();
 
-		int posRefFile = posRef.getFile();
-		int posRefRank = posRef.getRank();
-
-		int deltaFile = Math.abs(posRefFile - thisPosRefFile);
-		int deltaRank = Math.abs(posRefRank - thisPosRefRank);
-		
-		boolean deltaFileOne = deltaFile == 1;
-		boolean deltaRankOne = deltaRank == 1;
-		boolean deltaRankTwo = deltaRank == 2;
-		
-		boolean deltaRankTwoOrOne = deltaRankTwo || deltaRankOne;
-		boolean bothDeltasOne = deltaRankOne && deltaFileOne;
-
-		boolean equalFile = thisPosRefFile == posRefFile;
-
-		Piece pieceAtCell = board.getCell(posRef).getPiece();
-		
-		boolean matchesColor = pieceAtCell != null ? this.matchesColor(pieceAtCell) : false;
-		boolean oppositeColor = matchesColor == true ? false : true;
-
-		boolean whiteMoveForward = thisPosRefRank < posRefRank;
-		boolean blackMoveForward = posRefRank < thisPosRefRank;
-		
-		if (whiteMoveForward || blackMoveForward) {
-			boolean firstCondition =
-					deltaRankTwoOrOne
-					&& equalFile
-					&& pieceAtCell == null;
-			
-			boolean secondCondition = 
-					bothDeltasOne
-					&& pieceAtCell != null 
-					&& oppositeColor;
-			
-			boolean firstOrSecondCondition = firstCondition || secondCondition;
-			
-			if (firstMove && firstOrSecondCondition) {
-				result = true;
-				firstMove = false;				
-			} else {
-				boolean enpassantCondition =
-						deltaRankOne
-						&& deltaFileOne
-						&& pieceAtCell == null;
-				
-				if (firstOrSecondCondition) {
-					result = true;
-				} else if (enpassantCondition) {
-					checkEnpassant = true;
-					
-					if (checkEnpassant) {
-						Move lastMove = 
-								board.getCell
-								(board.getPosition(
-										posRefFile, posRefRank)).getLastMove();
-						
-						Position lastMoveStartPosition = lastMove
-								.getStartPosition();
-						Position lastMoveEndPosition = lastMove
-								.getEndPosition();
-						
-						Piece pieceFromLastMove = lastMove.getLastPiece();
-						
-						int lastMoveStartRank = lastMoveStartPosition.getRank();
-						int lastMoveEndRank = lastMoveEndPosition.getRank();
-						
-						int deltaRankLastMoveStartEnd = 
-								Math.abs(lastMoveStartRank - lastMoveEndRank);
-						
-						if (pieceFromLastMove.isPawn()) {
-							boolean whiteConditionsMet = 
-									(this.isWhite() 
-									&& thisPosRefRank == 4
-									&& lastMoveEndRank == 4 
-									&& deltaRankLastMoveStartEnd == 2);
-									
-							boolean blackConditionsMet = 
-									(this.isBlack() 
-									&& thisPosRefRank == 3 
-									&& lastMoveEndRank == 3 
-									&& deltaRankLastMoveStartEnd == 2);
-							
-							if (whiteConditionsMet || blackConditionsMet) {
-								pieceFromLastMove.makeDead();
-								
-								board.
-								setPieceNullAtPosition(lastMoveEndPosition);
-								
-								result = true;
+		if (this.isWhite()) {
+			if (this.posRef.getRank() < pos.getRank()) {
+				if (firstMove) {
+					if ((Math.abs(pos.getRank() - this.posRef.getRank()) == 2
+							|| Math.abs(
+									pos.getRank() - this.posRef.getRank()) == 1)
+							&& (this.posRef.getFile() == pos.getFile()
+									&& (cell[pos.getFile()][pos.getRank()]
+											.getPiece() == null))) {
+						result = true;
+						firstMove = false;
+					} else if (Math.abs(pos.getRank() - this.posRef.getRank()) == 1
+							&& Math.abs(pos.getFile() - this.posRef.getFile()) == 1
+							&& cell[pos.getFile()][pos.getRank()]
+									.getPiece() != null
+							&& cell[pos.getFile()][pos.getRank()].getPiece()
+									.isBlack()) {
+						result = true;
+						firstMove = false;
+					}
+				} else {
+					if (Math.abs(pos.getRank() - this.posRef.getRank()) == 1
+							&& this.posRef.getFile() == pos.getFile()
+							&& (cell[pos.getFile()][pos.getRank()]
+									.getPiece() == null)) {
+						result = true;
+					} else if (Math.abs(pos.getRank() - this.posRef.getRank()) == 1
+							&& Math.abs(pos.getFile() - this.posRef.getFile()) == 1
+							&& cell[pos.getFile()][pos.getRank()]
+									.getPiece() != null) {
+						if (cell[pos.getFile()][pos.getRank()].getPiece()
+								.isBlack())
+							result = true;
+					} else if (Math.abs(pos.getRank() - this.posRef.getRank()) == 1
+							&& Math.abs(pos.getFile() - this.posRef.getFile()) == 1
+							&& cell[pos.getFile()][pos.getRank()]
+									.getPiece() == null) {
+						checkEnpassant = true;
+						if (checkEnpassant) {
+							if (cell[pos.getFile()][pos.getRank()].getLastMove()
+									.getLastPiece().isPawn() == this.isPawn()) {
+								if (this.posRef
+										.getRank() == cell[pos.getFile()][pos
+												.getRank()].getLastMove()
+														.getEndPosition()
+														.getRank()) {
+									Position pieceEndPos = cell[pos
+											.getFile()][pos.getRank()]
+													.getLastMove()
+													.getEndPosition();
+									Position pieceStartPos = cell[pos
+											.getFile()][pos.getRank()]
+													.getLastMove()
+													.getStartPosition();
+									if (this.posRef.getRank() == 4
+											&& pieceEndPos.getRank() == 4) {
+										if (Math.abs(pieceStartPos.getRank()
+												- pieceEndPos.getRank()) == 2) {
+											cell[pieceEndPos
+													.getFile()][pieceEndPos
+															.getRank()]
+																	.setPieceNull(
+																			pieceEndPos
+																					.getFile(),
+																			pieceEndPos
+																					.getRank());
+											result = true;
+										}
+									}
+								} else {
+									result = false;
+								}
 							}
 						}
-						
+					}
+				}
+			}
+		} else if (this.isBlack()) {
+			if (pos.getRank() < this.posRef.getRank()) {
+				if (firstMove) {
+					if (Math.abs(pos.getRank() - this.posRef.getRank()) == 2
+							|| Math.abs(pos.getRank() - this.posRef.getRank()) == 1
+									&& (this.posRef.getFile() == pos.getFile()
+											&& (cell[pos.getFile()][pos
+													.getRank()]
+															.getPiece() == null))) {
+						result = true;
+						firstMove = false;
+					} else if (Math.abs(pos.getRank() - this.posRef.getRank()) == 1
+							&& Math.abs(pos.getFile() - this.posRef.getFile()) == 1
+							&& cell[pos.getFile()][pos.getRank()]
+									.getPiece() != null
+							&& cell[pos.getFile()][pos.getRank()].getPiece()
+									.isWhite()) {
+						result = true;
+						firstMove = false;
+					}
+				} else {
+					if (Math.abs(pos.getRank() - this.posRef.getRank()) == 1
+							&& this.posRef.getFile() == pos.getFile()
+							&& (cell[pos.getFile()][pos.getRank()]
+									.getPiece() == null)) {
+						result = true;
+					} else if (Math.abs(pos.getRank() - this.posRef.getRank()) == 1
+							&& Math.abs(pos.getFile() - this.posRef.getFile()) == 1
+							&& cell[pos.getFile()][pos.getRank()]
+									.getPiece() != null) {
+						if (cell[pos.getFile()][pos.getRank()].getPiece()
+								.isWhite())
+							result = true;
+					} else if (Math.abs(pos.getRank() - this.posRef.getRank()) == 1
+							&& Math.abs(pos.getFile() - this.posRef.getFile()) == 1
+							&& cell[pos.getFile()][pos.getRank()]
+									.getPiece() == null) {
+						checkEnpassant = true;
+						if (checkEnpassant) {
+							if (cell[pos.getFile()][pos.getRank()].getLastMove()
+									.getLastPiece().isPawn() == this.isPawn()) {
+								if (this.posRef
+										.getRank() == cell[pos.getFile()][pos
+												.getRank()].getLastMove()
+														.getEndPosition()
+														.getRank()) {
+									Position pieceEndPos = cell[pos
+											.getFile()][pos.getRank()]
+													.getLastMove()
+													.getEndPosition();
+									Position pieceStartPos = cell[pos
+											.getFile()][pos.getRank()]
+													.getLastMove()
+													.getStartPosition();
+									if (this.posRef.getRank() == 3
+											&& pieceEndPos.getRank() == 3) {
+										if (Math.abs(pieceStartPos.getRank()
+												- pieceEndPos.getRank()) == 2) {
+											cell[pieceEndPos
+													.getFile()][pieceEndPos
+															.getRank()]
+																	.setPieceNull(
+																			pieceEndPos
+																					.getFile(),
+																			pieceEndPos
+																					.getRank());
+											result = true;
+										}
+									}
+								} else {
+									result = false;
+								}
+							}
+						}
 					}
 				}
 			}
 		}
-		
 		return result;
 	}
-	
+
 	@Override
 	public String toString() {
 		return super.toString() + "P";
 	}
+
 }

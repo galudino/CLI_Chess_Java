@@ -12,11 +12,11 @@ package model.chess_set.piecetypes;
 
 import model.PieceType;
 import model.chess_set.Piece;
-import model.chess_set.Board;
+import model.chess_set.Board.Cell;
 import model.game.Position;
 
 /**
- * @version Apr 27, 2019
+ * @version Mar 3, 2019
  * @author gemuelealudino
  * @author patricknogaj
  */
@@ -45,28 +45,42 @@ public final class Knight extends Piece {
 					: " (left)";
 		}
 	}
-	
-	/* (non-Javadoc)
-	 * @see model.chess_set.Piece#isMoveLegal(model.chess_set.Board, 
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see model.chess_set.Piece#isMoveLegal(model.chess_set.Board.Cell[][],
 	 * model.game.Position)
 	 */
 	@Override
-	public boolean isMoveLegal(Board board, Position posRef) {
+	public boolean isMoveLegal(Cell[][] cell, Position pos) {
 		boolean result = false;
-		
-		int thisPosRefFile = this.posRef.getFile();
-		int thisPosRefRank = this.posRef.getRank();
-		
-		int posRefFile = posRef.getFile();
-		int posRefRank = posRef.getRank();
-		
-		int deltaFile = Math.abs(posRefFile - thisPosRefFile);
-		int deltaRank = Math.abs(posRefRank - thisPosRefRank);
-		
-		result = deltaFile == 2 && deltaRank == 1 ? true : result;
-		result = deltaFile == 1 && deltaRank == 2 ? true : result;
+
+		if (Math.abs(pos.getFile() - this.posRef.getFile()) == 2
+				&& Math.abs(pos.getRank() - this.posRef.getRank()) == 1) {
+			result = true;
+		}
+
+		if (Math.abs(pos.getFile() - this.posRef.getFile()) == 1
+				&& Math.abs(pos.getRank() - this.posRef.getRank()) == 2) {
+			result = true;
+		}
 
 		return result;
+
+		//@formatter:off
+		/*
+		boolean result = false;
+		
+		final int deltaFile = Math.abs(pos.getFile() - this.pos.getFile());
+		final int deltaRank = Math.abs(pos.getRank() - this.pos.getRank());
+		
+		result = (deltaFile == 2 && deltaRank == 1);
+		result = (deltaFile == 1 && deltaRank == 2);
+		
+		return result;
+		*/
+		//@formatter:on
 	}
 
 	@Override
