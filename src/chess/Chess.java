@@ -33,8 +33,42 @@ public class Chess {
 	public static void main(String[] args) throws IOException {
 		Game game = new Game();
 		
+		/**
+		 * By default:
+		 * -----------
+		 * printBoard == true
+		 * debugMoveLog == false
+		 * debugPostMoveLog == false
+		 * debugPieceSetLog == false
+		 * 
+		 * toggleAllDebugLogs will toggle all of these booleans,
+		 * to allow for the respective console messages.
+		 * 
+		 * You may also use toggleMoveLog(), togglePostMoveLog(),
+		 * and togglePieceSetLog() if only some of these messages
+		 * are required.
+		 * 
+		 * togglePrintBoard() will toggle the console printout of the
+		 * chess board.
+		 */
+		
+		/**
+		 * Comment this out for release!
+		 */
+		//game.toggleAllDebugLogs();
+		game.toggleMoveLog();
+		game.togglePieceSetLog();
+		game.togglePostMoveLog();
+		
+		/**
+		 * If for some reason, you would
+		 * like to turn off the CLI chess board,
+		 * here it is:
+		 */
+		//game.togglePrintBoard();
+		
+		
 		//game.startFromFile("dat/testgame.txt");
 		game.start();
 	}
-	
 }
