@@ -130,6 +130,16 @@ public final class Game {
 		togglePostMoveLog();
 		togglePieceSetLog();
 	}
+	
+	/**
+	 * Accessor to print certain console messages for classes outside
+	 * of this package
+	 * 
+	 * @return output string for console
+	 */
+	public String output() {
+		return output;
+	}
 
 	/**
 	 * Mutator to toggle the printing of the CLI chess board
@@ -409,6 +419,20 @@ public final class Game {
 			System.out.println(output);
 		}
 	}
+	
+	/**
+	 * Prints the white player's PieceSet
+	 */
+	public void printWhiteSet() {
+		System.out.println(white.pieceSetRef);
+	}
+	
+	/**
+	 * Prints the black player's PieceSet
+	 */
+	public void printBlackSet() {
+		System.out.println(black.pieceSetRef);
+	}
 
 	/**
 	 * Returns the current state of the Game as an ASCII chess board
@@ -478,8 +502,6 @@ public final class Game {
 	 * 
 	 * @param inputFilePath String representing the input file to be read
 	 * @throws IOException On nonexistent inputFilePath
-	 * 
-	 * @return true if game can continue, false otherwise
 	 */
 	public void startFromFile(String inputFilePath) throws IOException {
 		inputFile = new File(inputFilePath);
