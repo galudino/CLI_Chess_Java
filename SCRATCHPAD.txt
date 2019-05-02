@@ -1,3 +1,72 @@
+	boolean result = true;
+
+		if (Math.abs(this.posRef.getRank() - pos.getRank()) == Math
+				.abs(this.posRef.getFile() - pos.getFile())) {
+			int rowOffset, colOffset;
+
+			if (this.posRef.getFile() < pos.getFile()) {
+				colOffset = 1;
+			} else {
+				colOffset = -1;
+			}
+
+			if (this.posRef.getRank() < pos.getRank()) {
+				rowOffset = 1;
+			} else {
+				rowOffset = -1;
+			}
+
+			for (int x = this.posRef.getFile() + colOffset, y = this.posRef.getRank()
+					+ rowOffset; x != pos.getFile(); x += colOffset) {
+				if (cell[x][y].getPiece() != null) {
+					result = false;
+				}
+
+				y += rowOffset;
+			}
+		} else {
+			// This is to check if it is moving on one path aka not diagonal
+			if (pos.getRank() != this.posRef.getRank()
+					&& pos.getFile() != this.posRef.getFile()) {
+				result = false;
+			}
+
+			int offset;
+
+			if (pos.getFile() != this.posRef.getFile()) {
+				if (this.posRef.getFile() < pos.getFile()) {
+					offset = 1;
+				} else {
+					offset = -1;
+				}
+
+				for (int x = this.posRef.getFile() + offset; x != pos
+						.getFile(); x += offset) {
+					if (cell[x][this.posRef.getRank()].getPiece() != null) {
+						return false;
+					}
+				}
+			}
+
+			if (pos.getRank() != this.posRef.getRank()) {
+				if (this.posRef.getRank() < pos.getRank()) {
+					offset = 1;
+				} else {
+					offset = -1;
+				}
+
+				for (int x = this.posRef.getRank() + offset; x != pos
+						.getRank(); x += offset) {
+					if (cell[this.posRef.getFile()][x].getPiece() != null) {
+						return false;
+					}
+				}
+			}
+		}
+		return result;
+
+
+
 ---DELETE THIS SCRATCHPAD FILE UPON RELEASE---
 
 						final String prompt = String.format("\n%s\n"
