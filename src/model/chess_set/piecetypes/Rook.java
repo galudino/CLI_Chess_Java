@@ -61,6 +61,7 @@ public final class Rook extends Piece {
 	 */
 	@Override
 	public boolean isMoveLegal(Cell[][] cell, Position posRef) {
+		/*
 		boolean result = true;
 
 		boolean movingRight = false;
@@ -83,14 +84,6 @@ public final class Rook extends Piece {
 		boolean moveDownYDecreases = false;
 
 		boolean pieceFoundAlongPath = false;
-
-		/**
-		 * "Function" of Rook's movement has a slope m such that
-		 * m == 0 (the x-axis)
-		 * || m == UNDEFINED (the y-axis) 
-		 * 
-		 * It cannot "jump" over other pieces.
-		 */
 		
 		if (unequalRank && unequalFile) {
 			result = false;
@@ -141,6 +134,51 @@ public final class Rook extends Piece {
 		}
 
 		return result;
+		*/
+		
+		boolean result = true;
+
+		// This is to check if it is moving on one path aka not diagonal
+		if (posRef.getRank() != this.posRef.getRank()
+				&& posRef.getFile() != this.posRef.getFile()) {
+			result = false;
+		}
+
+		// Utilized to check if next piece will be null
+		int offset;
+
+		if (posRef.getFile() != this.posRef.getFile()) {
+			if (this.posRef.getFile() < posRef.getFile()) {
+				offset = 1;
+			} else {
+				offset = -1;
+			}
+
+			for (int x = this.posRef.getFile() + offset; x != posRef
+					.getFile(); x += offset) {
+				if (cell[x][this.posRef.getRank()].getPiece() != null) {
+					return false;
+				}
+			}
+		}
+
+		if (posRef.getRank() != this.posRef.getRank()) {
+			if (this.posRef.getRank() < posRef.getRank()) {
+				offset = 1;
+			} else {
+				offset = -1;
+			}
+
+			for (int x = this.posRef.getRank() + offset; x != posRef
+					.getRank(); x += offset) {
+				if (cell[this.posRef.getFile()][x].getPiece() != null) {
+					return false;
+				}
+			}
+		}
+
+		return result;
+
 	}
 
 	@Override
