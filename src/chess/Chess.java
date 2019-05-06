@@ -68,7 +68,7 @@ public class Chess {
 		//game.togglePrintBoard();
 		
 		
-		//game.startFromFile("dat/testgame.txt");
-		game.start();
+		game.startFromFile("dat/testgame.txt");
+		//game.start();
 	}
 }
