@@ -14,6 +14,7 @@ import java.io.*;
 import java.util.Scanner;
 
 import model.PieceType;
+import model.PieceType.Color;
 import model.chess_set.Board;
 import model.chess_set.Piece;
 import model.chess_set.PieceSet;
@@ -84,6 +85,8 @@ public final class Game {
 	private boolean promoteBlack;
 
 	private PieceType pawnPromoteType;
+	
+	private PieceType.Color gameWinner;
 
 	/**
 	 * Default constructor
@@ -120,6 +123,8 @@ public final class Game {
 		promoteBlack = false;
 
 		pawnPromoteType = null;
+		
+		gameWinner = null;
 	}
 
 	/**
@@ -139,6 +144,16 @@ public final class Game {
 	 */
 	public String output() {
 		return output;
+	}
+	
+	/**
+	 * Accessor to determine the winner of a game.
+	 * Precondition: game must not be active (must not be in play)
+	 * 
+	 * @return The winning player's color, otherwise if game is active, null
+	 */
+	public PieceType.Color getGameWinner() {
+		return !active ? gameWinner : null;
 	}
 
 	/**
@@ -466,7 +481,7 @@ public final class Game {
 				readInput(input);
 				System.out.println(output);
 
-				if (didDraw || didResign) {
+				if (didDraw || didResign || !active) {
 					scan.close();
 					System.exit(0);
 				}
@@ -537,7 +552,7 @@ public final class Game {
 				readInput(input);
 				System.out.println(output);
 
-				if (didDraw || didResign) {
+				if (didDraw || didResign || !active) {
 					bufferedReader.close();
 					fileReader.close();
 					System.exit(0);
@@ -650,6 +665,12 @@ public final class Game {
 
 		if (didDraw || didResign) {
 			return;
+		}
+		
+		if (board.isCheckmate()) {
+			output = board.getOutputWinner();
+			gameWinner = board.isWhiteWinner() ? Color.WHITE : Color.BLACK;
+			active = false;
 		}
 
 		if (validMoveInput) {
