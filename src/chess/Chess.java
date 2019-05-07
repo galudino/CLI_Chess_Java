@@ -11,8 +11,10 @@
 package chess;
 
 import java.io.IOException;
+import java.util.List;
 
 import model.game.Game;
+import model.game.Move;
 
 /**
  * Driver class for a Chess game
@@ -67,8 +69,11 @@ public class Chess {
 		 */
 		//game.togglePrintBoard();
 		
+
 		
-		game.startFromFile("dat/testgame.txt");
-		//game.start();
+		//game.startFromFilePlayByPlay("dat/testgame.txt");
+		//game.startFromFile("dat/testgame.txt");
+		//List<Move> ml = game.getMoveList();
+		game.start();
 	}
 }
