@@ -70,7 +70,8 @@ public class Chess {
 		//game.togglePrintBoard();
 		
 
-		game.startFromFile("dat/outofbounds.txt");
+		game.startFromFile("dat/promotion.txt");
+		//game.startFromFile("dat/outofbounds.txt");
 		//game.startFromFilePlayByPlay("dat/testgame.txt");
 		//game.startFromFile("dat/testgame.txt");
 		//List<Move> ml = game.getMoveList();
