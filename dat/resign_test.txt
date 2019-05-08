@@ -1,0 +1,18 @@
+[GAME_LIST]
+
+	[TITLE]
+		sample_title
+	[/TITLE]
+	
+	[DATE]
+		sample_date
+	[/DATE]
+	
+	[MOVES]
+		a2 a3 draw?
+		a7 a5
+		a3 a4 draw?
+		draw
+	[/MOVES]
+
+[/GAME_LIST]

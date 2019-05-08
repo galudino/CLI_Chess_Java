@@ -10,8 +10,10 @@
  */
 package chess;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Scanner;
 
 import model.game.Game;
 import model.game.Move;
@@ -70,6 +72,8 @@ public class Chess {
 		//game.togglePrintBoard();
 		
 
+		//game.startFromFile("dat/resign_test.txt");
+		//game.saveGameCLI();
 		//game.startFromFile("dat/promotion.txt");
 		//game.startFromFile("dat/outofbounds.txt");
 		//game.startFromFilePlayByPlay("dat/testgame.txt");
