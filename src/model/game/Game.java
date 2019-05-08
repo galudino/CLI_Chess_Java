@@ -956,7 +956,7 @@ public final class Game {
 
 		// Undo the previous move made by the opponent
 		// (opposite color of the caller)
-		board.undoMovePiece(getLastMove());
+		board.undoMovePiece();
 
 		System.out.println(boardToString());
 
