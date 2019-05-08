@@ -105,7 +105,7 @@ public final class Game {
 	
 	private DateTimeFormatter dateTimeFormatter;
 	
-	private static final String OUTPUT_DIR_CLI = "dat/";
+	private static final String OUTPUT_DIR_CLI = "dat" + File.pathSeparator;
 	private static final String OUTPUT_EXT = "chess22";
 
 	/**
