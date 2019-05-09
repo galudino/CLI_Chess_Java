@@ -10,7 +10,10 @@
  */
 package chess;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
@@ -79,6 +82,33 @@ public class Chess {
 		//game.startFromFilePlayByPlay("dat/testgame.txt");
 		//game.startFromFile("dat/testgame.txt");
 		//List<Move> ml = game.getMoveList();
+		
+		
+		String str = "";
+		
+		File file = new File("dat/resign_test.txt");
+		Scanner scan = new Scanner(file);
+		
+		while (scan.hasNext()) {
+			str += scan.nextLine() + "\n";
+			
+			if (str == "[/GAME_LIST]") {
+				break;
+			}
+		}
+		
+
+		
+		List<String> list = game.generateMoveListForPlayback(str);
+		
+		
+		
+		for (String s : list) {
+			System.out.println(s);
+		}
+		
+		
+		
 
 	}
 }

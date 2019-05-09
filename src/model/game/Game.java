@@ -162,8 +162,6 @@ public final class Game {
 		
 		gameTitleString = "<untitled>";
 		gameDateString = gameStartTime.format(dateTimeFormatter);
-		
-		moveListInputFile = null;
 	}
 	
 	/**
@@ -216,10 +214,37 @@ public final class Game {
 	 * @return
 	 * @throws IOException 
 	 */
-	public List<String> generateMoveListForPlayback(String inputFilePath) throws IOException {
+	public List<String> generateMoveListForPlayback(String inputFileString) throws IOException {
+		
 		moveListInputFile = new ArrayList<String>();
 		
+		Scanner scan = new Scanner(inputFileString);
+		String str = "";
+		while (scan.hasNext()) {
+			str = scan.nextLine();
 		
+			
+			if (str.equals("\t[TITLE]")) {
+
+			} else if (str.equals("\t[DATE]")) {
+
+			} else if (str.equals("\t[MOVES]")) {
+				break;
+			}
+		}
+		
+		while (scan.hasNext()) {
+			str = scan.nextLine();
+			if (str.contentEquals("[/MOVES]")) {
+				break;
+			}
+			moveListInputFile.add(str.trim());
+		}
+				
+		scan.close();
+		return moveListInputFile;
+		
+		/*
 		inputFile = new File(inputFilePath);
 		
 		if (inputFile.exists() == false) {
@@ -233,6 +258,8 @@ public final class Game {
 		input = "";
 				
 		input = ((BufferedReader)bufferedReader).readLine();
+		
+		
 		
 		if (input.equals("[GAME_LIST]")) {
 			while ((input = ((BufferedReader)bufferedReader).readLine()) != null) {
@@ -293,9 +320,8 @@ public final class Game {
 		
 		inputFile = null;
 		bufferedReader.close();
-		
-		
-		return moveListInputFile;
+		*/
+
 	}
 
 	/**
