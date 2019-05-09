@@ -14,6 +14,7 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -107,6 +108,8 @@ public final class Game {
 	
 	private static final String OUTPUT_DIR_CLI = "dat" + File.pathSeparator;
 	private static final String OUTPUT_EXT = "chess22";
+	
+	private List<String> moveListInputFile;
 
 	/**
 	 * Default constructor
@@ -159,8 +162,10 @@ public final class Game {
 		
 		gameTitleString = "<untitled>";
 		gameDateString = gameStartTime.format(dateTimeFormatter);
+		
+		moveListInputFile = null;
 	}
-
+	
 	/**
 	 * Mutator to toggle all debug logs
 	 */
@@ -203,23 +208,94 @@ public final class Game {
 		return board.getMoveList();
 	}
 
-	public File generateMoveListFile(String filename) throws IOException {
-		File result = null;
-		/*
-		 * if (!active) { result = new File(filename);
-		 * 
-		 * BufferedWriter bw = new BufferedWriter(new FileWriter(result));
-		 * 
-		 * 
-		 * List<Move> moveList = board.getMoveList();
-		 * 
-		 * for (Move m : moveList) { bw.append(m.getStartPosition() + " " +
-		 * m.getEndPosition()); }
-		 * 
-		 * }
-		 */
 
-		return result;
+	/**
+	 * Generates a movelist that can be used for playback with an input file
+	 * 
+	 * @param filepath
+	 * @return
+	 * @throws IOException 
+	 */
+	public List<String> generateMoveListForPlayback(String inputFilePath) throws IOException {
+		moveListInputFile = new ArrayList<String>();
+		
+		
+		inputFile = new File(inputFilePath);
+		
+		if (inputFile.exists() == false) {
+			output = "Error: " + inputFilePath + " does not exist.";
+			System.err.println(output);
+			System.exit(0);
+		}
+			
+		fileReader = new FileReader(inputFile);
+		bufferedReader = new BufferedReader(fileReader);
+		input = "";
+				
+		input = ((BufferedReader)bufferedReader).readLine();
+		
+		if (input.equals("[GAME_LIST]")) {
+			while ((input = ((BufferedReader)bufferedReader).readLine()) != null) {
+				if (input.equals("\t[TITLE]")) {
+					gameTitleString = ((BufferedReader)bufferedReader).readLine().trim();
+				} else if (input.equals("\t[DATE]")) {
+					gameDateString = ((BufferedReader)bufferedReader).readLine().trim();
+				} else if (input.equals("\t[MOVES]")) {
+					while (active) {
+						do {
+							validMoveInput = false;
+							
+							input = ((BufferedReader) bufferedReader).readLine().trim();
+							
+							moveListInputFile.add(input);
+
+							if (input == null) {
+								bufferedReader.close();
+								fileReader.close();
+								inputFile = null;
+								start();
+								break;
+							}
+
+							readInput(input);
+							//System.out.println(output);
+
+							if (didDraw || didResign || !active) {
+								break;
+							}
+						} while (validMoveInput == false);
+
+						if (active) {
+							if (printBoard) {
+								//System.out.println(boardToString());
+							}
+
+							if (debugPostMoveLog) {
+								//printPostMoveLog();
+							}
+
+							if (debugMoveLog) {
+								printMoveLog();
+							}//
+
+							if (debugPieceSetLog) {
+								if (whitesMove == false) {
+									//white.printPieceSet();
+								} else {
+									//black.printPieceSet();
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		inputFile = null;
+		bufferedReader.close();
+		
+		
+		return moveListInputFile;
 	}
 
 	/**
@@ -852,6 +928,108 @@ public final class Game {
 		bufferedReader.close();
 		fileReader.close();
 	}
+	
+	public void loadInputFile(String inputFilePath) throws IOException {
+		moveListInputFile = new ArrayList<String>();
+		
+		inputFile = new File(inputFilePath);
+		
+		if (inputFile.exists() == false) {
+			output = "Error: " + inputFilePath + " does not exist.";
+			System.err.println(output);
+			System.exit(0);
+		}
+
+		scan = new Scanner(System.in);
+		fileReader = new FileReader(inputFile);
+		bufferedReader = new BufferedReader(fileReader);
+		input = "";
+
+		System.out.println("*** PLAY BY PLAY MODE ***\n");
+		
+		if (printBoard) {
+			System.out.println(board);
+		}
+		
+		input = ((BufferedReader)bufferedReader).readLine();
+		
+		String line = "";
+		
+		if (input.equals("[GAME_LIST]")) {			
+			while ((input = ((BufferedReader)bufferedReader).readLine()) != null) {
+				if (input.equals("\t[TITLE]")) {
+					gameTitleString = ((BufferedReader)bufferedReader).readLine().trim();
+				} else if (input.equals("\t[DATE]")) {
+					gameDateString = ((BufferedReader)bufferedReader).readLine().trim();
+				} else if (input.equals("\t[MOVES]")) {
+					while (active) {
+						do {
+							validMoveInput = false;
+							
+							output = whitesMove ? "White's " : "Black's ";
+
+							System.out.print(output + "move (Hit ENTER to see the next move): ");
+							line = scan.nextLine();
+							
+							while (!line.equals("")) {
+								System.out.println("Hit ENTER to see the next move or type X and ENTER to quit.");
+								
+								line = scan.nextLine();
+								
+								if (line.equals("X")) {
+									return;
+								}
+							}
+							
+							input = ((BufferedReader) bufferedReader).readLine().trim();
+							System.out.println();
+
+							if (input == null) {
+								bufferedReader.close();
+								fileReader.close();
+								inputFile = null;
+								start();
+								break;
+							}
+
+							readInput(input);
+							System.out.println(output);
+
+							if (didDraw || didResign || !active) {
+								break;
+							}
+						} while (validMoveInput == false);
+
+						if (active) {
+							if (printBoard) {
+								System.out.println(boardToString());
+							}
+
+							if (debugPostMoveLog) {
+								printPostMoveLog();
+							}
+
+							if (debugMoveLog) {
+								printMoveLog();
+							}
+
+							if (debugPieceSetLog) {
+								if (whitesMove == false) {
+									white.printPieceSet();
+								} else {
+									black.printPieceSet();
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		inputFile = null;
+		bufferedReader.close();
+		fileReader.close();
+	}
 
 	/**
 	 * Starts a game from a String inputFilePath to an existing file. One move
@@ -1217,7 +1395,7 @@ public final class Game {
 		
 		String path = filepath + filename;
 		
-		File file = new File(filepath);
+		File file = new File(path);
 		if (!file.exists()) {
 			PrintWriter pw = new PrintWriter(path, "UTF-8");
 			pw.print("");

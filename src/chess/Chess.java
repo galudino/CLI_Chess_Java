@@ -79,6 +79,6 @@ public class Chess {
 		//game.startFromFilePlayByPlay("dat/testgame.txt");
 		//game.startFromFile("dat/testgame.txt");
 		//List<Move> ml = game.getMoveList();
-		game.start();
+
 	}
 }
