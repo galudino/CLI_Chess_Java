@@ -237,8 +237,9 @@ public final class Game {
 			str = scan.nextLine();
 			if (str.contentEquals("[/MOVES]")) {
 				break;
+			} else {
+				moveListInputFile.add(str.trim());
 			}
-			moveListInputFile.add(str.trim());
 		}
 				
 		scan.close();
