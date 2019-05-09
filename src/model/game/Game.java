@@ -234,7 +234,7 @@ public final class Game {
 		}
 		
 		while (scan.hasNext()) {
-			str = scan.nextLine();
+			str = scan.nextLine().trim();
 			if (str.contentEquals("[/MOVES]")) {
 				break;
 			} else {
